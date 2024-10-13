@@ -6,11 +6,17 @@ import { ViewTransitions } from "next-view-transitions";
 import { ThemeProvider } from "@/context/theme-provider";
 
 export const metadata: Metadata = {
-  title: "Everything AI",
+  metadataBase: new URL("https://ssiautomations.com"),
+  title: "SSI Automations - AI Solutions for Small Businesses",
   description:
-    "Everything AI is a platform that provides a wide range of AI tools and services to help you stay on top of your business. Generate images, text and everything else that you need to get your business off the ground.",
+    "Discover how SSI Automations empowers small businesses with cutting-edge AI tools and automation workflows to boost productivity and maximize profits. Explore our innovative solutions today!",
   openGraph: {
-    images: ["https://ai-saas-template-aceternity.vercel.app/banner.png"],
+    title: "SSI Automations - AI Solutions for Small Businesses",
+    description:
+      "Empower your business with SSI Automations. Leverage modern AI tools and automation workflows to enhance productivity and profitability.",
+    images: ["/SSI-Automations-banner.png"],
+    url: "https://www.ssiautomations.com", // Replace with your actual website URL
+    type: "website",
   },
 };
 
