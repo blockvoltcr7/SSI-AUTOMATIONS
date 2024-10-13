@@ -1,31 +1,25 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import sgMail from "@sendgrid/mail";
+import { rateLimit } from "@/lib/rate-limit";
+
+// Initialize SendGrid
+sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
+
+const limiter = rateLimit({
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 500, // Max 500 users per minute
+});
 
 export async function POST(req: Request) {
   try {
+    await limiter.check(req, 3, "CACHE_TOKEN"); // 3 requests per minute
     const { name, email, company, message } = await req.json();
+
     console.log("Received form data:", { name, email, company, message });
 
-    const transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: Number(process.env.EMAIL_PORT),
-      secure: process.env.EMAIL_SECURE === "true",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    console.log("Nodemailer transporter created with config:", {
-      host: process.env.EMAIL_HOST,
-      port: process.env.EMAIL_PORT,
-      secure: process.env.EMAIL_SECURE,
-      user: process.env.EMAIL_USER,
-    });
-
-    const mailOptions = {
-      from: `"Contact Form" <${process.env.EMAIL_USER}>`,
-      to: process.env.RECIPIENT_EMAIL,
+    const msg = {
+      to: process.env.RECIPIENT_EMAIL as string,
+      from: process.env.SENDER_EMAIL as string,
       subject: "New Contact Form Submission",
       text: `Name: ${name}\nEmail: ${email}\nCompany: ${company}\nMessage: ${message}`,
       html: `<p><strong>Name:</strong> ${name}</p>
@@ -34,16 +28,19 @@ export async function POST(req: Request) {
              <p><strong>Message:</strong> ${message}</p>`,
     };
 
-    console.log("Attempting to send email with options:", mailOptions);
+    console.log("Preparing to send email with data:", msg);
 
-    const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully:", info.response);
+    const result = await sgMail.send(msg);
+    console.log("SendGrid API response:", result);
 
     return NextResponse.json(
-      { message: "Email sent successfully" },
+      { message: "Email sent successfully", sendGridResponse: result },
       { status: 200 }
     );
   } catch (error) {
+    if ((error as Error).message === "Rate limit exceeded") {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
     console.error("Detailed error in sending email:", error);
     if (error instanceof Error) {
       console.error("Error name:", error.name);
