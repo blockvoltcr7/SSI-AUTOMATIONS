@@ -29,9 +29,9 @@ export const Hero = () => {
         }}
         className="flex justify-center"
       >
-        <Badge onClick={() => router.push("/blog/top-5-llm-of-all-time")}>
+        {/* <Badge onClick={() => router.push("/blog/top-5-llm-of-all-time")}>
           We&apos;ve raised $69M seed funding
-        </Badge>
+        </Badge> */}
       </motion.div>
       <motion.h1
         initial={{
@@ -48,7 +48,7 @@ export const Hero = () => {
         }}
         className="text-2xl md:text-4xl lg:text-8xl font-semibold max-w-6xl mx-auto text-center mt-6 relative z-10"
       >
-        <Balancer>Generate Images, Text and Videos with AI</Balancer>
+        <Balancer>Automate Your Business with AI-Powered Solutions</Balancer>
       </motion.h1>
       <motion.p
         initial={{
@@ -67,9 +67,8 @@ export const Hero = () => {
         className="text-center mt-6 text-base md:text-xl text-muted dark:text-muted-dark max-w-3xl mx-auto relative z-10"
       >
         <Balancer>
-          Everything AI seamlessly integrated all the modern AI generation tools
-          into one platform so that you can generate content with a single
-          click.
+          Streamline your workflows and optimize your business operations with
+          cutting-edge AI technology designed for small businesses.
         </Balancer>
       </motion.p>
       <motion.div
@@ -88,7 +87,7 @@ export const Hero = () => {
         }}
         className="flex items-center gap-4 justify-center mt-6 relative z-10"
       >
-        <Button>Get started</Button>
+        {/* <Button>Get started</Button> */}
         <Button
           variant="simple"
           as={Link}
@@ -99,7 +98,7 @@ export const Hero = () => {
           <HiArrowRight className="text-muted group-hover:translate-x-1 stroke-[1px] h-3 w-3 transition-transform duration-200 dark:text-muted-dark" />
         </Button>
       </motion.div>
-      <div className="p-4 border border-neutral-200 bg-neutral-100 dark:bg-neutral-800 dark:border-neutral-700 rounded-[32px] mt-20 relative">
+      {/* <div className="p-4 border border-neutral-200 bg-neutral-100 dark:bg-neutral-800 dark:border-neutral-700 rounded-[32px] mt-20 relative">
         <div className="absolute inset-x-0 bottom-0 h-40 w-full bg-gradient-to-b from-transparent via-white to-white dark:via-black/50 dark:to-black scale-[1.1] pointer-events-none" />
         <div className="p-2 bg-white dark:bg-black dark:border-neutral-700 border border-neutral-200 rounded-[24px]">
           <Image
@@ -110,7 +109,7 @@ export const Hero = () => {
             className="rounded-[20px]"
           />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

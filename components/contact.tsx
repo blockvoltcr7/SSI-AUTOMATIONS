@@ -67,29 +67,29 @@ export function ContactForm() {
     } catch (e) {}
   }
 
-  const socials = [
-    {
-      title: "twitter",
-      href: "https://twitter.com/mannupaaji",
-      icon: (
-        <IconBrandX className="h-5 w-5 text-muted dark:text-muted-dark hover:text-black" />
-      ),
-    },
-    {
-      title: "github",
-      href: "https://github.com/manuarora700",
-      icon: (
-        <IconBrandGithub className="h-5 w-5 text-muted dark:text-muted-dark hover:text-black" />
-      ),
-    },
-    {
-      title: "linkedin",
-      href: "https://linkedin.com/manuarora28",
-      icon: (
-        <IconBrandLinkedin className="h-5 w-5 text-muted dark:text-muted-dark hover:text-black" />
-      ),
-    },
-  ];
+  // const socials = [
+  //   {
+  //     title: "twitter",
+  //     href: "https://twitter.com/mannupaaji",
+  //     icon: (
+  //       <IconBrandX className="h-5 w-5 text-muted dark:text-muted-dark hover:text-black" />
+  //     ),
+  //   },
+  //   {
+  //     title: "github",
+  //     href: "https://github.com/manuarora700",
+  //     icon: (
+  //       <IconBrandGithub className="h-5 w-5 text-muted dark:text-muted-dark hover:text-black" />
+  //     ),
+  //   },
+  //   {
+  //     title: "linkedin",
+  //     href: "https://linkedin.com/manuarora28",
+  //     icon: (
+  //       <IconBrandLinkedin className="h-5 w-5 text-muted dark:text-muted-dark hover:text-black" />
+  //     ),
+  //   },
+  // ];
 
   return (
     <Form {...form}>
@@ -222,13 +222,13 @@ export function ContactForm() {
               </form>
             </div>
           </div>
-          <div className="flex items-center justify-center space-x-4 py-4">
+          {/* <div className="flex items-center justify-center space-x-4 py-4">
             {socials.map((social) => (
               <Link href={social.href} key={social.title}>
                 {social.icon}
               </Link>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </Form>

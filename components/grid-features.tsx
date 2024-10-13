@@ -13,31 +13,33 @@ import {
 export const GridFeatures = () => {
   const features = [
     {
-      title: "Built for developers",
+      title: "Built for Small Businesses",
       description:
-        "Built for engineers, developers, dreamers, thinkers and doers.",
+        "Tailored automation solutions designed for business owners and teams to optimize workflows and increase efficiency.",
       icon: <IconTerminal2 />,
     },
     {
-      title: "Ease of use",
+      title: "Seamless Integration",
       description:
-        "It's as easy as using an Apple, and as expensive as buying one.",
+        "Our tools work effortlessly with your existing systems, making automation as simple as flipping a switch.",
       icon: <IconEaseInOut />,
     },
     {
-      title: "Pricing like no other",
+      title: "Affordable Pricing",
       description:
-        "Our prices are best in the market. No cap, no lock, no credit card required.",
+        "Competitive pricing plans designed to fit the needs of small businesses, with flexible options that scale as you grow.",
       icon: <IconCurrencyDollar />,
     },
     {
-      title: "100% Uptime guarantee",
-      description: "We just cannot be taken down by anyone.",
+      title: "Reliable Performance",
+      description:
+        "Our AI solutions are built to ensure uptime and performance so your business never skips a beat.",
       icon: <IconCloud />,
     },
     {
-      title: "Multi-tenant Architecture",
-      description: "You can simply share passwords instead of buying new seats",
+      title: "Custom Automation Workflows",
+      description:
+        "We create tailored, scalable automation solutions designed to optimize your business processes, from streamlining repetitive tasks to managing complex workflows, helping you save time and improve efficiency.",
       icon: <IconRouteAltLeft />,
     },
     {
@@ -53,8 +55,9 @@ export const GridFeatures = () => {
       icon: <IconAdjustmentsBolt />,
     },
     {
-      title: "And everything else",
-      description: "I just ran out of copy ideas. Accept my sincere apologies",
+      title: "And So Much More",
+      description:
+        "Explore our full suite of AI-powered tools and services to transform the way you do business.",
       icon: <IconHeart />,
     },
   ];
