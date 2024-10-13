@@ -13,7 +13,10 @@ export function ModeToggle() {
 
   React.useEffect(() => {
     setIsClient(true);
-  }, []);
+    if (theme === "light") {
+      setTheme("dark");
+    }
+  }, [theme, setTheme]);
 
   return (
     isClient && (
