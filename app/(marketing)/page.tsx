@@ -15,16 +15,16 @@ export default function Home() {
       </div>
       <Container className="flex min-h-screen flex-col items-center justify-between ">
         <Hero />
-        <Companies />
-        <Features />
+        {/* <Companies /> */}
+        {/* <Features /> */}
         <GridFeatures />
-        <Testimonials />
+        {/* <Testimonials /> */}
       </Container>
       <div className="relative">
         <div className="absolute inset-0 h-full w-full overflow-hidden">
           <Background />
         </div>
-        <CTA />
+        {/* <CTA /> */}
       </div>
     </div>
   );

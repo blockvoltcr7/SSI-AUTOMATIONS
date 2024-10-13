@@ -1,3 +1,17 @@
+/**
+ * BlogLayout Component
+ *
+ * This component renders the layout for individual blog posts.
+ * It includes a header with navigation, author information, and date,
+ * followed by the blog content and an optional featured image.
+ *
+ * @component
+ * @param {Object} props - The component props
+ * @param {BlogWithSlug} props.blog - The blog post data
+ * @param {React.ReactNode} props.children - The blog post content
+ * @returns {JSX.Element} The rendered blog layout
+ */
+
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -8,6 +22,7 @@ import Image from "next/image";
 import { Logo } from "./Logo";
 import Link from "next/link";
 import { format } from "date-fns";
+
 export function BlogLayout({
   blog,
   children,
@@ -17,6 +32,7 @@ export function BlogLayout({
 }) {
   return (
     <Container className="mt-16 lg:mt-32">
+      {/* Header with back navigation, author info, and date */}
       <div className="flex justify-between items-center px-2 py-8">
         <Link href="/blog" className="flex space-x-2 items-center">
           <IconArrowLeft className="w-4 h-4 text-muted dark:text-muted-dark" />
@@ -43,6 +59,8 @@ export function BlogLayout({
           </time>
         </div>
       </div>
+
+      {/* Featured image or logo placeholder */}
       <div className="max-w-4xl mx-auto">
         {blog.image ? (
           <Image
@@ -58,6 +76,8 @@ export function BlogLayout({
           </div>
         )}
       </div>
+
+      {/* Blog content */}
       <div className="xl:relative">
         <div className="mx-auto max-w-2xl">
           <article className="pb-8">
@@ -67,7 +87,7 @@ export function BlogLayout({
               </h1>
             </header>
             <div
-              className="mt-8 prose prose-sm dark:prose-invert"
+              className="mt-8 prose prose-lg dark:prose-invert"
               data-mdx-content
             >
               {children}

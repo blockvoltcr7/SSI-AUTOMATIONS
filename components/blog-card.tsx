@@ -39,10 +39,10 @@ export const BlogCard = ({ blog }: { blog: BlogWithSlug }) => {
           />
           <p className="text-sm font-normal text-muted">{blog.author.name}</p>
         </div>
-        <p className="text-lg font-bold mb-4">
+        <p className="text-xl font-bold mb-4">
           <Balancer>{blog.title}</Balancer>
         </p>
-        <p className="text-left text-sm mt-2 text-muted">
+        <p className="text-left text-base mt-2 text-muted">
           {truncate(blog.description, 100)}
         </p>
       </div>

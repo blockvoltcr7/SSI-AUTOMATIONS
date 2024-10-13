@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import { cn } from "@/lib/utils";
 import { useId } from "react";
 import { motion } from "framer-motion";
@@ -39,7 +40,7 @@ export const HorizontalGradient = ({
           y2="1.5"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stopOpacity="0" />
+          <stop stopColor="white" stopOpacity="0" />
           <stop offset="0.2" stopColor="var(--neutral-400)" />
           <stop offset="0.8" stopColor="var(--neutral-400)" />
           <stop offset="1" stopColor="white" stop-opacity="0" />
