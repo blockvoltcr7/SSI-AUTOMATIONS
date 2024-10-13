@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useState } from "react";
 
 import {
   Form,
@@ -12,24 +13,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
-import {
-  IconBrandGithub,
-  IconBrandLinkedin,
-  IconBrandX,
-} from "@tabler/icons-react";
-import Password from "./password";
 import { Button } from "./button";
-import { Logo } from "./Logo";
 
 const formSchema = z.object({
   name: z
     .string({
       required_error: "Please enter your name",
     })
-    .min(1, "Please enter email"),
+    .min(1, "Please enter your name"),
   email: z
     .string({
       required_error: "Please enter email",
@@ -48,10 +40,12 @@ const formSchema = z.object({
     .min(1, "Please enter your message"),
 });
 
-export type LoginUser = z.infer<typeof formSchema>;
+export type ContactFormData = z.infer<typeof formSchema>;
 
 export function ContactForm() {
-  const form = useForm<LoginUser>({
+  const [submitStatus, setSubmitStatus] = useState<string | null>(null);
+
+  const form = useForm<ContactFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
@@ -61,35 +55,28 @@ export function ContactForm() {
     },
   });
 
-  async function onSubmit(values: LoginUser) {
+  async function onSubmit(values: ContactFormData) {
     try {
-      console.log("submitted form", values);
-    } catch (e) {}
-  }
+      setSubmitStatus("Sending...");
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
 
-  // const socials = [
-  //   {
-  //     title: "twitter",
-  //     href: "https://twitter.com/mannupaaji",
-  //     icon: (
-  //       <IconBrandX className="h-5 w-5 text-muted dark:text-muted-dark hover:text-black" />
-  //     ),
-  //   },
-  //   {
-  //     title: "github",
-  //     href: "https://github.com/manuarora700",
-  //     icon: (
-  //       <IconBrandGithub className="h-5 w-5 text-muted dark:text-muted-dark hover:text-black" />
-  //     ),
-  //   },
-  //   {
-  //     title: "linkedin",
-  //     href: "https://linkedin.com/manuarora28",
-  //     icon: (
-  //       <IconBrandLinkedin className="h-5 w-5 text-muted dark:text-muted-dark hover:text-black" />
-  //     ),
-  //   },
-  // ];
+      if (response.ok) {
+        setSubmitStatus("Message sent successfully!");
+        form.reset();
+      } else {
+        setSubmitStatus("Failed to send message. Please try again.");
+      }
+    } catch (e) {
+      setSubmitStatus("An error occurred. Please try again later.");
+      console.error(e);
+    }
+  }
 
   return (
     <Form {...form}>
@@ -126,8 +113,8 @@ export function ContactForm() {
                         <div className="mt-2">
                           <input
                             id="name"
-                            type="name"
-                            placeholder="Manu Arora"
+                            type="text"
+                            placeholder="John Doe"
                             className="block w-full bg-white dark:bg-neutral-900 px-4 rounded-md border-0 py-1.5  shadow-aceternity text-black placeholder:text-gray-400 focus:ring-2 focus:ring-neutral-400 focus:outline-none sm:text-sm sm:leading-6 dark:text-white"
                             {...field}
                           />
@@ -217,18 +204,29 @@ export function ContactForm() {
                 />
 
                 <div>
-                  <Button className="w-full">Submit</Button>
+                  <Button
+                    className="w-full"
+                    type="submit"
+                    disabled={form.formState.isSubmitting}
+                  >
+                    {form.formState.isSubmitting ? "Submitting..." : "Submit"}
+                  </Button>
                 </div>
+                {submitStatus && (
+                  <p
+                    className={cn(
+                      "text-sm",
+                      submitStatus.includes("successfully")
+                        ? "text-green-600"
+                        : "text-red-600"
+                    )}
+                  >
+                    {submitStatus}
+                  </p>
+                )}
               </form>
             </div>
           </div>
-          {/* <div className="flex items-center justify-center space-x-4 py-4">
-            {socials.map((social) => (
-              <Link href={social.href} key={social.title}>
-                {social.icon}
-              </Link>
-            ))}
-          </div> */}
         </div>
       </div>
     </Form>
