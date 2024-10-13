@@ -67,10 +67,14 @@ export function ContactForm() {
       });
 
       if (response.ok) {
-        setSubmitStatus("Message sent successfully!");
+        const data = await response.json();
+        setSubmitStatus(data.message || "Message sent successfully!");
         form.reset();
       } else {
-        setSubmitStatus("Failed to send message. Please try again.");
+        const errorData = await response.json();
+        setSubmitStatus(
+          `Failed to send message: ${errorData.details || "Please try again."}`
+        );
       }
     } catch (e) {
       setSubmitStatus("An error occurred. Please try again later.");

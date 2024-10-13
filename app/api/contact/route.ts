@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
+export const config = {
+  runtime: "edge",
+};
+
 export async function POST(req: Request) {
   try {
     const { name, email, company, message } = await req.json();
@@ -14,6 +18,9 @@ export async function POST(req: Request) {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
+      connectionTimeout: 5000, // 5 seconds
+      greetingTimeout: 5000, // 5 seconds
+      socketTimeout: 5000, // 5 seconds
     });
 
     console.log("Nodemailer transporter created with config:", {
@@ -36,8 +43,23 @@ export async function POST(req: Request) {
 
     console.log("Attempting to send email with options:", mailOptions);
 
-    const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully:", info.response);
+    const sendMailPromise = new Promise((resolve, reject) => {
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error("Error sending email:", error);
+          reject(error);
+        } else {
+          console.log("Email sent successfully:", info.response);
+          resolve(info);
+        }
+      });
+    });
+
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("Email sending timed out")), 10000)
+    );
+
+    await Promise.race([sendMailPromise, timeoutPromise]);
 
     return NextResponse.json(
       { message: "Email sent successfully" },
