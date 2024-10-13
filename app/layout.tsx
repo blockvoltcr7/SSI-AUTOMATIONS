@@ -26,24 +26,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ViewTransitions>
-      <html lang="en">
-        <body
-          className={cn(
-            GeistSans.className,
-            "bg-white dark:bg-black antialiased h-full w-full"
-          )}
+    <html lang="en" suppressHydrationWarning>
+      <body className={cn(GeistSans.className, "antialiased h-full w-full")}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
         >
-          <ThemeProvider
-            attribute="class"
-            enableSystem
-            disableTransitionOnChange
-            defaultTheme="light"
-          >
-            {children}
-          </ThemeProvider>
-        </body>
-      </html>
-    </ViewTransitions>
+          <ViewTransitions>{children}</ViewTransitions>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }
