@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description:
     "SSI Automations is a cutting-edge AI team dedicated to crafting bespoke artificial intelligence solutions for businesses. Our expert developers leverage state-of-the-art machine learning technologies to create intelligent systems that streamline operations, enhance decision-making processes, and drive innovation across various industries. From predictive analytics and natural language processing to computer vision and robotic process automation, we deliver tailored AI solutions that empower businesses to stay ahead in an increasingly digital world.",
   openGraph: {
-    images: ["https://ai-saas-template-aceternity.vercel.app/banner.png"],
+    images: ["/SSI-Automations-banner.png"],
   },
 };
 
