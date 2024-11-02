@@ -90,7 +90,7 @@ export function ContactForm() {
             <h1 className="mt-8 text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
               Contact Us
             </h1>
-            <p className="mt-4 text-muted dark:text-muted-dark  text-sm max-w-sm">
+            <p className="mt-4 text-muted dark:text-muted-dark text-sm max-w-sm">
               Please reach out to us and we will get back to you at the speed of
               light.
             </p>
@@ -118,8 +118,7 @@ export function ContactForm() {
                           <input
                             id="name"
                             type="text"
-                            placeholder="John Doe"
-                            className="block w-full bg-white dark:bg-neutral-900 px-4 rounded-md border-0 py-1.5  shadow-aceternity text-black placeholder:text-gray-400 focus:ring-2 focus:ring-neutral-400 focus:outline-none sm:text-sm sm:leading-6 dark:text-white"
+                            className="block w-full bg-white dark:bg-neutral-900 px-4 rounded-md border-0 py-1.5 shadow-aceternity text-black placeholder:text-gray-400 focus:ring-2 focus:ring-neutral-400 focus:outline-none sm:text-sm sm:leading-6 dark:text-white"
                             {...field}
                           />
                         </div>
@@ -144,8 +143,7 @@ export function ContactForm() {
                           <input
                             id="email"
                             type="email"
-                            placeholder="hello@johndoe.com"
-                            className="block w-full bg-white dark:bg-neutral-900 px-4 rounded-md border-0 py-1.5  shadow-aceternity text-black placeholder:text-gray-400 focus:ring-2 focus:ring-neutral-400 focus:outline-none sm:text-sm sm:leading-6 dark:text-white"
+                            className="block w-full bg-white dark:bg-neutral-900 px-4 rounded-md border-0 py-1.5 shadow-aceternity text-black placeholder:text-gray-400 focus:ring-2 focus:ring-neutral-400 focus:outline-none sm:text-sm sm:leading-6 dark:text-white"
                             {...field}
                           />
                         </div>
@@ -169,9 +167,8 @@ export function ContactForm() {
                         <div className="mt-2">
                           <input
                             id="company"
-                            type="company"
-                            placeholder="Aceternity Labs, LLC"
-                            className="block w-full bg-white dark:bg-neutral-900 px-4 rounded-md border-0 py-1.5  shadow-aceternity text-black placeholder:text-gray-400 focus:ring-2 focus:ring-neutral-400 focus:outline-none sm:text-sm sm:leading-6 dark:text-white"
+                            type="text"
+                            className="block w-full bg-white dark:bg-neutral-900 px-4 rounded-md border-0 py-1.5 shadow-aceternity text-black placeholder:text-gray-400 focus:ring-2 focus:ring-neutral-400 focus:outline-none sm:text-sm sm:leading-6 dark:text-white"
                             {...field}
                           />
                         </div>
@@ -189,15 +186,14 @@ export function ContactForm() {
                         htmlFor="message"
                         className="block text-sm font-medium leading-6 text-neutral-700 dark:text-muted-dark"
                       >
-                        message
+                        Message
                       </label>
                       <FormControl>
                         <div className="mt-2">
                           <textarea
                             rows={5}
                             id="message"
-                            placeholder="Enter your message here"
-                            className="block w-full bg-white dark:bg-neutral-900 px-4 rounded-md border-0 py-1.5  shadow-aceternity text-black placeholder:text-gray-400 focus:ring-2 focus:ring-neutral-400 focus:outline-none sm:text-sm sm:leading-6 dark:text-white"
+                            className="block w-full bg-white dark:bg-neutral-900 px-4 rounded-md border-0 py-1.5 shadow-aceternity text-black placeholder:text-gray-400 focus:ring-2 focus:ring-neutral-400 focus:outline-none sm:text-sm sm:leading-6 dark:text-white"
                             {...field}
                           />
                         </div>
