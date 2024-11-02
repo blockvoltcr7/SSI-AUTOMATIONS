@@ -8,6 +8,7 @@ export const TypewriterEffect = ({
   words,
   className,
   cursorClassName,
+  onComplete,
 }: {
   words: {
     text: string;
@@ -15,6 +16,7 @@ export const TypewriterEffect = ({
   }[];
   className?: string;
   cursorClassName?: string;
+  onComplete?: () => void;
 }) => {
   const wordsArray = words.map((word) => {
     return {
@@ -39,7 +41,9 @@ export const TypewriterEffect = ({
           delay: stagger(0.1),
           ease: "easeInOut",
         }
-      );
+      ).then(() => {
+        onComplete?.();
+      });
     }
   }, [isInView]);
 

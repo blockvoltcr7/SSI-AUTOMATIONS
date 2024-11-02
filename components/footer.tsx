@@ -33,11 +33,6 @@ export const Footer = () => {
           </p>
         </div>
       </div>
-      <div className="bg-transparent py-8">
-        <p className="text-center text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-700 to-neutral-900 dark:from-neutral-200 dark:to-neutral-400">
-          SSI AUTOMATIONS
-        </p>
-      </div>
     </footer>
   );
 };

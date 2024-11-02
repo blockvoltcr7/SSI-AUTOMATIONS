@@ -4,8 +4,10 @@ import { Button } from "./button";
 import { HiArrowRight } from "react-icons/hi2";
 import { motion } from "framer-motion";
 import { TypewriterEffect } from "./ui/typewriter-effect";
+import { TextGenerateEffect } from "./ui/text-generate-effect";
 import { useRouter } from "next/navigation";
 import { Link } from "next-view-transitions";
+import { useState } from "react";
 
 export const Hero = () => {
   const router = useRouter();
@@ -17,6 +19,8 @@ export const Hero = () => {
     { text: "AI-Powered" },
     { text: "Solutions" },
   ];
+
+  const [typewriterComplete, setTypewriterComplete] = useState(false);
 
   return (
     <div className="flex flex-col min-h-screen pt-20 md:pt-40 relative overflow-hidden">
@@ -39,8 +43,12 @@ export const Hero = () => {
           We&apos;ve raised $69M seed funding
         </Badge> */}
       </motion.div>
-      <TypewriterEffect words={words} className="mt-6" />
-      <motion.p
+      <TypewriterEffect
+        words={words}
+        className="mt-6"
+        onComplete={() => setTypewriterComplete(true)}
+      />
+      <motion.div
         initial={{
           y: 40,
           opacity: 0,
@@ -56,9 +64,10 @@ export const Hero = () => {
         }}
         className="text-center mt-6 text-base md:text-xl text-muted dark:text-muted-dark max-w-3xl mx-auto relative z-10"
       >
-        Streamline your workflows and optimize your business operations with
-        cutting-edge AI technology designed for small businesses.
-      </motion.p>
+        {typewriterComplete && (
+          <TextGenerateEffect words="Empower your business to harness the power of AI and transform your operations for greater efficiency and success." />
+        )}
+      </motion.div>
       <motion.div
         initial={{
           y: 80,
