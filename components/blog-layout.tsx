@@ -22,6 +22,7 @@ import Image from "next/image";
 import { Logo } from "./Logo";
 import Link from "next/link";
 import { format } from "date-fns";
+import { TracingBeam } from "@/components/ui/tracing-beam";
 
 export function BlogLayout({
   blog,
@@ -31,9 +32,9 @@ export function BlogLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Container className="mt-16 lg:mt-32">
+    <Container className="mt-16 lg:mt-32 bg-white dark:bg-black">
       {/* Header with back navigation, author info, and date */}
-      <div className="flex justify-between items-center px-2 py-8">
+      <div className="flex justify-between items-center px-2 py-8 bg-white dark:bg-black">
         <Link href="/blog" className="flex space-x-2 items-center">
           <IconArrowLeft className="w-4 h-4 text-muted dark:text-muted-dark" />
           <span className="text-sm text-muted dark:text-muted-dark">Back</span>
@@ -51,7 +52,7 @@ export function BlogLayout({
               {blog.author.name}
             </p>
           </div>
-          <div className="h-5 rounded-lg w-0.5 bg-neutral-200 dark:bg-neutral-700" />
+          <div className="h-5 rounded-lg w-0.5 bg-neutral-200 dark:bg-neutral-700 transition-colors duration-200" />
           <time dateTime={blog.date} className="flex items-center text-base ">
             <span className="text-muted dark:text-muted-dark text-sm">
               {format(new Date(blog.date), "MMMM dd, yyyy")}
@@ -77,24 +78,26 @@ export function BlogLayout({
         )}
       </div>
 
-      {/* Blog content */}
-      <div className="xl:relative">
-        <div className="mx-auto max-w-2xl">
-          <article className="pb-8">
-            <header className="flex flex-col">
-              <h1 className="mt-8 text-4xl font-bold tracking-tight text-neutral-800 dark:text-neutral-200 sm:text-5xl ">
-                {blog.title}
-              </h1>
-            </header>
-            <div
-              className="mt-8 prose prose-lg dark:prose-invert"
-              data-mdx-content
-            >
-              {children}
-            </div>
-          </article>
+      {/* Blog content with Tracing Beam */}
+      <TracingBeam>
+        <div className="xl:relative bg-white dark:bg-black">
+          <div className="mx-auto max-w-2xl">
+            <article className="pb-8">
+              <header className="flex flex-col">
+                <h1 className="mt-8 text-4xl font-bold tracking-tight text-neutral-800 dark:text-neutral-200 sm:text-5xl ">
+                  {blog.title}
+                </h1>
+              </header>
+              <div
+                className="mt-8 prose prose-lg dark:prose-invert"
+                data-mdx-content
+              >
+                {children}
+              </div>
+            </article>
+          </div>
         </div>
-      </div>
+      </TracingBeam>
     </Container>
   );
 }

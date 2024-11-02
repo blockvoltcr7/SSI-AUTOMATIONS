@@ -12,7 +12,7 @@ export const BlogCard = ({ blog }: { blog: BlogWithSlug }) => {
   };
   return (
     <Link
-      className="shadow-derek rounded-3xl border dark:border-neutral-800 w-full bg-white dark:bg-neutral-900  overflow-hidden  hover:scale-[1.02] transition duration-200"
+      className="shadow-derek rounded-3xl border dark:border-neutral-800 w-full bg-black dark:bg-black overflow-hidden hover:scale-[1.02] transition duration-200"
       href={`/blog/${blog.slug}`}
     >
       {blog.image ? (
