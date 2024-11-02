@@ -6,7 +6,7 @@ import { ViewTransitions } from "next-view-transitions";
 import { ThemeProvider } from "@/context/theme-provider";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://z.com"),
+  metadataBase: new URL("https://ssiautomations.com"),
   title: "SSI Automations - AI Solutions for Small Businesses",
   description:
     "Discover how SSI Automations empowers small businesses with cutting-edge AI tools and automation workflows to boost productivity and maximize profits. Explore our innovative solutions today!",
