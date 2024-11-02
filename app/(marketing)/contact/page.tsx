@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description:
     "Get in touch with SSI Automations to discover how our AI-driven automation tools can help your small business thrive, streamline operations, and enhance decision-making.",
   openGraph: {
-    images: ["/SSI-Automations-banner.png"], // Updated path to the image in the public directory
+    images: ["https://www.ssiautomations.com/SSI-Automations-banner.png"],
   },
 };
 

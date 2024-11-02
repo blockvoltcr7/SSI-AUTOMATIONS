@@ -14,8 +14,8 @@ export const metadata: Metadata = {
     title: "SSI Automations - AI Solutions for Small Businesses",
     description:
       "Empower your business with SSI Automations. Leverage modern AI tools and automation workflows to enhance productivity and profitability.",
-    images: ["/SSI-Automations-banner.png"],
-    url: "https://www.ssiautomations.com", // Replace with your actual website URL
+    images: ["https://www.ssiautomations.com/SSI-Automations-banner.png"],
+    url: "https://www.ssiautomations.com",
     type: "website",
   },
 };
