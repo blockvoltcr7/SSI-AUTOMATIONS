@@ -91,7 +91,7 @@ export const Hero = () => {
           href="/contact"
           className="flex space-x-2 items-center group"
         >
-          <span>Contact us</span>
+          <span className="mr-2">Contact us</span>
           <HiArrowRight className="text-muted group-hover:translate-x-1 stroke-[1px] h-3 w-3 transition-transform duration-200 dark:text-muted-dark" />
         </Button>
       </motion.div>
