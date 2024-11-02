@@ -6,11 +6,12 @@ import { HorizontalGradient } from "@/components/horizontal-gradient";
 import { ContactForm } from "@/components/contact";
 
 export const metadata: Metadata = {
-  title: "Contact Us - Everything AI",
+  title:
+    "Contact SSI Automations - Empowering Small Businesses with AI Solutions",
   description:
-    "Everything AI is a platform that provides a wide range of AI tools and services to help you stay on top of your business. Generate images, text and everything else that you need to get your business off the ground.",
+    "Get in touch with SSI Automations to discover how our AI-driven automation tools can help your small business thrive, streamline operations, and enhance decision-making.",
   openGraph: {
-    images: ["https://ai-saas-template-aceternity.vercel.app/banner.png"],
+    images: ["/SSI-Automations-banner.png"], // Updated path to the image in the public directory
   },
 };
 
@@ -22,21 +23,24 @@ export default function PricingPage() {
         <ContactForm />
         <div className="relative w-full z-20 hidden md:flex border-l border-neutral-100 dark:border-neutral-900 overflow-hidden bg-gray-50 dark:bg-black items-center justify-center">
           <div className="max-w-sm mx-auto">
-            <FeaturedTestimonials />
+            {/* <FeaturedTestimonials /> */}
             <p
               className={cn(
                 "font-semibold text-xl text-center dark:text-muted-dark text-muted"
               )}
             >
-              Every AI is used by thousands of users
+              SSI Automations empowers businesses to harness the power of AI for
+              their growth and success.
             </p>
             <p
               className={cn(
                 "font-normal text-base text-center text-neutral-500 dark:text-neutral-200 mt-8"
               )}
             >
-              With lots of AI applications around, Everything AI stands out with
-              its state of the art Shitposting capabilities.
+              SSI Automations stands out in the crowded AI landscape by offering
+              innovative automation solutions specifically designed to meet the
+              unique needs of small businesses, ensuring they can thrive in a
+              competitive market.
             </p>
           </div>
           <HorizontalGradient className="top-20" />
