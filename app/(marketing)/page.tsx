@@ -13,11 +13,7 @@ export default function Home() {
       </div>
       <Container className="flex min-h-screen flex-col items-center justify-between ">
         <Hero />
-        {/* <Companies /> */}
-        {/* <Features /> */}
-        {/* <GridFeatures /> */}
         <HowItWorks />
-        {/* <Testimonials /> */}
       </Container>
       <div className="relative">
         <div className="absolute inset-0 h-full w-full overflow-hidden">
