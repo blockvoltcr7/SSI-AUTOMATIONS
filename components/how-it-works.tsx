@@ -47,7 +47,7 @@ const Step: React.FC<StepProps> = ({ emoji, title, description, stepNumber, dela
       <div className="pb-12 relative">
         <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform duration-300">{emoji}</div>
         <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-blue-400 transition-colors duration-300">{title}</h3>
-        <p className="text-sm leading-relaxed text-neutral-400 max-w-md group-hover:text-neutral-300 transition-colors duration-300">
+        <p className="text-base leading-relaxed text-neutral-400 max-w-md group-hover:text-neutral-300 transition-colors duration-300">
           {description}
         </p>
         
@@ -108,7 +108,7 @@ export const HowItWorks: React.FC = () => {
         className="text-center mb-16"
       >
         <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">How It Works</h2>
-        <p className="text-neutral-400 max-w-2xl mx-auto text-sm md:text-base">
+        <p className="text-neutral-400 max-w-2xl mx-auto text-base md:text-lg">
           Our simple process to get your AI agents and automations up and running
         </p>
       </motion.div>

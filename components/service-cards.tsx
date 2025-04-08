@@ -31,7 +31,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ emoji, title, description, de
     >
       <div className="text-4xl mb-4 transform group-hover:scale-110 transition-all duration-300">{emoji}</div>
       <h3 className="text-xl font-medium text-white mb-3">{title}</h3>
-      <p className="text-sm leading-relaxed text-neutral-400 max-w-xs">
+      <p className="text-base leading-relaxed text-neutral-400 max-w-xs">
         {description}
       </p>
     </motion.div>
@@ -87,10 +87,10 @@ export const ServiceCards: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
-        className="text-center mb-10 md:mb-12"
+        className="text-center mb-12"
       >
         <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Our AI-Powered Services</h2>
-        <p className="text-neutral-400 max-w-2xl mx-auto text-sm md:text-base">
+        <p className="text-neutral-400 max-w-2xl mx-auto text-base md:text-lg">
           Cutting-edge solutions to streamline your business operations and enhance customer experience
         </p>
       </motion.div>

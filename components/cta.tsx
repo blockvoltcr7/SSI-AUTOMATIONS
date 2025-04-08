@@ -3,6 +3,9 @@ import React from "react";
 import Balancer from "react-wrap-balancer";
 import Link from "next/link";
 import { Button } from "./button";
+import { HoverBorderGradient } from "./ui/hover-border-gradient";
+import { HiArrowRight } from "react-icons/hi2";
+
 export const CTA = () => {
   return (
     <section className="py-60 w-full  overflow-hidden relative z-30">
@@ -34,7 +37,16 @@ export const CTA = () => {
               </p>
 
               <div className="relative z-10 mx-auto flex justify-center mt-6">
-                <Button as={Link} href="/contact">📅 Book Free Strategy Call</Button>
+                <Link href="/contact">
+                  <HoverBorderGradient
+                    containerClassName="rounded-full"
+                    className="bg-black group"
+                    duration={1.5}
+                  >
+                    <span className="mr-2">📅 Book Free Strategy Call</span>
+                    <HiArrowRight className="text-white group-hover:translate-x-1 stroke-[1px] h-3 w-3 transition-transform duration-200" />
+                  </HoverBorderGradient>
+                </Link>
               </div>
             </div>
           </div>
