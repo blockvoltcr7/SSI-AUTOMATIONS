@@ -2,6 +2,7 @@ import { Container } from "@/components/container";
 import { Hero } from "@/components/hero";
 import { Background } from "@/components/background";
 import { GridFeatures } from "@/components/grid-features";
+import HowItWorks from "@/components/how-it-works";
 // import { CTA } from "@/components/cta";
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
         {/* <Companies /> */}
         {/* <Features /> */}
         {/* <GridFeatures /> */}
+        <HowItWorks />
         {/* <Testimonials /> */}
       </Container>
       {/* <div className="relative">

@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { Link } from "next-view-transitions";
 import { useState } from "react";
 import LogoCloudMarquee from "./LogoCloudMarquee";
+import ServiceCards from "./service-cards";
 
 export const Hero = () => {
   const router = useRouter();
@@ -97,6 +98,10 @@ export const Hero = () => {
           <HiArrowRight className="text-muted group-hover:translate-x-1 stroke-[1px] h-3 w-3 transition-transform duration-200 dark:text-muted-dark" />
         </Button>
       </motion.div>
+      
+      {/* Service Cards Section */}
+      <ServiceCards />
+      
       {/* <LogoCloudMarquee /> */}
     </div>
   );
