@@ -3,34 +3,19 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { TracingBeam } from "@/components/ui/tracing-beam";
 
 interface StepProps {
   emoji: string;
   title: string;
   description: string;
   stepNumber: number;
-  delay: number;
 }
 
-const Step: React.FC<StepProps> = ({ emoji, title, description, stepNumber, delay }) => {
+const Step: React.FC<StepProps> = ({ emoji, title, description, stepNumber }) => {
   return (
-    <motion.div
-      initial={{
-        y: 40,
-        opacity: 0,
-      }}
-      animate={{
-        y: 0,
-        opacity: 1,
-      }}
-      transition={{
-        ease: "easeOut",
-        duration: 0.5,
-        delay: delay,
-      }}
-      className="flex gap-4 md:gap-6 group relative"
-    >
-      {/* Step number and connector line */}
+    <div className="flex gap-4 md:gap-6 group relative">
+      {/* Step number and connector line - now managed by TracingBeam */}
       <div className="flex flex-col items-center relative">
         <motion.div 
           whileHover={{ scale: 1.1 }}
@@ -38,9 +23,6 @@ const Step: React.FC<StepProps> = ({ emoji, title, description, stepNumber, dela
         >
           {stepNumber}
         </motion.div>
-        {stepNumber < 5 && (
-          <div className="w-0.5 bg-gradient-to-b from-neutral-800 via-neutral-800 to-transparent h-full group-hover:from-blue-900 group-hover:via-neutral-800 transition-colors duration-500 my-2"></div>
-        )}
       </div>
       
       {/* Step content */}
@@ -54,7 +36,7 @@ const Step: React.FC<StepProps> = ({ emoji, title, description, stepNumber, dela
         {/* Hidden highlight on hover */}
         <div className="absolute -left-6 -top-3 -bottom-3 -right-12 rounded-xl bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -64,31 +46,26 @@ export const HowItWorks: React.FC = () => {
       emoji: "📞",
       title: "Book a Free Strategy Call",
       description: "Tell us about your business and goals.",
-      delay: 0.1,
     },
     {
       emoji: "🧠",
       title: "We Recommend the Right AI Agents",
       description: "Based on your needs, we design a custom voice agent + automation plan.",
-      delay: 0.2,
     },
     {
       emoji: "✅",
       title: "You Approve the Setup",
       description: "You review everything before launch — we'll make any adjustments needed.",
-      delay: 0.3,
     },
     {
       emoji: "🚀",
       title: "AI Workers Go Live",
       description: "Your voice agent, workflows, and automations are deployed.",
-      delay: 0.4,
     },
     {
       emoji: "📈",
       title: "Watch Your Business Grow",
       description: "While your 24/7 AI team handles customer calls, bookings, and backend tasks.",
-      delay: 0.5,
     }
   ];
 
@@ -113,21 +90,19 @@ export const HowItWorks: React.FC = () => {
         </p>
       </motion.div>
       
-      <div className="pl-4 md:pl-10 lg:pl-16 relative">
-        {/* Background gradient for timeline */}
-        <div className="absolute left-9 top-6 bottom-0 w-1 bg-gradient-to-b from-blue-500/20 via-purple-500/10 to-transparent"></div>
-        
-        {steps.map((step, index) => (
-          <Step
-            key={index}
-            emoji={step.emoji}
-            title={step.title}
-            description={step.description}
-            stepNumber={index + 1}
-            delay={step.delay}
-          />
-        ))}
-      </div>
+      <TracingBeam className="w-full">
+        <div className="pl-4 md:pl-10 lg:pl-16 relative">
+          {steps.map((step, index) => (
+            <Step
+              key={index}
+              emoji={step.emoji}
+              title={step.title}
+              description={step.description}
+              stepNumber={index + 1}
+            />
+          ))}
+        </div>
+      </TracingBeam>
     </div>
   );
 };
