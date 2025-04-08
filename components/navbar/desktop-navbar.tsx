@@ -11,7 +11,6 @@ import {
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Link } from "next-view-transitions";
-import { ModeToggle } from "../mode-toggle";
 
 type Props = {
   navItems: {
@@ -65,7 +64,6 @@ export const DesktopNavbar = ({ navItems }: Props) => {
         </div>
       </div>
       <div className="flex space-x-2 items-center">
-        <ModeToggle />
         {/* <Button variant="simple" as={Link} href="/login">
           Login
         </Button>
