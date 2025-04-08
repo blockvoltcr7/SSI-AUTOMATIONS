@@ -1,10 +1,7 @@
 import { Container } from "@/components/container";
 import { Hero } from "@/components/hero";
 import { Background } from "@/components/background";
-import { Features } from "@/components/features";
-import { Companies } from "@/components/companies";
 import { GridFeatures } from "@/components/grid-features";
-import { Testimonials } from "@/components/testimonials";
 
 export default function Home() {
   return (
@@ -16,7 +13,7 @@ export default function Home() {
         <Hero />
         {/* <Companies /> */}
         {/* <Features /> */}
-        <GridFeatures />
+        {/* <GridFeatures /> */}
         {/* <Testimonials /> */}
       </Container>
       <div className="relative">

@@ -13,12 +13,14 @@ import LogoCloudMarquee from "./LogoCloudMarquee";
 export const Hero = () => {
   const router = useRouter();
   const words = [
-    { text: "Automate" },
-    { text: "Your" },
-    { text: "Business" },
-    { text: "with" },
-    { text: "AI-Powered" },
-    { text: "Solutions" },
+    { text: "Custom" },
+    { text: "AI" },
+    { text: "Agents" },
+    { text: "&" },
+    { text: "Automations" },
+    { text: "for" },
+    { text: "Small" },
+    { text: "Businesses" },
   ];
 
   const [typewriterComplete, setTypewriterComplete] = useState(false);
@@ -66,7 +68,7 @@ export const Hero = () => {
         className="text-center mt-6 text-base md:text-xl text-muted dark:text-muted-dark max-w-3xl mx-auto relative z-10"
       >
         {typewriterComplete && (
-          <TextGenerateEffect words="Empower your business to harness the power of AI and transform your operations for greater efficiency and success." />
+          <TextGenerateEffect words="We build AI apps that help you save time and money" />
         )}
       </motion.div>
       <motion.div
@@ -95,7 +97,7 @@ export const Hero = () => {
           <HiArrowRight className="text-muted group-hover:translate-x-1 stroke-[1px] h-3 w-3 transition-transform duration-200 dark:text-muted-dark" />
         </Button>
       </motion.div>
-      <LogoCloudMarquee />
+      {/* <LogoCloudMarquee /> */}
     </div>
   );
 };

@@ -37,3 +37,14 @@ export function NavBarItem({
     </Link>
   );
 }
+
+export const NAV_ITEMS = [
+  {
+    label: "Pricing",
+    href: "/pricing",
+  },
+  {
+    label: "Contact",
+    href: "/contact",
+  },
+];
