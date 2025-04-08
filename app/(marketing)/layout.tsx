@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "../globals.css";
-import { GeistSans } from "geist/font/sans";
 import { NavBar } from "@/components/navbar";
-import { cn } from "@/lib/utils";
+import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "SSI Automations",
@@ -22,6 +21,7 @@ export default function MarketingLayout({
     <main className="min-h-screen">
       <NavBar />
       {children}
+      <Footer />
     </main>
   );
 }
