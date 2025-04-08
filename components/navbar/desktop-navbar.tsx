@@ -64,12 +64,6 @@ export const DesktopNavbar = ({ navItems }: Props) => {
         </div>
       </div>
       <div className="flex space-x-2 items-center">
-        {/* <Button variant="simple" as={Link} href="/login">
-          Login
-        </Button>
-        <Button as={Link} href="/signup">
-          Sign Up
-        </Button> */}
       </div>
     </div>
   );
