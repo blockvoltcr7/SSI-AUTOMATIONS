@@ -18,7 +18,7 @@ export const Footer = () => {
         </div>
         <div className="mt-8 pt-8 border-t border-neutral-100 dark:border-neutral-800 flex justify-center items-center">
           <p className="text-xs text-neutral-500 dark:text-neutral-400">
-            &copy; 2024 SSI AUTOMATIONS. All rights reserved.
+            &copy; 2025 SSI AUTOMATIONS. All rights reserved.
           </p>
         </div>
       </div>

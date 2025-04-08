@@ -90,9 +90,6 @@ export const ServiceCards: React.FC = () => {
         className="text-center mb-12"
       >
         <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Our AI-Powered Services</h2>
-        <p className="text-neutral-400 max-w-2xl mx-auto text-base md:text-lg">
-          Cutting-edge solutions to streamline your business operations and enhance customer experience
-        </p>
       </motion.div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
