@@ -27,12 +27,7 @@ async function importBlog(blogFilename: string): Promise<BlogWithSlug> {
   };
 }
 
+// This file is kept as a placeholder in case blog functionality is needed in the future
 export async function getAllBlogs() {
-  let blogFilenames = await glob("*/page.mdx", {
-    cwd: "./app/(marketing)/blog",
-  });
-
-  let blogs = await Promise.all(blogFilenames.map(importBlog));
-
-  return blogs.sort((a, z) => +new Date(z.date) - +new Date(a.date));
+  return [];
 }
