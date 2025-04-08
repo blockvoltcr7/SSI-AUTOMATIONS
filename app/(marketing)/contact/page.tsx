@@ -1,3 +1,4 @@
+
 import { Background } from "@/components/background";
 import { Metadata } from "next";
 import { HorizontalGradient } from "@/components/horizontal-gradient";
@@ -7,10 +8,8 @@ import { TypewriterEffect } from "@/components/ui/typewriter-effect";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 
 export const metadata: Metadata = {
-  title:
-    "Contact SSI Automations - Empowering Small Businesses with AI Solutions",
-  description:
-    "Get in touch with SSI Automations to discover how our AI-driven automation tools can help your small business thrive, streamline operations, and enhance decision-making.",
+  title: "Contact SSI Automations - Empowering Small Businesses with AI Solutions",
+  description: "Get in touch with SSI Automations to discover how our AI-driven automation tools can help your small business thrive, streamline operations, and enhance decision-making.",
   openGraph: {
     images: ["https://www.ssiautomations.com/SSI-Automations-banner.png"],
   },
@@ -42,22 +41,22 @@ export default function ContactPage() {
           </div>
           
           {/* Contact Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 relative z-20 px-4 md:px-8">
-            {/* Contact Form Column */}
-            <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-lg overflow-hidden border border-neutral-200 dark:border-neutral-800">
-              <div className="p-6 md:p-8">
-                <h2 className="text-xl md:text-2xl font-bold mb-2 text-black dark:text-white">Send Us a Message</h2>
-                <p className="text-muted dark:text-muted-dark text-sm mb-6">We'll get back to you as soon as possible.</p>
-                <ContactForm />
-              </div>
-            </div>
-            
+          <div className="grid grid-cols-1 gap-8 md:gap-16 relative z-20 px-4 md:px-8">
             {/* Calendar Column */}
             <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-lg overflow-hidden border border-neutral-200 dark:border-neutral-800">
               <div className="p-6 md:p-8">
                 <h2 className="text-xl md:text-2xl font-bold mb-2 text-black dark:text-white">Book a Strategy Call</h2>
                 <p className="text-muted dark:text-muted-dark text-sm mb-6">Schedule a free 30-minute consultation with our team.</p>
                 <CalendarEmbed />
+              </div>
+            </div>
+            
+            {/* Contact Form Column */}
+            <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-lg overflow-hidden border border-neutral-200 dark:border-neutral-800">
+              <div className="p-6 md:p-8">
+                <h2 className="text-xl md:text-2xl font-bold mb-2 text-black dark:text-white">Send Us a Message</h2>
+                <p className="text-muted dark:text-muted-dark text-sm mb-6">We'll get back to you as soon as possible.</p>
+                <ContactForm />
               </div>
             </div>
           </div>
