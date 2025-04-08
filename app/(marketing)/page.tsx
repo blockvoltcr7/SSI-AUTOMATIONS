@@ -2,6 +2,7 @@ import { Container } from "@/components/container";
 import { Hero } from "@/components/hero";
 import { Background } from "@/components/background";
 import { GridFeatures } from "@/components/grid-features";
+// import { CTA } from "@/components/cta";
 
 export default function Home() {
   return (
@@ -16,12 +17,12 @@ export default function Home() {
         {/* <GridFeatures /> */}
         {/* <Testimonials /> */}
       </Container>
-      <div className="relative">
+      {/* <div className="relative">
         <div className="absolute inset-0 h-full w-full overflow-hidden">
           <Background />
         </div>
-        {/* <CTA /> */}
-      </div>
+        <CTA />
+      </div> */}
     </div>
   );
 }
