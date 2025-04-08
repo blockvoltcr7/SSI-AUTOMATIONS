@@ -17,8 +17,11 @@ export function CalendarEmbed() {
         namespace="30min"
         calLink="sami-sabir-idrissi-couvnl/30min"
         style={{ width: "100%", height: "100%", overflow: "scroll" }}
-        config={{ layout: "month_view" }}
+        config={{
+          layout: "month_view",
+          hidePersonalFields: "true"
+        }}
       />
     </div>
   );
-} 
+}
