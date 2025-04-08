@@ -1,9 +1,10 @@
 import { Background } from "@/components/background";
 import { Metadata } from "next";
-import { FeaturedTestimonials } from "@/components/featured-testimonials";
-import { cn } from "@/lib/utils";
 import { HorizontalGradient } from "@/components/horizontal-gradient";
 import { ContactForm } from "@/components/contact";
+import { CalendarEmbed } from "@/components/calendar-embed";
+import { TypewriterEffect } from "@/components/ui/typewriter-effect";
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 
 export const metadata: Metadata = {
   title:
@@ -15,39 +16,55 @@ export const metadata: Metadata = {
   },
 };
 
-export default function PricingPage() {
+export default function ContactPage() {
+  const words = [
+    { text: "Let's" },
+    { text: "Discuss" },
+    { text: "Your" },
+    { text: "Business" },
+    { text: "Needs" },
+  ];
+
   return (
-    <div className="relative overflow-hidden py-20 md:py-0 px-4 md:px-20 bg-gray-50 dark:bg-black">
-      <div className="w-full min-h-screen grid grid-cols-1 md:grid-cols-2 relative overflow-hidden">
+    <div className="relative overflow-hidden py-16 md:py-0 px-4 md:px-0 bg-gray-50 dark:bg-black">
+      <div className="w-full min-h-screen relative overflow-hidden">
         <Background />
-        <ContactForm />
-        <div className="relative w-full z-20 hidden md:flex border-l border-neutral-100 dark:border-neutral-900 overflow-hidden bg-gray-50 dark:bg-black items-center justify-center">
-          <div className="max-w-sm mx-auto">
-            {/* <FeaturedTestimonials /> */}
-            <p
-              className={cn(
-                "font-semibold text-xl text-center dark:text-muted-dark text-muted"
-              )}
-            >
-              SSI Automations empowers businesses to harness the power of AI for
-              their growth and success.
-            </p>
-            <p
-              className={cn(
-                "font-normal text-base text-center text-neutral-500 dark:text-neutral-200 mt-8"
-              )}
-            >
-              SSI Automations stands out in the crowded AI landscape by offering
-              innovative automation solutions specifically designed to meet the
-              unique needs of small businesses, ensuring they can thrive in a
-              competitive market.
-            </p>
+        
+        <div className="max-w-7xl mx-auto pb-20">
+          {/* Header Section */}
+          <div className="text-center py-12 md:py-20 relative z-10">
+            <div className="mx-auto">
+              <TypewriterEffect words={words} className="mb-6" />
+              <p className="text-center mt-4 text-base md:text-xl text-muted dark:text-muted-dark max-w-2xl mx-auto">
+                <TextGenerateEffect words="Schedule a free strategy call or send us a message. Our team will help you find the perfect AI solution for your business." />
+              </p>
+            </div>
           </div>
-          <HorizontalGradient className="top-20" />
-          <HorizontalGradient className="bottom-20" />
-          <HorizontalGradient className="-right-80 transform rotate-90 inset-y-0 h-full scale-x-150" />
-          <HorizontalGradient className="-left-80 transform rotate-90 inset-y-0 h-full scale-x-150" />
+          
+          {/* Contact Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 relative z-20 px-4 md:px-8">
+            {/* Contact Form Column */}
+            <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-lg overflow-hidden border border-neutral-200 dark:border-neutral-800">
+              <div className="p-6 md:p-8">
+                <h2 className="text-xl md:text-2xl font-bold mb-2 text-black dark:text-white">Send Us a Message</h2>
+                <p className="text-muted dark:text-muted-dark text-sm mb-6">We'll get back to you as soon as possible.</p>
+                <ContactForm />
+              </div>
+            </div>
+            
+            {/* Calendar Column */}
+            <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-lg overflow-hidden border border-neutral-200 dark:border-neutral-800">
+              <div className="p-6 md:p-8">
+                <h2 className="text-xl md:text-2xl font-bold mb-2 text-black dark:text-white">Book a Strategy Call</h2>
+                <p className="text-muted dark:text-muted-dark text-sm mb-6">Schedule a free 30-minute consultation with our team.</p>
+                <CalendarEmbed />
+              </div>
+            </div>
+          </div>
         </div>
+        
+        <HorizontalGradient className="top-20" />
+        <HorizontalGradient className="bottom-20" />
       </div>
     </div>
   );

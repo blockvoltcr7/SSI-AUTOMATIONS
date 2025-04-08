@@ -3,7 +3,6 @@ import React from "react";
 import { Logo } from "./Logo";
 
 export const Footer = () => {
-  const links = [{ name: "Contact", href: "/contact" }];
 
   return (
     <footer className="bg-white dark:bg-black border-t border-neutral-100 dark:border-neutral-800">
@@ -15,17 +14,7 @@ export const Footer = () => {
               Automating your business with AI-powered solutions.
             </p>
           </div>
-          <nav className="grid grid-cols-2 gap-4">
-            {links.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="text-sm text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </nav>
+        
         </div>
         <div className="mt-8 pt-8 border-t border-neutral-100 dark:border-neutral-800 flex justify-center items-center">
           <p className="text-xs text-neutral-500 dark:text-neutral-400">
