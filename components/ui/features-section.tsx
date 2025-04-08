@@ -3,10 +3,9 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import createGlobe from "cobe";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { IconBrandYoutubeFilled, IconBrain, IconCalendar, IconRobot } from "@tabler/icons-react";
+import { IconBrandYoutubeFilled, IconBrain, IconCalendar, IconRobot, IconGlobe } from "@tabler/icons-react";
 import Link from "next/link";
 
 export function FeaturesSection() {
@@ -220,65 +219,11 @@ export const SkeletonFour = () => {
 };
 
 export const Globe = ({ className }: { className?: string }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isCanvasReady, setIsCanvasReady] = useState(false);
-  
-  // Set canvas as ready after mount
-  useEffect(() => {
-    if (canvasRef.current) {
-      setIsCanvasReady(true);
-    }
-  }, []);
-
-  // Create globe only when canvas is ready
-  useEffect(() => {
-    if (!isCanvasReady || !canvasRef.current) return;
-    
-    let phi = 0;
-    let globeInstance: ReturnType<typeof createGlobe> | null = null;
-
-    try {
-      globeInstance = createGlobe(canvasRef.current, {
-        devicePixelRatio: 2,
-        width: 600 * 2,
-        height: 600 * 2,
-        phi: 0,
-        theta: 0,
-        dark: 1,
-        diffuse: 1.2,
-        mapSamples: 16000,
-        mapBrightness: 6,
-        baseColor: [0.3, 0.3, 0.3],
-        markerColor: [0.1, 0.8, 1],
-        glowColor: [1, 1, 1],
-        markers: [
-          // longitude latitude
-          { location: [37.7595, -122.4367], size: 0.03 },
-          { location: [40.7128, -74.006], size: 0.1 },
-        ],
-        onRender: (state) => {
-          // Called on every animation frame.
-          // `state` will be an empty object, return updated params.
-          state.phi = phi;
-          phi += 0.01;
-        },
-      });
-    } catch (error) {
-      console.error("Failed to create globe:", error);
-    }
-
-    return () => {
-      if (globeInstance) {
-        globeInstance.destroy();
-      }
-    };
-  }, [isCanvasReady]);
-
   return (
-    <canvas
-      ref={canvasRef}
-      style={{ width: 600, height: 600, maxWidth: "100%", aspectRatio: 1 }}
-      className={className}
-    />
+    <div className={cn("relative flex items-center justify-center", className)}>
+      <div className="relative h-64 w-64 rounded-full bg-blue-100 bg-opacity-20 flex items-center justify-center dark:bg-blue-900 dark:bg-opacity-10">
+        <IconGlobe className="h-32 w-32 text-blue-500" />
+      </div>
+    </div>
   );
 }; 
