@@ -13,18 +13,51 @@ const limiter = rateLimit({
 export async function POST(req: Request) {
   try {
     await limiter.check(req, 3, "CACHE_TOKEN"); // 3 requests per minute
-    const { name, email, company, message } = await req.json();
+    const { 
+      name, 
+      email, 
+      phone, 
+      company, 
+      businessSize, 
+      industry, 
+      serviceInterest, 
+      timeline, 
+      message 
+    } = await req.json();
 
-    console.log("Received form data:", { name, email, company, message });
+    console.log("Received form data:", { 
+      name, 
+      email, 
+      phone, 
+      company, 
+      businessSize, 
+      industry, 
+      serviceInterest, 
+      timeline, 
+      message 
+    });
 
     const msg = {
       to: process.env.RECIPIENT_EMAIL as string,
       from: process.env.SENDER_EMAIL as string,
       subject: "New Contact Form Submission",
-      text: `Name: ${name}\nEmail: ${email}\nCompany: ${company}\nMessage: ${message}`,
+      text: `Name: ${name}
+Email: ${email}
+Phone: ${phone || 'Not provided'}
+Company: ${company}
+Business Size: ${businessSize || 'Not provided'}
+Industry: ${industry || 'Not provided'}
+Service Interest: ${serviceInterest || 'Not provided'}
+Timeline: ${timeline || 'Not provided'}
+Message: ${message}`,
       html: `<p><strong>Name:</strong> ${name}</p>
              <p><strong>Email:</strong> ${email}</p>
+             <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
              <p><strong>Company:</strong> ${company}</p>
+             <p><strong>Business Size:</strong> ${businessSize || 'Not provided'}</p>
+             <p><strong>Industry:</strong> ${industry || 'Not provided'}</p>
+             <p><strong>Service Interest:</strong> ${serviceInterest || 'Not provided'}</p>
+             <p><strong>Timeline:</strong> ${timeline || 'Not provided'}</p>
              <p><strong>Message:</strong> ${message}</p>`,
     };
 
