@@ -13,13 +13,14 @@ import LogoCloudMarquee from "./LogoCloudMarquee";
 export const Hero = () => {
   const router = useRouter();
   const words = [
-    { text: "Build" },
-    { text: "MVP" },
-    { text: "Apps" },
-    { text: "with" },
-    { text: "Streamlit" },
-    { text: "and" },
-    { text: "Gradio" },
+    { text: "Custom" },
+    { text: "AI" },
+    { text: "Agents" },
+    { text: "&" },
+    { text: "Automations" },
+    { text: "for" },
+    { text: "Small" },
+    { text: "Businesses" },
   ];
 
   const [typewriterComplete, setTypewriterComplete] = useState(false);
