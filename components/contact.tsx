@@ -33,11 +33,19 @@ const formSchema = z.object({
     .email("Please enter valid email")
     .min(1, "Please enter email"),
   webUrl: z
-    .string({
-      required_error: "Please enter your website URL",
-    })
-    .url("Please enter a valid URL")
-    .min(1, "Please enter your website URL"),
+    .string()
+    .refine(
+      (val) => {
+        if (val === "") return true;
+        try {
+          new URL(val);
+          return true;
+        } catch {
+          return false;
+        }
+      },
+      { message: "Please enter a valid URL" }
+    ),
   phone: z
     .string()
     .optional(),
@@ -81,12 +89,21 @@ export function ContactForm() {
   async function onSubmit(values: ContactFormData) {
     try {
       setSubmitStatus("Sending...");
+      
+      // Create a copy of values to modify
+      const formData = { ...values };
+      
+      // Set default value for empty website URL
+      if (!formData.webUrl || formData.webUrl.trim() === "") {
+        formData.webUrl = "Website URL Not provided";
+      }
+      
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
@@ -168,7 +185,7 @@ export function ContactForm() {
             render={({ field }) => (
               <FormItem>
                 <label htmlFor="webUrl" className={labelClasses}>
-                  Website URL *
+                  Website URL (Optional)
                 </label>
                 <FormControl>
                   <input
