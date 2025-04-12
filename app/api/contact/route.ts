@@ -35,6 +35,8 @@ export async function POST(req: Request) {
       message 
     });
 
+    const webUrlFormatted = webUrl ? webUrl.replace(/https?:\/\//i, '[https]://').replace(/\./g, '[.]') : 'Not provided';
+
     const msg = {
       to: process.env.RECIPIENT_EMAIL as string,
       from: process.env.SENDER_EMAIL as string,
@@ -43,7 +45,7 @@ export async function POST(req: Request) {
 Email: ${email}
 Phone: ${phone || 'Not provided'}
 Company: ${company}
-Website URL: ${webUrl || 'Not provided'}
+Website URL: ${webUrlFormatted}
 Service Interest: ${serviceInterest || 'Not provided'}
 Timeline: ${timeline || 'Not provided'}
 Message: ${message}`,
@@ -51,7 +53,7 @@ Message: ${message}`,
              <p><strong>Email:</strong> ${email}</p>
              <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
              <p><strong>Company:</strong> ${company}</p>
-             <p><strong>Website URL:</strong> ${webUrl || 'Not provided'}</p>
+             <p><strong>Website URL:</strong> <span style="font-family:monospace;">${webUrlFormatted}</span></p>
              <p><strong>Service Interest:</strong> ${serviceInterest || 'Not provided'}</p>
              <p><strong>Timeline:</strong> ${timeline || 'Not provided'}</p>
              <p><strong>Message:</strong> ${message}</p>`,
