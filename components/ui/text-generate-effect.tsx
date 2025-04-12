@@ -1,4 +1,3 @@
-
 "use client";
 import { useEffect } from "react";
 import { motion, stagger, useAnimate } from "framer-motion";
@@ -16,7 +15,7 @@ export const TextGenerateEffect = ({
   duration?: number;
 }) => {
   const [scope, animate] = useAnimate();
-  let wordsArray = words.split(" ");
+  let wordsArray = words.split(" ").filter(word => word.length > 0);
   
   useEffect(() => {
     animate(
@@ -38,12 +37,12 @@ export const TextGenerateEffect = ({
         {wordsArray.map((word, idx) => (
           <motion.span
             key={word + idx}
-            className="dark:text-white text-black opacity-0 inline-block"
+            className="dark:text-white text-black opacity-0 inline-block mr-[0.25em]"
             style={{
               filter: filter ? "blur(10px)" : "none",
             }}
           >
-            {word}{" "}
+            {word}
           </motion.span>
         ))}
       </motion.span>
