@@ -32,6 +32,12 @@ const formSchema = z.object({
     })
     .email("Please enter valid email")
     .min(1, "Please enter email"),
+  webUrl: z
+    .string({
+      required_error: "Please enter your website URL",
+    })
+    .url("Please enter a valid URL")
+    .min(1, "Please enter your website URL"),
   phone: z
     .string()
     .optional(),
@@ -40,12 +46,6 @@ const formSchema = z.object({
       required_error: "Please enter your company's name",
     })
     .min(1, "Please enter your company's name"),
-  businessSize: z
-    .string()
-    .optional(),
-  industry: z
-    .string()
-    .optional(),
   serviceInterest: z
     .string()
     .optional(),
@@ -71,8 +71,7 @@ export function ContactForm() {
       email: "",
       phone: "",
       company: "",
-      businessSize: "",
-      industry: "",
+      webUrl: "",
       serviceInterest: "",
       timeline: "",
       message: "",
@@ -165,6 +164,28 @@ export function ContactForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormField
             control={form.control}
+            name="webUrl"
+            render={({ field }) => (
+              <FormItem>
+                <label htmlFor="webUrl" className={labelClasses}>
+                  Website URL *
+                </label>
+                <FormControl>
+                  <input
+                    id="webUrl"
+                    type="url"
+                    className={inputClasses}
+                    placeholder="https://example.com"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className={errorClasses} />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
             name="phone"
             render={({ field }) => (
               <FormItem>
@@ -184,7 +205,9 @@ export function ContactForm() {
               </FormItem>
             )}
           />
+        </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormField
             control={form.control}
             name="company"
@@ -206,67 +229,7 @@ export function ContactForm() {
               </FormItem>
             )}
           />
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="businessSize"
-            render={({ field }) => (
-              <FormItem>
-                <label htmlFor="businessSize" className={labelClasses}>
-                  Business Size
-                </label>
-                <FormControl>
-                  <select
-                    id="businessSize"
-                    className={inputClasses}
-                    {...field}
-                  >
-                    <option value="">Select business size</option>
-                    <option value="1-10">1-10 employees</option>
-                    <option value="11-50">11-50 employees</option>
-                    <option value="51-200">51-200 employees</option>
-                    <option value="201+">201+ employees</option>
-                  </select>
-                </FormControl>
-                <FormMessage className={errorClasses} />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="industry"
-            render={({ field }) => (
-              <FormItem>
-                <label htmlFor="industry" className={labelClasses}>
-                  Industry
-                </label>
-                <FormControl>
-                  <select
-                    id="industry"
-                    className={inputClasses}
-                    {...field}
-                  >
-                    <option value="">Select your industry</option>
-                    <option value="Healthcare">Healthcare</option>
-                    <option value="Professional Services">Professional Services</option>
-                    <option value="Retail">Retail</option>
-                    <option value="E-commerce">E-commerce</option>
-                    <option value="Technology">Technology</option>
-                    <option value="Real Estate">Real Estate</option>
-                    <option value="Education">Education</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </FormControl>
-                <FormMessage className={errorClasses} />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormField
             control={form.control}
             name="serviceInterest"
@@ -293,7 +256,9 @@ export function ContactForm() {
               </FormItem>
             )}
           />
+        </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormField
             control={form.control}
             name="timeline"
@@ -320,6 +285,7 @@ export function ContactForm() {
               </FormItem>
             )}
           />
+          <div></div>
         </div>
 
         <FormField

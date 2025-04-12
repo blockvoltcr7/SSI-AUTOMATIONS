@@ -18,8 +18,7 @@ export async function POST(req: Request) {
       email, 
       phone, 
       company, 
-      businessSize, 
-      industry, 
+      webUrl, 
       serviceInterest, 
       timeline, 
       message 
@@ -30,8 +29,7 @@ export async function POST(req: Request) {
       email, 
       phone, 
       company, 
-      businessSize, 
-      industry, 
+      webUrl, 
       serviceInterest, 
       timeline, 
       message 
@@ -45,8 +43,7 @@ export async function POST(req: Request) {
 Email: ${email}
 Phone: ${phone || 'Not provided'}
 Company: ${company}
-Business Size: ${businessSize || 'Not provided'}
-Industry: ${industry || 'Not provided'}
+Website URL: ${webUrl || 'Not provided'}
 Service Interest: ${serviceInterest || 'Not provided'}
 Timeline: ${timeline || 'Not provided'}
 Message: ${message}`,
@@ -54,8 +51,7 @@ Message: ${message}`,
              <p><strong>Email:</strong> ${email}</p>
              <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
              <p><strong>Company:</strong> ${company}</p>
-             <p><strong>Business Size:</strong> ${businessSize || 'Not provided'}</p>
-             <p><strong>Industry:</strong> ${industry || 'Not provided'}</p>
+             <p><strong>Website URL:</strong> ${webUrl || 'Not provided'}</p>
              <p><strong>Service Interest:</strong> ${serviceInterest || 'Not provided'}</p>
              <p><strong>Timeline:</strong> ${timeline || 'Not provided'}</p>
              <p><strong>Message:</strong> ${message}</p>`,
