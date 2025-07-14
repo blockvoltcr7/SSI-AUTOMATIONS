@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
+import Link from "next/link";
 
 import {
   Form,
@@ -21,17 +22,32 @@ import { HoverBorderGradient } from "./ui/hover-border-gradient";
 import { HiArrowRight } from "react-icons/hi2";
 
 const formSchema = z.object({
-  name: z
+  firstName: z
     .string({
-      required_error: "Please enter your name",
+      required_error: "Please enter your first name",
     })
-    .min(1, "Please enter your name"),
+    .min(1, "Please enter your first name"),
+  lastName: z
+    .string({
+      required_error: "Please enter your last name",
+    })
+    .min(1, "Please enter your last name"),
   email: z
     .string({
       required_error: "Please enter email",
     })
     .email("Please enter valid email")
     .min(1, "Please enter email"),
+  phone: z
+    .string({
+      required_error: "Please enter your phone number",
+    })
+    .min(1, "Please enter your phone number"),
+  company: z
+    .string({
+      required_error: "Please enter your company's name",
+    })
+    .min(1, "Please enter your company's name"),
   webUrl: z
     .string()
     .refine(
@@ -46,14 +62,6 @@ const formSchema = z.object({
       },
       { message: "Please enter a valid URL" }
     ),
-  phone: z
-    .string()
-    .optional(),
-  company: z
-    .string({
-      required_error: "Please enter your company's name",
-    })
-    .min(1, "Please enter your company's name"),
   serviceInterest: z
     .string()
     .optional(),
@@ -65,6 +73,8 @@ const formSchema = z.object({
       required_error: "Please enter your message",
     })
     .min(1, "Please enter your message"),
+  transactionalConsent: z.boolean().default(false),
+  marketingConsent: z.boolean().default(false),
 });
 
 export type ContactFormData = z.infer<typeof formSchema>;
@@ -75,7 +85,8 @@ export function ContactForm() {
   const form = useForm<ContactFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      firstName: "",
+      lastName: "",
       email: "",
       phone: "",
       company: "",
@@ -83,6 +94,8 @@ export function ContactForm() {
       serviceInterest: "",
       timeline: "",
       message: "",
+      transactionalConsent: false,
+      marketingConsent: false,
     },
   });
 
@@ -135,18 +148,18 @@ export function ContactForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormField
             control={form.control}
-            name="name"
+            name="firstName"
             render={({ field }) => (
               <FormItem>
-                <label htmlFor="name" className={labelClasses}>
-                  Full Name *
+                <label htmlFor="firstName" className={labelClasses}>
+                  First Name *
                 </label>
                 <FormControl>
                   <input
-                    id="name"
+                    id="firstName"
                     type="text"
                     className={inputClasses}
-                    placeholder="John Doe"
+                    placeholder="First Name"
                     {...field}
                   />
                 </FormControl>
@@ -157,18 +170,18 @@ export function ContactForm() {
 
           <FormField
             control={form.control}
-            name="email"
+            name="lastName"
             render={({ field }) => (
               <FormItem>
-                <label htmlFor="email" className={labelClasses}>
-                  Email Address *
+                <label htmlFor="lastName" className={labelClasses}>
+                  Last Name *
                 </label>
                 <FormControl>
                   <input
-                    id="email"
-                    type="email"
+                    id="lastName"
+                    type="text"
                     className={inputClasses}
-                    placeholder="you@example.com"
+                    placeholder="Last Name"
                     {...field}
                   />
                 </FormControl>
@@ -181,18 +194,18 @@ export function ContactForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormField
             control={form.control}
-            name="webUrl"
+            name="email"
             render={({ field }) => (
               <FormItem>
-                <label htmlFor="webUrl" className={labelClasses}>
-                  Website URL (Optional)
+                <label htmlFor="email" className={labelClasses}>
+                  Email *
                 </label>
                 <FormControl>
                   <input
-                    id="webUrl"
-                    type="url"
+                    id="email"
+                    type="email"
                     className={inputClasses}
-                    placeholder="https://example.com"
+                    placeholder="Email"
                     {...field}
                   />
                 </FormControl>
@@ -207,14 +220,14 @@ export function ContactForm() {
             render={({ field }) => (
               <FormItem>
                 <label htmlFor="phone" className={labelClasses}>
-                  Phone Number (Optional)
+                  Phone *
                 </label>
                 <FormControl>
                   <input
                     id="phone"
                     type="tel"
                     className={inputClasses}
-                    placeholder="(123) 456-7890"
+                    placeholder="Phone"
                     {...field}
                   />
                 </FormControl>
@@ -249,6 +262,30 @@ export function ContactForm() {
 
           <FormField
             control={form.control}
+            name="webUrl"
+            render={({ field }) => (
+              <FormItem>
+                <label htmlFor="webUrl" className={labelClasses}>
+                  Website URL (Optional)
+                </label>
+                <FormControl>
+                  <input
+                    id="webUrl"
+                    type="url"
+                    className={inputClasses}
+                    placeholder="https://example.com"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className={errorClasses} />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
             name="serviceInterest"
             render={({ field }) => (
               <FormItem>
@@ -273,9 +310,7 @@ export function ContactForm() {
               </FormItem>
             )}
           />
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormField
             control={form.control}
             name="timeline"
@@ -302,7 +337,6 @@ export function ContactForm() {
               </FormItem>
             )}
           />
-          <div></div>
         </div>
 
         <FormField
@@ -323,6 +357,50 @@ export function ContactForm() {
                 />
               </FormControl>
               <FormMessage className={errorClasses} />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="transactionalConsent"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+              <FormControl>
+                <input
+                  type="checkbox"
+                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary dark:border-gray-600 dark:bg-gray-700"
+                  checked={field.value}
+                  onChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel className="text-sm font-normal text-neutral-600 dark:text-neutral-400">
+                  By checking this box, I consent to receive transactional messages related to my account, orders, or services I have requested. These messages may include appointment reminders, order confirmations, and account notifications among others. Message frequency may vary. Message & Data rates may apply. Reply HELP for help or STOP to opt-out.
+                </FormLabel>
+              </div>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="marketingConsent"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+              <FormControl>
+                <input
+                  type="checkbox"
+                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary dark:border-gray-600 dark:bg-gray-700"
+                  checked={field.value}
+                  onChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel className="text-sm font-normal text-neutral-600 dark:text-neutral-400">
+                  By checking this box, I consent to receive marketing and promotional messages, including special offers, discounts, new product updates among others. Message frequency may vary. Message & Data rates may apply. Reply HELP for help or STOP to opt-out.
+                </FormLabel>
+              </div>
             </FormItem>
           )}
         />
@@ -352,6 +430,12 @@ export function ContactForm() {
             {submitStatus}
           </div>
         )}
+        
+        <div className="text-center text-sm text-neutral-600 dark:text-neutral-400 mt-4">
+          <Link href="/privacy" className="underline hover:text-primary">Privacy Policy</Link>
+          {" | "}
+          <Link href="/terms" className="underline hover:text-primary">Terms of Service</Link>
+        </div>
       </form>
     </Form>
   );
