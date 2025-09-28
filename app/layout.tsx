@@ -12,7 +12,7 @@ const isProduction = process.env.NODE_ENV === 'production' &&
                      (!process.env.NEXT_PUBLIC_VERCEL_ENV || process.env.NEXT_PUBLIC_VERCEL_ENV === 'production');
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ssiautomations.com"),
+  metadataBase: new URL("https://www.ssiautomations.com"),
   title: "SSI Automations - AI Solutions for Small Businesses",
   description:
     "Discover how SSI Automations empowers small businesses with cutting-edge AI tools and automation workflows to boost productivity and maximize profits. Explore our innovative solutions today!",
