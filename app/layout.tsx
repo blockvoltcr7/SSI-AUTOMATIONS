@@ -5,6 +5,12 @@ import { cn } from "@/lib/utils";
 import { ViewTransitions } from "next-view-transitions";
 import { ThemeProvider } from "@/context/theme-provider";
 
+// Check if we're in production environment for Meta Business Suite domain verification
+// This ensures the Meta verification tag only appears on the live production domain
+// Required for Facebook/Meta integrations and business features
+const isProduction = process.env.NODE_ENV === 'production' &&
+                     (!process.env.NEXT_PUBLIC_VERCEL_ENV || process.env.NEXT_PUBLIC_VERCEL_ENV === 'production');
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://ssiautomations.com"),
   title: "SSI Automations - AI Solutions for Small Businesses",
@@ -17,6 +23,14 @@ export const metadata: Metadata = {
     images: ["https://www.ssiautomations.com/SSI-Automations-banner.png"],
     url: "https://www.ssiautomations.com",
     type: "website",
+  },
+  other: {
+    // Meta Business Suite domain verification - production only for security and accuracy
+    // Verification token obtained from Meta Business Suite dashboard (Business Settings → Domains)
+    // Enables Facebook/Meta integrations, Pixel implementation, and advanced business features
+    ...(isProduction && {
+      "facebook-domain-verification": "yb8e406dpnvzbn2gxsmdivpf1sjpny5",
+    }),
   },
 };
 
