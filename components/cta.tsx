@@ -1,53 +1,33 @@
 "use client";
 import React from "react";
-import Balancer from "react-wrap-balancer";
 import Link from "next/link";
-import { Button } from "./button";
 import { HoverBorderGradient } from "./ui/hover-border-gradient";
 import { HiArrowRight } from "react-icons/hi2";
 
 export const CTA = () => {
   return (
-    <section className="py-60 w-full  overflow-hidden relative z-30">
-      <div className="bg-white dark:bg-black">
-        <div className="mx-auto w-full relative z-20 sm:max-w-[40rem]  md:max-w-[48rem] lg:max-w-[64rem] xl:max-w-[80rem] bg-gradient-to-br from-slate-800 dark:from-neutral-900 to-gray-900 sm:rounded-2xl">
-          <div className="relative -mx-6   sm:mx-0 sm:rounded-2xl overflow-hidden px-6  md:px-8 ">
-            <div
-              className="absolute inset-0 w-full h-full opacity-10 bg-noise fade-vignette [mask-image:radial-gradient(#fff,transparent,75%)]"
-              style={{
-                backgroundImage: "url(/noise.webp)",
-                backgroundSize: "30%",
-              }}
-            ></div>
-            <div
-              className="pointer-events-none absolute inset-y-0 right-0 select-none overflow-hidden rounded-2xl"
-              style={{
-                mask: "radial-gradient(33.875rem 33.875rem at calc(100% - 8.9375rem) 0, white 3%, transparent 70%)",
-              }}
-            ></div>
+    <section className="py-20 w-full overflow-hidden relative z-30">
+      <div className="bg-transparent">
+        <div className="mx-auto w-full relative z-20 max-w-4xl px-4">
+          <div className="text-center">
+            <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
+              Want everything in one place?
+            </h2>
+            <p className="text-base md:text-lg text-neutral-400 mb-6">
+              Browse all featured hubs on our Learn page.
+            </p>
 
-            <div className="relative px-6 pb-14 pt-20 sm:px-10 sm:pb-20 lg:px-[4.5rem]">
-              <h2 className="  text-center text-balance mx-auto text-3xl md:text-5xl font-semibold tracking-[-0.015em] text-white">
-                Ready to transform your business with AI?
-              </h2>
-              <p className="mt-4 max-w-[26rem] text-center mx-auto  text-base/6 text-neutral-200">
-                <Balancer>
-                  Schedule a free strategy call to discover how custom AI solutions can help your business save time and money.
-                </Balancer>
-              </p>
-
-              <div className="relative z-10 mx-auto flex justify-center mt-6">
-                <Link href="/contact">
-                  <HoverBorderGradient
-                    containerClassName="rounded-full"
-                    className="bg-black group"
-                    duration={1.5}
-                  >
-                    <span className="mr-2">📅 Book Free Strategy Call</span>
-                    <HiArrowRight className="text-white group-hover:translate-x-1 stroke-[1px] h-3 w-3 transition-transform duration-200" />
-                  </HoverBorderGradient>
-                </Link>
-              </div>
+            <div className="flex justify-center">
+              <Link href="/learn">
+                <HoverBorderGradient
+                  containerClassName="rounded-full"
+                  className="bg-black group"
+                  duration={1.5}
+                >
+                  <span className="mr-2">Explore Featured AI Hubs</span>
+                  <HiArrowRight className="text-white group-hover:translate-x-1 stroke-[1px] h-3 w-3 transition-transform duration-200" />
+                </HoverBorderGradient>
+              </Link>
             </div>
           </div>
         </div>

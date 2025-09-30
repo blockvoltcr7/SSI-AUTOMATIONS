@@ -1,35 +1,14 @@
 "use client";
 
-import { Button } from "./button";
 import { HiArrowRight } from "react-icons/hi2";
 import { motion } from "framer-motion";
-import { TypewriterEffect } from "./ui/typewriter-effect";
-import { TextGenerateEffect } from "./ui/text-generate-effect";
-import { useRouter } from "next/navigation";
 import { Link } from "next-view-transitions";
-import { useState } from "react";
-import LogoCloudMarquee from "./LogoCloudMarquee";
-import ServiceCards from "./service-cards";
 import { HoverBorderGradient } from "./ui/hover-border-gradient";
 
 export const Hero = () => {
-  const router = useRouter();
-  const words = [
-    { text: "Custom" },
-    { text: "AI" },
-    { text: "Agents" },
-    { text: "&" },
-    { text: "Automations" },
-    { text: "for" },
-    { text: "Small" },
-    { text: "Businesses" },
-  ];
-
-  const [typewriterComplete, setTypewriterComplete] = useState(false);
-
   return (
-    <div className="flex flex-col min-h-screen pt-20 md:pt-40 relative overflow-hidden">
-      <motion.div
+    <div className="flex flex-col items-center justify-center pt-32 md:pt-48 pb-20 relative overflow-hidden">
+      <motion.h1
         initial={{
           y: 40,
           opacity: 0,
@@ -40,19 +19,32 @@ export const Hero = () => {
         }}
         transition={{
           ease: "easeOut",
-          duration: 0.5,
+          duration: 0.6,
         }}
-        className="flex justify-center"
+        className="text-4xl md:text-6xl lg:text-7xl font-bold text-center text-white max-w-5xl mx-auto relative z-10"
       >
-        {/* <Badge onClick={() => router.push("/blog/top-5-llm-of-all-time")}>
-          We&apos;ve raised $69M seed funding
-        </Badge> */}
-      </motion.div>
-      <TypewriterEffect
-        words={words}
-        className="mt-6"
-        onComplete={() => setTypewriterComplete(true)}
-      />
+        Discover the best places to learn AI.
+      </motion.h1>
+
+      <motion.p
+        initial={{
+          y: 40,
+          opacity: 0,
+        }}
+        animate={{
+          y: 0,
+          opacity: 1,
+        }}
+        transition={{
+          ease: "easeOut",
+          duration: 0.6,
+          delay: 0.1,
+        }}
+        className="text-center mt-6 text-lg md:text-xl text-neutral-400 max-w-2xl mx-auto relative z-10"
+      >
+        Curated links to world-class academies and communities—kept simple.
+      </motion.p>
+
       <motion.div
         initial={{
           y: 40,
@@ -64,47 +56,22 @@ export const Hero = () => {
         }}
         transition={{
           ease: "easeOut",
-          duration: 0.5,
+          duration: 0.6,
           delay: 0.2,
         }}
-        className="text-center mt-6 text-base md:text-xl text-muted dark:text-muted-dark max-w-3xl mx-auto relative z-10"
+        className="flex items-center gap-4 justify-center mt-8 relative z-10"
       >
-        {typewriterComplete && (
-          <TextGenerateEffect words="We build AI apps that help you save time and money." />
-        )}
-      </motion.div>
-      <motion.div
-        initial={{
-          y: 80,
-          opacity: 0,
-        }}
-        animate={{
-          y: 0,
-          opacity: 1,
-        }}
-        transition={{
-          ease: "easeOut",
-          duration: 0.5,
-          delay: 0.4,
-        }}
-        className="flex items-center gap-4 justify-center mt-6 relative z-10"
-      >
-        <Link href="/contact">
+        <Link href="/learn">
           <HoverBorderGradient
             containerClassName="rounded-full"
             className="bg-black group"
             duration={1.5}
           >
-            <span className="mr-2">📅 Book Free Strategy Call</span>
+            <span className="mr-2">Explore Featured AI Hubs</span>
             <HiArrowRight className="text-white group-hover:translate-x-1 stroke-[1px] h-3 w-3 transition-transform duration-200" />
           </HoverBorderGradient>
         </Link>
       </motion.div>
-      
-      {/* Service Cards Section */}
-      <ServiceCards />
-      
-      {/* <LogoCloudMarquee /> */}
     </div>
   );
 };
