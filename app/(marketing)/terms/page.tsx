@@ -6,7 +6,7 @@ import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 
 export const metadata: Metadata = {
   title: "Terms & Conditions - SSI Automations",
-  description: "Read the terms and conditions for using SSI Automations services. Understanding your rights and responsibilities.",
+  description: "Read the terms and conditions for using the SSI Automations AI learning hub website.",
 };
 
 export default function TermsPage() {
@@ -36,86 +36,67 @@ export default function TermsPage() {
               <div className="prose prose-gray dark:prose-invert max-w-none">
                 <h2 className="text-2xl font-bold mb-6">1. Acceptance of Terms</h2>
                 <p className="mb-6">
-                  By accessing and using SSI Automations services, you accept and agree to be bound by the terms and provision of this agreement. These Terms of Service govern your use of our services and constitute a legally binding agreement between you and SSI Automations.
+                  By accessing and using the SSI Automations website, you accept and agree to be bound by these Terms and Conditions. These terms govern your use of our informational website and constitute a legally binding agreement between you and SSI Automations.
                 </p>
 
                 <h2 className="text-2xl font-bold mb-6 mt-8">2. Description of Service</h2>
+                <p className="mb-6">
+                  SSI Automations operates as an informational website that curates and provides links to third-party AI learning resources, educational platforms, academies, and communities. We do not provide educational services directly, nor do we sell products or services through this website.
+                </p>
+
+                <h2 className="text-2xl font-bold mb-6 mt-8">3. No User Accounts</h2>
+                <p className="mb-6">
+                  This website does not require user registration or accounts. You may browse our curated links freely without providing personal information.
+                </p>
+
+                <h2 className="text-2xl font-bold mb-6 mt-8">4. Third-Party Links and Resources</h2>
                 <p className="mb-4">
-                  SSI Automations provides AI-powered automation solutions for businesses, including but not limited to:
+                  Our website contains links to third-party websites and resources. You acknowledge and agree that:
                 </p>
                 <ul className="list-disc pl-6 mb-6">
-                  <li>Voice AI agents for customer service and support</li>
-                  <li>Workflow automation tools and systems</li>
-                  <li>Appointment setting and scheduling services</li>
-                  <li>Custom AI solutions for business processes</li>
-                  <li>Consulting and implementation services</li>
+                  <li>We are not responsible for the availability, content, or accuracy of third-party websites</li>
+                  <li>We do not endorse or guarantee the quality of third-party services</li>
+                  <li>Your use of third-party websites is at your own risk and subject to their terms and conditions</li>
+                  <li>Any transactions or interactions with third-party sites are solely between you and the third party</li>
                 </ul>
 
-                <h2 className="text-2xl font-bold mb-6 mt-8">3. User Accounts and Registration</h2>
-                <p className="mb-4">
-                  To access certain features of our services, you may be required to create an account. You agree to:
-                </p>
+                <h2 className="text-2xl font-bold mb-6 mt-8">5. Acceptable Use</h2>
+                <p className="mb-4">You agree not to:</p>
                 <ul className="list-disc pl-6 mb-6">
-                  <li>Provide accurate, current, and complete information during registration</li>
-                  <li>Maintain and promptly update your account information</li>
-                  <li>Maintain the security of your password and accept responsibility for all activities under your account</li>
-                  <li>Notify us immediately of any unauthorized use of your account</li>
-                </ul>
-
-                <h2 className="text-2xl font-bold mb-6 mt-8">4. Acceptable Use Policy</h2>
-                <p className="mb-4">You agree not to use our services to:</p>
-                <ul className="list-disc pl-6 mb-6">
-                  <li>Violate any local, state, national, or international law or regulation</li>
-                  <li>Transmit any harassing, libelous, abusive, threatening, or harmful material</li>
-                  <li>Transmit any material that infringes upon the rights of another</li>
-                  <li>Transmit any material that contains viruses, trojan horses, or other harmful components</li>
-                  <li>Engage in any activity that could damage or impair our services</li>
-                </ul>
-
-                <h2 className="text-2xl font-bold mb-6 mt-8">5. Payment Terms</h2>
-                <p className="mb-4">
-                  For paid services:
-                </p>
-                <ul className="list-disc pl-6 mb-6">
-                  <li>Fees are billed in advance on a monthly or annual basis depending on your plan</li>
-                  <li>All fees are non-refundable except as required by law</li>
-                  <li>We reserve the right to change our pricing with 30 days notice</li>
-                  <li>Late payments may result in service suspension</li>
+                  <li>Use the website in any way that violates applicable laws or regulations</li>
+                  <li>Attempt to interfere with or disrupt the website's functionality</li>
+                  <li>Use automated systems to access or scrape the website without permission</li>
+                  <li>Misrepresent your affiliation with SSI Automations</li>
                 </ul>
 
                 <h2 className="text-2xl font-bold mb-6 mt-8">6. Intellectual Property</h2>
                 <p className="mb-6">
-                  The service and its original content, features, and functionality are and will remain the exclusive property of SSI Automations and its licensors. The service is protected by copyright, trademark, and other laws.
+                  The website design, content, and compilation of curated links are the property of SSI Automations and are protected by copyright and other intellectual property laws. You may not reproduce, distribute, or create derivative works without our express permission.
                 </p>
 
-                <h2 className="text-2xl font-bold mb-6 mt-8">7. Service Availability</h2>
+                <h2 className="text-2xl font-bold mb-6 mt-8">7. Disclaimer of Warranties</h2>
                 <p className="mb-6">
-                  We strive to maintain high availability but do not guarantee uninterrupted access to our services. We may temporarily suspend service for maintenance, updates, or other operational reasons.
+                  This website and its content are provided "as is" without warranties of any kind. We do not guarantee the accuracy, completeness, or timeliness of the information or links provided. We make no warranties regarding third-party websites or services.
                 </p>
 
                 <h2 className="text-2xl font-bold mb-6 mt-8">8. Limitation of Liability</h2>
                 <p className="mb-6">
-                  In no event shall SSI Automations, nor its directors, employees, partners, agents, suppliers, or affiliates be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, use, goodwill, or other intangible losses.
+                  To the fullest extent permitted by law, SSI Automations shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the website or third-party resources. This includes any damages resulting from your reliance on information or links provided.
                 </p>
 
-                <h2 className="text-2xl font-bold mb-6 mt-8">9. Termination</h2>
-                <p className="mb-4">
-                  We may terminate or suspend your account and bar access to the service immediately, without prior notice or liability, under our sole discretion, for any reason whatsoever including but not limited to:
+                <h2 className="text-2xl font-bold mb-6 mt-8">9. Changes to Website</h2>
+                <p className="mb-6">
+                  We reserve the right to modify, update, or discontinue any aspect of the website at any time without notice. We may add, remove, or modify curated links and resources at our discretion.
                 </p>
-                <ul className="list-disc pl-6 mb-6">
-                  <li>Breach of the Terms</li>
-                  <li>Non-payment of fees</li>
-                  <li>Violation of our Acceptable Use Policy</li>
-                </ul>
 
                 <h2 className="text-2xl font-bold mb-6 mt-8">10. Governing Law</h2>
                 <p className="mb-6">
-                  These Terms shall be interpreted and governed by the laws of the jurisdiction in which SSI Automations operates, without regard to conflict of law provisions.
+                  These Terms shall be governed by and construed in accordance with applicable laws, without regard to conflict of law provisions.
                 </p>
 
                 <h2 className="text-2xl font-bold mb-6 mt-8">11. Changes to Terms</h2>
                 <p className="mb-6">
-                  We reserve the right to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days notice prior to any new terms taking effect.
+                  We reserve the right to modify these Terms at any time. Changes will be effective immediately upon posting to the website. Your continued use of the website constitutes acceptance of any changes.
                 </p>
 
                 <h2 className="text-2xl font-bold mb-6 mt-8">12. Contact Information</h2>
@@ -123,9 +104,7 @@ export default function TermsPage() {
                   If you have any questions about these Terms & Conditions, please contact us:
                 </p>
                 <ul className="list-none mb-6">
-                  <li>Email: legal@ssiautomations.com</li>
-                  <li>Phone: Available on our contact page</li>
-                  <li>Address: Contact us for our mailing address</li>
+                  <li>Email: sami@ssiautomations.com</li>
                 </ul>
               </div>
             </div>
