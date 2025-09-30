@@ -8,6 +8,10 @@ const navItems = [
     title: "Learn",
     link: "/learn",
   },
+  {
+    title: "Blog",
+    link: "/blog",
+  },
 ];
 
 export function NavBar() {
