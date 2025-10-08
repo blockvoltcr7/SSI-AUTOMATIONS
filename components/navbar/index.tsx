@@ -9,6 +9,10 @@ const navItems = [
     link: "/learn",
   },
   {
+    title: "Newsletter",
+    link: "/newsletter",
+  },
+  {
     title: "Blog",
     link: "/blog",
   },
