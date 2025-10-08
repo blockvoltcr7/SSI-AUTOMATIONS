@@ -4,8 +4,12 @@ import { Background } from "@/components/background";
 import { HubCards } from "@/components/hub-cards";
 import { CTA } from "@/components/cta";
 import { NewsletterSection } from "@/components/newsletter-section";
+import { BlogSection } from "@/components/blog-section";
+import { getFeaturedBlogs } from "@/lib/blog";
 
 export default function Home() {
+  const featuredBlogs = getFeaturedBlogs(3);
+
   return (
     <div className="relative">
       <div className="absolute inset-0 h-full w-full overflow-hidden">
@@ -21,6 +25,14 @@ export default function Home() {
 
         <NewsletterSection />
       </Container>
+
+      {/* Blog Section */}
+      <div className="relative">
+        <div className="absolute inset-0 h-full w-full overflow-hidden">
+          <Background />
+        </div>
+        <BlogSection blogs={featuredBlogs} />
+      </div>
 
       <div className="relative">
         <div className="absolute inset-0 h-full w-full overflow-hidden">
