@@ -44,7 +44,12 @@ export function BlogContentCentered({ blog }: BlogContentCenteredProps) {
         <div className="flex items-center mb-6">
           <div className="h-5 w-5 rounded-full bg-blue-500 flex items-center justify-center">
             <span className="text-[8px] font-semibold text-white">
-              {blog.author.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2)}
+              {blog.author
+                .split(" ")
+                .map((n) => n[0])
+                .join("")
+                .toUpperCase()
+                .slice(0, 2)}
             </span>
           </div>
           <p className="pl-2 text-sm text-neutral-600 dark:text-neutral-400">

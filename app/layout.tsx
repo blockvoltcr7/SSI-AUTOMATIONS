@@ -8,8 +8,10 @@ import { ThemeProvider } from "@/context/theme-provider";
 // Check if we're in production environment for Meta Business Suite domain verification
 // This ensures the Meta verification tag only appears on the live production domain
 // Required for Facebook/Meta integrations and business features
-const isProduction = process.env.NODE_ENV === 'production' &&
-                     (!process.env.NEXT_PUBLIC_VERCEL_ENV || process.env.NEXT_PUBLIC_VERCEL_ENV === 'production');
+const isProduction =
+  process.env.NODE_ENV === "production" &&
+  (!process.env.NEXT_PUBLIC_VERCEL_ENV ||
+    process.env.NEXT_PUBLIC_VERCEL_ENV === "production");
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.ssiautomations.com"),

@@ -27,23 +27,29 @@ Follow-up TODOs:
 ## Core Principles
 
 ### I. Component-First Architecture
+
 Every feature MUST be implemented as a reusable React component with clear boundaries. Components must be self-contained with their own styles, types, and tests. No feature implementation without proper componentization - business logic must be separated from presentation logic through custom hooks and utilities.
 
 ### II. Type Safety & Documentation
+
 TypeScript strict mode is mandatory for all code. Every exported function, component, and hook MUST have comprehensive type definitions. JSDoc comments required for public APIs. Props interfaces must be explicitly defined and exported for all components.
 
 ### III. Test Coverage Requirements
+
 Minimum 80% code coverage for all new features. Critical paths require integration tests using Cypress or Playwright. Component testing mandatory for all UI components. API routes must have request/response validation tests. No deployment without passing test suites.
 
 ### IV. Performance & Accessibility
+
 Core Web Vitals targets MUST be met: LCP < 2.5s, FID < 100ms, CLS < 0.1. All interactive elements require ARIA labels and keyboard navigation support. Images must use Next.js Image component with proper sizing. Code splitting required for routes over 50KB.
 
 ### V. Security & Data Protection
+
 All user inputs MUST be validated on both client and server. API routes require authentication middleware except public endpoints. Sensitive data must never be exposed in client-side code or logs. Rate limiting required on all API endpoints. Environment variables must follow naming convention and be documented.
 
 ## Technical Standards
 
 ### Framework Conventions
+
 - Next.js App Router patterns for all routing
 - Server Components by default, Client Components only when needed
 - API routes follow RESTful conventions with proper status codes
@@ -51,6 +57,7 @@ All user inputs MUST be validated on both client and server. API routes require 
 - Shadcn/ui components as base building blocks
 
 ### Code Organization
+
 - Features grouped by domain in `/app` directory
 - Shared components in `/components` with atomic design principles
 - Utilities and helpers in `/lib` directory
@@ -60,6 +67,7 @@ All user inputs MUST be validated on both client and server. API routes require 
 ## Development Workflow
 
 ### Code Review Requirements
+
 - All code requires peer review before merge
 - Automated checks must pass: lint, type-check, tests
 - Performance budget validation required
@@ -67,6 +75,7 @@ All user inputs MUST be validated on both client and server. API routes require 
 - Security review for authentication/data handling changes
 
 ### Deployment Pipeline
+
 - Feature branches deploy to preview environments
 - Main branch auto-deploys to staging
 - Production deployment requires manual approval
@@ -76,6 +85,7 @@ All user inputs MUST be validated on both client and server. API routes require 
 ## Governance
 
 The Constitution supersedes all development practices and architectural decisions. Amendments require:
+
 1. Written proposal with justification
 2. Team review and discussion
 3. Impact analysis on existing code

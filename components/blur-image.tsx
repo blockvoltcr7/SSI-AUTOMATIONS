@@ -31,7 +31,7 @@ export const BlurImage = ({
       className={clsx(
         "transition duration-300 transform",
         isLoading ? "blur-sm scale-105" : "blur-0 scale-100",
-        className
+        className,
       )}
       onLoadingComplete={() => setLoading(false)}
       src={src}

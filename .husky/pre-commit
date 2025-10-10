@@ -1,0 +1,5 @@
+pnpm run clear-cache
+pnpm run build
+pnpm run lint
+pnpm run format
+pnpm run type-check

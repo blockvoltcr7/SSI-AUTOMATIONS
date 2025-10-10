@@ -25,7 +25,8 @@ export function NewsletterSection() {
                 Stay Ahead of the AI Curve
               </h2>
               <p className="text-lg md:text-xl text-neutral-400 max-w-2xl mx-auto mb-2">
-                Get curated AI learning resources, course updates, and expert insights delivered straight to your inbox.
+                Get curated AI learning resources, course updates, and expert
+                insights delivered straight to your inbox.
               </p>
               <p className="text-sm text-neutral-500">
                 No spam. Unsubscribe anytime.
@@ -65,7 +66,9 @@ export function NewsletterSection() {
                     />
                   </svg>
                 </div>
-                <h4 className="text-white font-semibold mb-1">Curated Courses</h4>
+                <h4 className="text-white font-semibold mb-1">
+                  Curated Courses
+                </h4>
                 <p className="text-sm text-neutral-400">
                   Handpicked from top platforms
                 </p>
@@ -87,7 +90,9 @@ export function NewsletterSection() {
                     />
                   </svg>
                 </div>
-                <h4 className="text-white font-semibold mb-1">Weekly Updates</h4>
+                <h4 className="text-white font-semibold mb-1">
+                  Weekly Updates
+                </h4>
                 <p className="text-sm text-neutral-400">
                   Platform news and launches
                 </p>

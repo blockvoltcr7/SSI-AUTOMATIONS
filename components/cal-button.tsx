@@ -9,24 +9,24 @@ interface CalButtonProps {
   children: React.ReactNode;
 }
 
-export function CalButton({ 
-  calLink = "sami-sabir-idrissi-couvnl/30min", 
+export function CalButton({
+  calLink = "sami-sabir-idrissi-couvnl/30min",
   className,
-  children
+  children,
 }: CalButtonProps) {
   useEffect(() => {
-    (async function() {
+    (async function () {
       try {
-        const cal = await getCalApi({"namespace":"30min"});
-        cal("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+        const cal = await getCalApi({ namespace: "30min" });
+        cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
       } catch (error) {
         console.error("Error initializing Cal.com button:", error);
       }
     })();
   }, []);
-  
+
   return (
-    <button 
+    <button
       data-cal-namespace="30min"
       data-cal-link={calLink}
       data-cal-config='{"layout":"month_view"}'
@@ -35,4 +35,4 @@ export function CalButton({
       {children}
     </button>
   );
-} 
+}

@@ -11,7 +11,12 @@ interface ServiceCardProps {
   delay: number;
 }
 
-const ServiceCard: React.FC<ServiceCardProps> = ({ emoji, title, description, delay }) => {
+const ServiceCard: React.FC<ServiceCardProps> = ({
+  emoji,
+  title,
+  description,
+  delay,
+}) => {
   return (
     <motion.div
       initial={{
@@ -29,7 +34,9 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ emoji, title, description, de
       }}
       className="flex flex-col items-center p-5 sm:p-6 rounded-xl border border-neutral-800 hover:border-neutral-700 bg-black/20 backdrop-blur-sm transition-all duration-300 text-center group hover:translate-y-[-5px]"
     >
-      <div className="text-4xl mb-4 transform group-hover:scale-110 transition-all duration-300">{emoji}</div>
+      <div className="text-4xl mb-4 transform group-hover:scale-110 transition-all duration-300">
+        {emoji}
+      </div>
       <h3 className="text-xl font-medium text-white mb-3">{title}</h3>
       <p className="text-base leading-relaxed text-neutral-400 max-w-xs">
         {description}
@@ -43,19 +50,22 @@ export const ServiceCards: React.FC = () => {
     {
       emoji: "🧠",
       title: "Voice AI Agents",
-      description: "Human-like agents that answer customer calls, handle FAQs, and schedule appointments.",
+      description:
+        "Human-like agents that answer customer calls, handle FAQs, and schedule appointments.",
       delay: 0.5,
     },
     {
       emoji: "⚙️",
       title: "Workflow Automation",
-      description: "Eliminate manual processes like follow-ups, reminders, or emails with seamless backend automations.",
+      description:
+        "Eliminate manual processes like follow-ups, reminders, or emails with seamless backend automations.",
       delay: 0.6,
     },
     {
       emoji: "📅",
       title: "Appointment Setting Agents",
-      description: "Qualify leads and sync with your calendar — no human assistant required.",
+      description:
+        "Qualify leads and sync with your calendar — no human assistant required.",
       delay: 0.7,
     },
   ];
@@ -89,9 +99,11 @@ export const ServiceCards: React.FC = () => {
         transition={{ duration: 0.5, delay: 0.4 }}
         className="text-center mb-12"
       >
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Our AI-Powered Services</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+          Our AI-Powered Services
+        </h2>
       </motion.div>
-      
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {services.map((service, index) => (
           <ServiceCard
@@ -107,4 +119,4 @@ export const ServiceCards: React.FC = () => {
   );
 };
 
-export default ServiceCards; 
+export default ServiceCards;
