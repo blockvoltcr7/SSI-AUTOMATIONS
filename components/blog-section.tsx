@@ -19,7 +19,7 @@ export function BlogSection({ blogs }: BlogSectionProps) {
         <div className="relative z-20 py-10">
           <h1
             className={cn(
-              "scroll-m-20 text-4xl font-bold text-center md:text-left tracking-tight text-black dark:text-white mb-6"
+              "scroll-m-20 text-4xl font-bold text-center md:text-left tracking-tight text-black dark:text-white mb-6",
             )}
           >
             Latest from the Blog

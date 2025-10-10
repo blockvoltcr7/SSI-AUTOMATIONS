@@ -15,14 +15,14 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
             <FeaturedTestimonials />
             <p
               className={cn(
-                "font-semibold text-xl text-center text-muted dark:text-muted-dark"
+                "font-semibold text-xl text-center text-muted dark:text-muted-dark",
               )}
             >
               Every AI is used by thousands of users
             </p>
             <p
               className={cn(
-                "font-normal text-base text-center text-neutral-500 dark:text-neutral-400 mt-8"
+                "font-normal text-base text-center text-neutral-500 dark:text-neutral-400 mt-8",
               )}
             >
               With lots of AI applications around, Everything AI stands out with

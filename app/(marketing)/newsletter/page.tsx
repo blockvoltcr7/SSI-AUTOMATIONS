@@ -28,7 +28,8 @@ export default function NewsletterPage() {
               AI Learning Newsletter
             </h1>
             <p className="text-lg md:text-xl text-neutral-400 max-w-2xl mx-auto">
-              Stay ahead of the curve with curated AI learning resources, course updates, and expert insights delivered to your inbox.
+              Stay ahead of the curve with curated AI learning resources, course
+              updates, and expert insights delivered to your inbox.
             </p>
           </div>
 
@@ -59,7 +60,9 @@ export default function NewsletterPage() {
                 Curated Course Picks
               </h3>
               <p className="text-neutral-400">
-                Handpicked courses from top platforms like OpenAI Academy, DeepLearning.ai, and Claude for Education—no noise, just quality.
+                Handpicked courses from top platforms like OpenAI Academy,
+                DeepLearning.ai, and Claude for Education—no noise, just
+                quality.
               </p>
             </div>
 
@@ -83,7 +86,8 @@ export default function NewsletterPage() {
                 Platform Updates
               </h3>
               <p className="text-neutral-400">
-                Be the first to know about new features, course launches, and exclusive opportunities from featured AI learning platforms.
+                Be the first to know about new features, course launches, and
+                exclusive opportunities from featured AI learning platforms.
               </p>
             </div>
 
@@ -107,7 +111,8 @@ export default function NewsletterPage() {
                 Learning Tips & Insights
               </h3>
               <p className="text-neutral-400">
-                Practical advice, study strategies, and expert insights to help you maximize your AI learning journey.
+                Practical advice, study strategies, and expert insights to help
+                you maximize your AI learning journey.
               </p>
             </div>
 
@@ -131,7 +136,8 @@ export default function NewsletterPage() {
                 Community Highlights
               </h3>
               <p className="text-neutral-400">
-                Success stories, community achievements, and trending discussions from the AI learning community.
+                Success stories, community achievements, and trending
+                discussions from the AI learning community.
               </p>
             </div>
           </div>
@@ -151,7 +157,8 @@ export default function NewsletterPage() {
                     Weekly or Bi-weekly Delivery
                   </h4>
                   <p className="text-neutral-400 text-sm">
-                    Receive our newsletter directly to your inbox at a consistent cadence—never overwhelming, always valuable.
+                    Receive our newsletter directly to your inbox at a
+                    consistent cadence—never overwhelming, always valuable.
                   </p>
                 </div>
               </div>
@@ -165,7 +172,9 @@ export default function NewsletterPage() {
                     Course of the Week
                   </h4>
                   <p className="text-neutral-400 text-sm">
-                    One carefully selected course or learning resource that stands out, with clear explanations of why it's worth your time.
+                    One carefully selected course or learning resource that
+                    stands out, with clear explanations of why it's worth your
+                    time.
                   </p>
                 </div>
               </div>
@@ -179,7 +188,8 @@ export default function NewsletterPage() {
                     Actionable Insights
                   </h4>
                   <p className="text-neutral-400 text-sm">
-                    No fluff, just practical tips and strategies you can apply immediately to accelerate your learning.
+                    No fluff, just practical tips and strategies you can apply
+                    immediately to accelerate your learning.
                   </p>
                 </div>
               </div>
@@ -193,7 +203,8 @@ export default function NewsletterPage() {
                     Unsubscribe Anytime
                   </h4>
                   <p className="text-neutral-400 text-sm">
-                    No commitment required. Unsubscribe with one click if our newsletter isn't the right fit for you.
+                    No commitment required. Unsubscribe with one click if our
+                    newsletter isn't the right fit for you.
                   </p>
                 </div>
               </div>

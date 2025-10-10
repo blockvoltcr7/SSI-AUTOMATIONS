@@ -28,7 +28,7 @@ export const MobileNavbar = ({ navItems }: any) => {
       className={cn(
         "flex justify-between bg-white dark:bg-neutral-900 items-center w-full rounded-full px-2.5 py-1.5 transition duration-200",
         showBackground &&
-          "bg-neutral-50 dark:bg-neutral-900 shadow-[0px_-2px_0px_0px_var(--neutral-100),0px_2px_0px_0px_var(--neutral-100)] dark:shadow-[0px_-2px_0px_0px_var(--neutral-800),0px_2px_0px_0px_var(--neutral-800)]"
+          "bg-neutral-50 dark:bg-neutral-900 shadow-[0px_-2px_0px_0px_var(--neutral-100),0px_2px_0px_0px_var(--neutral-100)] dark:shadow-[0px_-2px_0px_0px_var(--neutral-800),0px_2px_0px_0px_var(--neutral-800)]",
       )}
     >
       <Logo />
@@ -45,7 +45,7 @@ export const MobileNavbar = ({ navItems }: any) => {
                 className="h-8 w-8 text-black dark:text-white"
                 onClick={() => setOpen(!open)}
               />
-          </div>
+            </div>
           </div>
           <div className="flex flex-col items-start justify-start gap-[14px] px-8">
             {navItems.map((navItem: any, idx: number) => (

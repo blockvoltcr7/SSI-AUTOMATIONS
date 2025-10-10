@@ -1,6 +1,6 @@
-import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
-import type { Database } from './types'
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
+import type { Database } from "./types";
 
 export function createClient() {
   return createServerClient<Database>(
@@ -11,10 +11,10 @@ export function createClient() {
         getAll: () => cookies().getAll(),
         setAll: (cookiesToSet) => {
           cookiesToSet.forEach(({ name, value, options }) => {
-            cookies().set(name, value, options)
-          })
+            cookies().set(name, value, options);
+          });
         },
-      }
-    }
-  )
+      },
+    },
+  );
 }

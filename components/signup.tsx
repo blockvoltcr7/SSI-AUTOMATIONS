@@ -167,7 +167,7 @@ export function SignupForm() {
                   <Button className="w-full">Sign Up</Button>
                   <p
                     className={cn(
-                      "text-sm text-neutral-500 text-center mt-4 text-muted dark:text-muted-dark"
+                      "text-sm text-neutral-500 text-center mt-4 text-muted dark:text-muted-dark",
                     )}
                   >
                     Already have an account?{" "}

@@ -18,7 +18,7 @@ export const SkeletonTwo = () => {
       },
       {
         delay: stagger(0.5),
-      }
+      },
     );
     setAnimating(false);
   };

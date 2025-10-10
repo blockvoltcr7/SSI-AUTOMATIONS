@@ -11,7 +11,12 @@ interface HubCardProps {
   delay: number;
 }
 
-const HubCard: React.FC<HubCardProps> = ({ title, url, description, delay }) => {
+const HubCard: React.FC<HubCardProps> = ({
+  title,
+  url,
+  description,
+  delay,
+}) => {
   return (
     <motion.a
       href={url}
@@ -56,7 +61,12 @@ const HubCard: React.FC<HubCardProps> = ({ title, url, description, delay }) => 
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M17 8l4 4m0 0l-4 4m4-4H3"
+          />
         </svg>
       </div>
     </motion.a>
@@ -68,25 +78,29 @@ export const HubCards: React.FC = () => {
     {
       title: "OpenAI Academy",
       url: "https://academy.openai.com/home",
-      description: "Official OpenAI learning hub for GPTs, agents, safety, and AI workflows.",
+      description:
+        "Official OpenAI learning hub for GPTs, agents, safety, and AI workflows.",
       delay: 0.1,
     },
     {
       title: "Claude for Education (Anthropic)",
       url: "https://claude.com/solutions/education",
-      description: "Responsible AI learning with Claude—advanced reasoning, safe integrations, and classroom resources.",
+      description:
+        "Responsible AI learning with Claude—advanced reasoning, safe integrations, and classroom resources.",
       delay: 0.2,
     },
     {
       title: "DeepLearning.ai",
       url: "https://www.deeplearning.ai/",
-      description: "Industry-recognized AI courses from Andrew Ng and experts across the field.",
+      description:
+        "Industry-recognized AI courses from Andrew Ng and experts across the field.",
       delay: 0.3,
     },
     {
       title: "AI Engineer (Community)",
       url: "https://www.ai.engineer/",
-      description: "The builder community for modern AI engineering—news, events, and practical resources.",
+      description:
+        "The builder community for modern AI engineering—news, events, and practical resources.",
       delay: 0.4,
     },
   ];

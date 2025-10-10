@@ -30,7 +30,7 @@ export const Heading = ({
         "font-medium",
         "text-black dark:text-white",
         sizeVariants[size],
-        className
+        className,
       )}
       {...props}
     >

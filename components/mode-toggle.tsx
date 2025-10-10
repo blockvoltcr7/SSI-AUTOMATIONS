@@ -8,7 +8,9 @@ import { motion } from "framer-motion";
 
 export function ModeToggle() {
   const { theme, setTheme } = useTheme();
-  const [localTheme, setLocalTheme] = React.useState<string | undefined>(undefined);
+  const [localTheme, setLocalTheme] = React.useState<string | undefined>(
+    undefined,
+  );
 
   React.useEffect(() => {
     setLocalTheme(theme);

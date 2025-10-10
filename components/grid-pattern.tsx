@@ -5,7 +5,7 @@ export function GridPatternContainer({ className }: { className?: string }) {
     <div
       className={cn(
         "absolute inset-0 pointer-events-none [mask-image:radial-gradient(ellipse_at_center,white,transparent)]",
-        className
+        className,
       )}
     >
       <GridPattern />
@@ -31,7 +31,7 @@ export function GridPattern() {
               }`}
             />
           );
-        })
+        }),
       )}
     </div>
   );

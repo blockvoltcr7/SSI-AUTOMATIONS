@@ -1,5 +1,8 @@
-pnpm clear-cache
-pnpm build
-pnpm lint
-pnpm format
-pnpm type-check
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+pnpm run clear-cache
+pnpm run build
+pnpm run lint
+pnpm run format
+pnpm run type-check

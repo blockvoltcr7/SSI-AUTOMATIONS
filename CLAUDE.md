@@ -7,6 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 SSI Automations is a Next.js 14 marketing website for AI solutions and automation services for small businesses. The site features a blog system, contact forms, newsletter signup, and various marketing pages.
 
 **Tech Stack:**
+
 - Next.js 14.2.15 (App Router)
 - React 18
 - TypeScript 5
@@ -18,6 +19,7 @@ SSI Automations is a Next.js 14 marketing website for AI solutions and automatio
 ## Development Commands
 
 ### Daily Development
+
 ```bash
 npm run dev          # Start dev server at http://localhost:3000
 npm run build        # Build for production
@@ -26,6 +28,7 @@ npm run lint         # Run ESLint
 ```
 
 ### Testing
+
 ```bash
 npm test                # Run all tests
 npm run test:watch      # Run tests in watch mode
@@ -67,11 +70,13 @@ Route groups `(marketing)` and `(auth)` organize pages with shared layouts witho
 ### Component Architecture
 
 **Component Types:**
+
 - **UI Components** (`components/ui/`) - Reusable primitives
 - **Feature Components** (`components/`) - Business logic components
 - **Layout Components** - `navbar/`, `footer.tsx`, `container.tsx`
 
 **Key Components:**
+
 - `components/navbar/` - Split into desktop/mobile variants
 - `components/blog-section.tsx` - Homepage blog preview
 - `components/newsletter-section.tsx` - Newsletter signup
@@ -84,13 +89,14 @@ Blog posts are MDX files stored in `content/blog/` with frontmatter metadata:
 
 ```typescript
 // lib/blog.ts provides utilities:
-getAllBlogSlugs()           // Get all post slugs
-getBlogBySlug(slug)         // Get single post with metadata
-getAllBlogs()               // Get all posts sorted by date
-getFeaturedBlogs(limit)     // Get n most recent posts
+getAllBlogSlugs(); // Get all post slugs
+getBlogBySlug(slug); // Get single post with metadata
+getAllBlogs(); // Get all posts sorted by date
+getFeaturedBlogs(limit); // Get n most recent posts
 ```
 
 **Blog Post Structure:**
+
 ```yaml
 ---
 title: "Post Title"
@@ -110,6 +116,7 @@ Blog posts are rendered with syntax highlighting via Prism and support GitHub-fl
 ### API Routes
 
 **Contact Form API** (`app/api/contact/route.ts`):
+
 - Rate limited (3 requests/minute via LRU cache)
 - Sends emails via SendGrid
 - Requires env vars: `SENDGRID_API_KEY`, `ADMIN_EMAIL_ADDRESS`, `FROM_EMAIL_ADDRESS`
@@ -118,18 +125,21 @@ Blog posts are rendered with syntax highlighting via Prism and support GitHub-fl
 ### Styling System
 
 **Tailwind Configuration:**
+
 - Custom theme in `tailwind.config.ts`
 - Dark mode support via `next-themes`
 - Typography plugin for blog content (`@tailwindcss/typography`)
 - Utility function: `lib/utils.ts` exports `cn()` for className merging
 
 **Fonts:**
+
 - Uses Geist Sans via `geist/font/sans`
 - Configured in root layout with `antialiased` class
 
 ### State Management
 
 **Theme Provider:**
+
 - Located in `context/theme-provider.tsx`
 - Wraps app in root layout
 - Provides dark/light/system theme switching
@@ -137,6 +147,7 @@ Blog posts are rendered with syntax highlighting via Prism and support GitHub-fl
 ### Image Handling
 
 Remote images configured in `next.config.mjs`:
+
 - `i.pravatar.cc` - Avatar placeholders
 - `images.unsplash.com` - Stock imagery
 
@@ -168,6 +179,7 @@ Use Next.js `<Image>` component for all images.
 ### Modifying Forms
 
 Forms use `react-hook-form` with `zod` validation:
+
 - Define schema with Zod
 - Use `@hookform/resolvers/zod` for integration
 - See `components/contact.tsx` for reference implementation
@@ -175,6 +187,7 @@ Forms use `react-hook-form` with `zod` validation:
 ## Environment Variables
 
 Required for production:
+
 ```bash
 SENDGRID_API_KEY=         # SendGrid email service
 ADMIN_EMAIL_ADDRESS=      # Where contact forms are sent
@@ -191,14 +204,16 @@ NODE_ENV=production       # Enables Meta verification tag
 ## Path Aliases
 
 TypeScript configured with `@/*` alias mapping to root directory:
+
 ```typescript
-import { Component } from "@/components/component"
-import { utils } from "@/lib/utils"
+import { Component } from "@/components/component";
+import { utils } from "@/lib/utils";
 ```
 
 ## MDX Configuration
 
 MDX support configured in `next.config.mjs`:
+
 - `remarkPlugins`: `remark-gfm` for GitHub-flavored markdown
 - `rehypePlugins`: `rehype-prism` for code syntax highlighting
 - Supports `.md` and `.mdx` extensions
@@ -208,12 +223,14 @@ Syntax highlighting styles in `app/prism.css`.
 ## Testing Strategy
 
 **Coverage Requirements:**
+
 - Branches: 80%
 - Functions: 80%
 - Lines: 80%
 - Statements: 80%
 
 **Test Exclusions:**
+
 - Type definitions (`.d.ts`)
 - Private files (`_*.{js,jsx,ts,tsx}`)
 - API routes
@@ -237,20 +254,23 @@ When creating PRs, target `main` branch.
 ## Common Patterns
 
 **Conditional Rendering:**
+
 ```typescript
-const isProduction = process.env.NODE_ENV === 'production'
+const isProduction = process.env.NODE_ENV === "production";
 ```
 
 **Blog Queries:**
+
 ```typescript
 // Homepage
-const featuredBlogs = getFeaturedBlogs(3)
+const featuredBlogs = getFeaturedBlogs(3);
 
 // Blog listing page
-const allBlogs = getAllBlogs()
+const allBlogs = getAllBlogs();
 ```
 
 **Styling Pattern:**
+
 ```typescript
 import { cn } from "@/lib/utils"
 

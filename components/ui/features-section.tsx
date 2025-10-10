@@ -5,7 +5,13 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { IconBrandYoutubeFilled, IconBrain, IconCalendar, IconRobot, IconGlobe } from "@tabler/icons-react";
+import {
+  IconBrandYoutubeFilled,
+  IconBrain,
+  IconCalendar,
+  IconRobot,
+  IconGlobe,
+} from "@tabler/icons-react";
 import Link from "next/link";
 
 export function FeaturesSection() {
@@ -30,8 +36,7 @@ export function FeaturesSection() {
       description:
         "Watch how our AI solutions can transform your business operations and improve customer experience.",
       skeleton: <SkeletonThree />,
-      className:
-        "col-span-1 lg:col-span-3 lg:border-r dark:border-neutral-800",
+      className: "col-span-1 lg:col-span-3 lg:border-r dark:border-neutral-800",
     },
     {
       title: "Appointment Setting Agents",
@@ -49,7 +54,8 @@ export function FeaturesSection() {
         </h4>
 
         <p className="mx-auto my-4 max-w-2xl text-center text-sm font-normal text-neutral-500 lg:text-base dark:text-neutral-300">
-          Automate your business operations, enhance customer experience, and boost efficiency with our cutting-edge AI technologies.
+          Automate your business operations, enhance customer experience, and
+          boost efficiency with our cutting-edge AI technologies.
         </p>
       </div>
 
@@ -226,4 +232,4 @@ export const Globe = ({ className }: { className?: string }) => {
       </div>
     </div>
   );
-}; 
+};

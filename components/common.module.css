@@ -22,18 +22,12 @@
   background-size: var(--width) var(--height);
 
   /* Fade out the edges */
-  mask: linear-gradient(
-      to left,
-      var(--background) var(--fade-stop),
-      transparent
-    ),
+  mask:
+    linear-gradient(to left, var(--background) var(--fade-stop), transparent),
     linear-gradient(to right, var(--background) var(--fade-stop), transparent),
     linear-gradient(black, black);
-  -webkit-mask: linear-gradient(
-      to left,
-      var(--background) var(--fade-stop),
-      transparent
-    ),
+  -webkit-mask:
+    linear-gradient(to left, var(--background) var(--fade-stop), transparent),
     linear-gradient(to right, var(--background) var(--fade-stop), transparent),
     linear-gradient(black, black);
   mask-composite: exclude;
@@ -65,18 +59,12 @@
   background-size: var(--width) var(--height);
 
   /* Fade out the edges */
-  mask: linear-gradient(
-      to left,
-      var(--background) var(--fade-stop),
-      transparent
-    ),
+  mask:
+    linear-gradient(to left, var(--background) var(--fade-stop), transparent),
     linear-gradient(to right, var(--background) var(--fade-stop), transparent),
     linear-gradient(black, black);
-  -webkit-mask: linear-gradient(
-      to left,
-      var(--background) var(--fade-stop),
-      transparent
-    ),
+  -webkit-mask:
+    linear-gradient(to left, var(--background) var(--fade-stop), transparent),
     linear-gradient(to right, var(--background) var(--fade-stop), transparent),
     linear-gradient(black, black);
   mask-composite: exclude;
@@ -106,14 +94,12 @@
   );
   background-size: var(--width) var(--height);
 
-  mask: linear-gradient(to top, var(--background) var(--fade-stop), transparent),
+  mask:
+    linear-gradient(to top, var(--background) var(--fade-stop), transparent),
     linear-gradient(to bottom, var(--background) var(--fade-stop), transparent),
     linear-gradient(black, black);
-  -webkit-mask: linear-gradient(
-      to top,
-      var(--background) var(--fade-stop),
-      transparent
-    ),
+  -webkit-mask:
+    linear-gradient(to top, var(--background) var(--fade-stop), transparent),
     linear-gradient(to bottom, var(--background) var(--fade-stop), transparent),
     linear-gradient(black, black);
   mask-composite: exclude;
@@ -143,14 +129,12 @@
   );
   background-size: var(--width) var(--height);
 
-  mask: linear-gradient(to top, var(--background) var(--fade-stop), transparent),
+  mask:
+    linear-gradient(to top, var(--background) var(--fade-stop), transparent),
     linear-gradient(to bottom, var(--background) var(--fade-stop), transparent),
     linear-gradient(black, black);
-  -webkit-mask: linear-gradient(
-      to top,
-      var(--background) var(--fade-stop),
-      transparent
-    ),
+  -webkit-mask:
+    linear-gradient(to top, var(--background) var(--fade-stop), transparent),
     linear-gradient(to bottom, var(--background) var(--fade-stop), transparent),
     linear-gradient(black, black);
   mask-composite: exclude;

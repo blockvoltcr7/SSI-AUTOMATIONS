@@ -1,10 +1,12 @@
-import { cookies } from 'next/headers'
+import { cookies } from "next/headers";
 
 export function getAllCookies(): Record<string, string> {
   const out: Record<string, string> = {};
-  cookies().getAll().forEach(({ name, value }) => {
-    out[name] = value;
-  });
+  cookies()
+    .getAll()
+    .forEach(({ name, value }) => {
+      out[name] = value;
+    });
   return out;
 }
 

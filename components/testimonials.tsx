@@ -212,7 +212,7 @@ function Testimonial({
     <figure
       className={cn(
         "animate-fade-in rounded-3xl bg-transparent p-8 opacity-0 shadow-derek dark:bg-neutral-900",
-        className
+        className,
       )}
       style={{
         animationDelay,
@@ -268,7 +268,7 @@ function TestimonialColumn({
             designation={testimonial.designation}
             key={testimonialIndex}
             className={containerClassName?.(
-              testimonialIndex % testimonials.length
+              testimonialIndex % testimonials.length,
             )}
           />
         ))}
@@ -300,7 +300,7 @@ function TestimonialGrid() {
         containerClassName={(tIndex) =>
           cn(
             tIndex >= column1.length + column3[0].length && "md:hidden",
-            tIndex >= column1.length && "lg:hidden"
+            tIndex >= column1.length && "lg:hidden",
           )
         }
         shift={10}

@@ -20,15 +20,15 @@ The verification is implemented using Next.js 13+ App Router's metadata API, whi
 // Production-only Meta Business Suite domain verification
 // Required for Facebook/Meta integrations and business features
 // Verification token obtained from Meta Business Suite dashboard
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === "production";
 
 export const metadata: Metadata = {
   // ... other metadata
   ...(isProduction && {
     other: {
-      'facebook-domain-verification': 'your_verification_token_here'
-    }
-  })
+      "facebook-domain-verification": "your_verification_token_here",
+    },
+  }),
 };
 ```
 
@@ -45,12 +45,14 @@ The Meta verification tag is configured to appear **only in production** for the
 ### Environment Variables
 
 No additional environment variables are required. The implementation uses:
+
 - `NODE_ENV === 'production'` for environment detection
 - Hardcoded verification token (as provided by Meta Business Suite)
 
 ## Verification Steps for Meta Business Suite
 
 ### 1. Initial Setup
+
 1. Access Meta Business Suite dashboard
 2. Navigate to Business Settings → Domains
 3. Add your production domain (`ssiautomations.com`)
@@ -58,17 +60,20 @@ No additional environment variables are required. The implementation uses:
 5. Copy the provided verification token
 
 ### 2. Implementation
+
 1. Update `/app/layout.tsx` with the verification token
 2. Deploy to production environment
 3. Ensure the meta tag appears in the HTML source
 
 ### 3. Verification Process
+
 1. Return to Meta Business Suite dashboard
 2. Click "Verify Domain" for your domain entry
 3. Meta will crawl your production site looking for the meta tag
 4. Verification typically completes within 24 hours
 
 ### 4. Confirmation
+
 - Check Business Suite for "Verified" status
 - Monitor for any verification failure notifications
 - Test Meta integrations if applicable
@@ -78,30 +83,38 @@ No additional environment variables are required. The implementation uses:
 ### Common Issues
 
 #### Meta Tag Not Found
+
 **Symptoms**: Meta reports unable to find verification tag
 **Solutions**:
+
 1. Verify production deployment is live
 2. Check that `NODE_ENV=production` in production environment
 3. Inspect HTML source for presence of meta tag
 4. Clear CDN/cache if applicable
 
 #### Verification Token Mismatch
+
 **Symptoms**: Tag found but verification fails
 **Solutions**:
+
 1. Re-copy token from Meta Business Suite
 2. Check for extra spaces or characters in token
 3. Ensure token is exactly as provided by Meta
 
 #### Development Environment Issues
+
 **Symptoms**: Meta tag appearing in development
 **Solutions**:
+
 1. Verify environment detection logic
 2. Check `NODE_ENV` value in development
 3. Restart development server after changes
 
 #### Deployment Issues
+
 **Symptoms**: Tag not appearing after deployment
 **Solutions**:
+
 1. Verify build process includes metadata
 2. Check production environment variables
 3. Review deployment logs for errors
@@ -127,6 +140,7 @@ npm run build
 If verification causes issues:
 
 1. **Quick Fix**: Comment out the verification metadata
+
 ```typescript
 // Temporarily disabled - Meta verification
 // ...(isProduction && {
@@ -164,6 +178,7 @@ git revert <commit-hash>
 ### Meta Business Suite Features
 
 With domain verification, the following features become available:
+
 - Facebook Pixel implementation
 - Conversions API setup
 - Business Manager integrations

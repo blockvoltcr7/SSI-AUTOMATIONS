@@ -85,7 +85,9 @@ export function NewsletterSignup() {
               Successfully Subscribed!
             </h3>
             <p className="text-neutral-400 max-w-md">
-              Thank you for subscribing to our AI Learning Newsletter. You'll receive curated content, course updates, and learning tips straight to your inbox.
+              Thank you for subscribing to our AI Learning Newsletter. You'll
+              receive curated content, course updates, and learning tips
+              straight to your inbox.
             </p>
           </motion.div>
         )}

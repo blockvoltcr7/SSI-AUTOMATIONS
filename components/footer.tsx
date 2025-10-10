@@ -15,7 +15,9 @@ export const Footer = () => {
           </div>
 
           <div className="flex flex-col md:items-center">
-            <h3 className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-4">Pages</h3>
+            <h3 className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-4">
+              Pages
+            </h3>
             <div className="flex flex-col space-y-2">
               <Link
                 href="/about"

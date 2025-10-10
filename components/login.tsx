@@ -140,7 +140,7 @@ export function LoginForm() {
                   <Button className="w-full">Sign in</Button>
                   <p
                     className={cn(
-                      "text-sm text-neutral-500 text-center mt-4 text-muted dark:text-muted-dark"
+                      "text-sm text-neutral-500 text-center mt-4 text-muted dark:text-muted-dark",
                     )}
                   >
                     Don&apos; have an account?{" "}
