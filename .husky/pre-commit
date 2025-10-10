@@ -1,0 +1,5 @@
+pnpm clear-cache
+pnpm build
+pnpm lint
+pnpm format
+pnpm type-check
