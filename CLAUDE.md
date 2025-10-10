@@ -1,417 +1,258 @@
-# Task Master AI - Claude Code Integration Guide
+# CLAUDE.md
 
-## Essential Commands
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-### Core Workflow Commands
+## Project Overview
 
+SSI Automations is a Next.js 14 marketing website for AI solutions and automation services for small businesses. The site features a blog system, contact forms, newsletter signup, and various marketing pages.
+
+**Tech Stack:**
+- Next.js 14.2.15 (App Router)
+- React 18
+- TypeScript 5
+- Tailwind CSS
+- MDX for blog content
+- SendGrid for email
+- Framer Motion for animations
+
+## Development Commands
+
+### Daily Development
 ```bash
-# Project Setup
-task-master init                                    # Initialize Task Master in current project
-task-master parse-prd .taskmaster/docs/prd.txt      # Generate tasks from PRD document
-task-master models --setup                        # Configure AI models interactively
-
-# Daily Development Workflow
-task-master list                                   # Show all tasks with status
-task-master next                                   # Get next available task to work on
-task-master show <id>                             # View detailed task information (e.g., task-master show 1.2)
-task-master set-status --id=<id> --status=done    # Mark task complete
-
-# Task Management
-task-master add-task --prompt="description" --research        # Add new task with AI assistance
-task-master expand --id=<id> --research --force              # Break task into subtasks
-task-master update-task --id=<id> --prompt="changes"         # Update specific task
-task-master update --from=<id> --prompt="changes"            # Update multiple tasks from ID onwards
-task-master update-subtask --id=<id> --prompt="notes"        # Add implementation notes to subtask
-
-# Analysis & Planning
-task-master analyze-complexity --research          # Analyze task complexity
-task-master complexity-report                      # View complexity analysis
-task-master expand --all --research               # Expand all eligible tasks
-
-# Dependencies & Organization
-task-master add-dependency --id=<id> --depends-on=<id>       # Add task dependency
-task-master move --from=<id> --to=<id>                       # Reorganize task hierarchy
-task-master validate-dependencies                            # Check for dependency issues
-task-master generate                                         # Update task markdown files (usually auto-called)
+npm run dev          # Start dev server at http://localhost:3000
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Run ESLint
 ```
 
-## Key Files & Project Structure
-
-### Core Files
-
-- `.taskmaster/tasks/tasks.json` - Main task data file (auto-managed)
-- `.taskmaster/config.json` - AI model configuration (use `task-master models` to modify)
-- `.taskmaster/docs/prd.txt` - Product Requirements Document for parsing
-- `.taskmaster/tasks/*.txt` - Individual task files (auto-generated from tasks.json)
-- `.env` - API keys for CLI usage
-
-### Claude Code Integration Files
-
-- `CLAUDE.md` - Auto-loaded context for Claude Code (this file)
-- `.claude/settings.json` - Claude Code tool allowlist and preferences
-- `.claude/commands/` - Custom slash commands for repeated workflows
-- `.mcp.json` - MCP server configuration (project-specific)
-
-### Directory Structure
-
-```
-project/
-├── .taskmaster/
-│   ├── tasks/              # Task files directory
-│   │   ├── tasks.json      # Main task database
-│   │   ├── task-1.md      # Individual task files
-│   │   └── task-2.md
-│   ├── docs/              # Documentation directory
-│   │   ├── prd.txt        # Product requirements
-│   ├── reports/           # Analysis reports directory
-│   │   └── task-complexity-report.json
-│   ├── templates/         # Template files
-│   │   └── example_prd.txt  # Example PRD template
-│   └── config.json        # AI models & settings
-├── .claude/
-│   ├── settings.json      # Claude Code configuration
-│   └── commands/         # Custom slash commands
-├── .env                  # API keys
-├── .mcp.json            # MCP configuration
-└── CLAUDE.md            # This file - auto-loaded by Claude Code
-```
-
-## MCP Integration
-
-Task Master provides an MCP server that Claude Code can connect to. Configure in `.mcp.json`:
-
-```json
-{
-  "mcpServers": {
-    "task-master-ai": {
-      "command": "npx",
-      "args": ["-y", "--package=task-master-ai", "task-master-ai"],
-      "env": {
-        "ANTHROPIC_API_KEY": "your_key_here",
-        "PERPLEXITY_API_KEY": "your_key_here",
-        "OPENAI_API_KEY": "OPENAI_API_KEY_HERE",
-        "GOOGLE_API_KEY": "GOOGLE_API_KEY_HERE",
-        "XAI_API_KEY": "XAI_API_KEY_HERE",
-        "OPENROUTER_API_KEY": "OPENROUTER_API_KEY_HERE",
-        "MISTRAL_API_KEY": "MISTRAL_API_KEY_HERE",
-        "AZURE_OPENAI_API_KEY": "AZURE_OPENAI_API_KEY_HERE",
-        "OLLAMA_API_KEY": "OLLAMA_API_KEY_HERE"
-      }
-    }
-  }
-}
-```
-
-### Essential MCP Tools
-
-```javascript
-help; // = shows available taskmaster commands
-// Project setup
-initialize_project; // = task-master init
-parse_prd; // = task-master parse-prd
-
-// Daily workflow
-get_tasks; // = task-master list
-next_task; // = task-master next
-get_task; // = task-master show <id>
-set_task_status; // = task-master set-status
-
-// Task management
-add_task; // = task-master add-task
-expand_task; // = task-master expand
-update_task; // = task-master update-task
-update_subtask; // = task-master update-subtask
-update; // = task-master update
-
-// Analysis
-analyze_project_complexity; // = task-master analyze-complexity
-complexity_report; // = task-master complexity-report
-```
-
-## Claude Code Workflow Integration
-
-### Standard Development Workflow
-
-#### 1. Project Initialization
-
+### Testing
 ```bash
-# Initialize Task Master
-task-master init
-
-# Create or obtain PRD, then parse it
-task-master parse-prd .taskmaster/docs/prd.txt
-
-# Analyze complexity and expand tasks
-task-master analyze-complexity --research
-task-master expand --all --research
+npm test                # Run all tests
+npm run test:watch      # Run tests in watch mode
+npm run test:coverage   # Run tests with coverage report
 ```
 
-If tasks already exist, another PRD can be parsed (with new information only!) using parse-prd with --append flag. This will add the generated tasks to the existing list of tasks..
+Tests are located in `tests/` directory and use Jest with React Testing Library. Test files should match pattern `*.test.ts` or `*.test.tsx`.
 
-#### 2. Daily Development Loop
+## Architecture & Code Organization
 
-```bash
-# Start each session
-task-master next                           # Find next available task
-task-master show <id>                     # Review task details
+### App Router Structure
 
-# During implementation, check in code context into the tasks and subtasks
-task-master update-subtask --id=<id> --prompt="implementation notes..."
+Uses Next.js App Router with route groups for organization:
 
-# Complete tasks
-task-master set-status --id=<id> --status=done
+```
+app/
+├── (marketing)/          # Public marketing pages (shared layout)
+│   ├── page.tsx         # Homepage
+│   ├── about/
+│   ├── blog/
+│   │   ├── page.tsx    # Blog listing
+│   │   └── [slug]/     # Dynamic blog post pages
+│   ├── contact/
+│   ├── pricing/
+│   ├── newsletter/
+│   └── ...
+├── (auth)/              # Authentication pages (shared layout)
+│   ├── login/
+│   └── signup/
+├── api/                 # API routes
+│   └── contact/
+│       └── route.ts    # Contact form handler
+├── layout.tsx          # Root layout
+└── globals.css         # Global styles
 ```
 
-#### 3. Multi-Claude Workflows
+Route groups `(marketing)` and `(auth)` organize pages with shared layouts without affecting URL structure.
 
-For complex projects, use multiple Claude Code sessions:
+### Component Architecture
 
-```bash
-# Terminal 1: Main implementation
-cd project && claude
+**Component Types:**
+- **UI Components** (`components/ui/`) - Reusable primitives
+- **Feature Components** (`components/`) - Business logic components
+- **Layout Components** - `navbar/`, `footer.tsx`, `container.tsx`
 
-# Terminal 2: Testing and validation
-cd project-test-worktree && claude
+**Key Components:**
+- `components/navbar/` - Split into desktop/mobile variants
+- `components/blog-section.tsx` - Homepage blog preview
+- `components/newsletter-section.tsx` - Newsletter signup
+- `components/contact.tsx` - Contact form with validation
+- `components/background.tsx` - Animated gradient background
 
-# Terminal 3: Documentation updates
-cd project-docs-worktree && claude
+### Blog System
+
+Blog posts are MDX files stored in `content/blog/` with frontmatter metadata:
+
+```typescript
+// lib/blog.ts provides utilities:
+getAllBlogSlugs()           // Get all post slugs
+getBlogBySlug(slug)         // Get single post with metadata
+getAllBlogs()               // Get all posts sorted by date
+getFeaturedBlogs(limit)     // Get n most recent posts
 ```
 
-### Custom Slash Commands
-
-Create `.claude/commands/taskmaster-next.md`:
-
-```markdown
-Find the next available Task Master task and show its details.
-
-Steps:
-
-1. Run `task-master next` to get the next task
-2. If a task is available, run `task-master show <id>` for full details
-3. Provide a summary of what needs to be implemented
-4. Suggest the first implementation step
-```
-
-Create `.claude/commands/taskmaster-complete.md`:
-
-```markdown
-Complete a Task Master task: $ARGUMENTS
-
-Steps:
-
-1. Review the current task with `task-master show $ARGUMENTS`
-2. Verify all implementation is complete
-3. Run any tests related to this task
-4. Mark as complete: `task-master set-status --id=$ARGUMENTS --status=done`
-5. Show the next available task with `task-master next`
-```
-
-## Tool Allowlist Recommendations
-
-Add to `.claude/settings.json`:
-
-```json
-{
-  "allowedTools": [
-    "Edit",
-    "Bash(task-master *)",
-    "Bash(git commit:*)",
-    "Bash(git add:*)",
-    "Bash(npm run *)",
-    "mcp__task_master_ai__*"
-  ]
-}
-```
-
-## Configuration & Setup
-
-### API Keys Required
-
-At least **one** of these API keys must be configured:
-
-- `ANTHROPIC_API_KEY` (Claude models) - **Recommended**
-- `PERPLEXITY_API_KEY` (Research features) - **Highly recommended**
-- `OPENAI_API_KEY` (GPT models)
-- `GOOGLE_API_KEY` (Gemini models)
-- `MISTRAL_API_KEY` (Mistral models)
-- `OPENROUTER_API_KEY` (Multiple models)
-- `XAI_API_KEY` (Grok models)
-
-An API key is required for any provider used across any of the 3 roles defined in the `models` command.
-
-### Model Configuration
-
-```bash
-# Interactive setup (recommended)
-task-master models --setup
-
-# Set specific models
-task-master models --set-main claude-3-5-sonnet-20241022
-task-master models --set-research perplexity-llama-3.1-sonar-large-128k-online
-task-master models --set-fallback gpt-4o-mini
-```
-
-## Task Structure & IDs
-
-### Task ID Format
-
-- Main tasks: `1`, `2`, `3`, etc.
-- Subtasks: `1.1`, `1.2`, `2.1`, etc.
-- Sub-subtasks: `1.1.1`, `1.1.2`, etc.
-
-### Task Status Values
-
-- `pending` - Ready to work on
-- `in-progress` - Currently being worked on
-- `done` - Completed and verified
-- `deferred` - Postponed
-- `cancelled` - No longer needed
-- `blocked` - Waiting on external factors
-
-### Task Fields
-
-```json
-{
-  "id": "1.2",
-  "title": "Implement user authentication",
-  "description": "Set up JWT-based auth system",
-  "status": "pending",
-  "priority": "high",
-  "dependencies": ["1.1"],
-  "details": "Use bcrypt for hashing, JWT for tokens...",
-  "testStrategy": "Unit tests for auth functions, integration tests for login flow",
-  "subtasks": []
-}
-```
-
-## Claude Code Best Practices with Task Master
-
-### Context Management
-
-- Use `/clear` between different tasks to maintain focus
-- This CLAUDE.md file is automatically loaded for context
-- Use `task-master show <id>` to pull specific task context when needed
-
-### Iterative Implementation
-
-1. `task-master show <subtask-id>` - Understand requirements
-2. Explore codebase and plan implementation
-3. `task-master update-subtask --id=<id> --prompt="detailed plan"` - Log plan
-4. `task-master set-status --id=<id> --status=in-progress` - Start work
-5. Implement code following logged plan
-6. `task-master update-subtask --id=<id> --prompt="what worked/didn't work"` - Log progress
-7. `task-master set-status --id=<id> --status=done` - Complete task
-
-### Complex Workflows with Checklists
-
-For large migrations or multi-step processes:
-
-1. Create a markdown PRD file describing the new changes: `touch task-migration-checklist.md` (prds can be .txt or .md)
-2. Use Taskmaster to parse the new prd with `task-master parse-prd --append` (also available in MCP)
-3. Use Taskmaster to expand the newly generated tasks into subtasks. Consdier using `analyze-complexity` with the correct --to and --from IDs (the new ids) to identify the ideal subtask amounts for each task. Then expand them.
-4. Work through items systematically, checking them off as completed
-5. Use `task-master update-subtask` to log progress on each task/subtask and/or updating/researching them before/during implementation if getting stuck
-
-### Git Integration
-
-Task Master works well with `gh` CLI:
-
-```bash
-# Create PR for completed task
-gh pr create --title "Complete task 1.2: User authentication" --body "Implements JWT auth system as specified in task 1.2"
-
-# Reference task in commits
-git commit -m "feat: implement JWT auth (task 1.2)"
-```
-
-### Parallel Development with Git Worktrees
-
-```bash
-# Create worktrees for parallel task development
-git worktree add ../project-auth feature/auth-system
-git worktree add ../project-api feature/api-refactor
-
-# Run Claude Code in each worktree
-cd ../project-auth && claude    # Terminal 1: Auth work
-cd ../project-api && claude     # Terminal 2: API work
-```
-
-## Troubleshooting
-
-### AI Commands Failing
-
-```bash
-# Check API keys are configured
-cat .env                           # For CLI usage
-
-# Verify model configuration
-task-master models
-
-# Test with different model
-task-master models --set-fallback gpt-4o-mini
-```
-
-### MCP Connection Issues
-
-- Check `.mcp.json` configuration
-- Verify Node.js installation
-- Use `--mcp-debug` flag when starting Claude Code
-- Use CLI as fallback if MCP unavailable
-
-### Task File Sync Issues
-
-```bash
-# Regenerate task files from tasks.json
-task-master generate
-
-# Fix dependency issues
-task-master fix-dependencies
-```
-
-DO NOT RE-INITIALIZE. That will not do anything beyond re-adding the same Taskmaster core files.
-
-## Important Notes
-
-### AI-Powered Operations
-
-These commands make AI calls and may take up to a minute:
-
-- `parse_prd` / `task-master parse-prd`
-- `analyze_project_complexity` / `task-master analyze-complexity`
-- `expand_task` / `task-master expand`
-- `expand_all` / `task-master expand --all`
-- `add_task` / `task-master add-task`
-- `update` / `task-master update`
-- `update_task` / `task-master update-task`
-- `update_subtask` / `task-master update-subtask`
-
-### File Management
-
-- Never manually edit `tasks.json` - use commands instead
-- Never manually edit `.taskmaster/config.json` - use `task-master models`
-- Task markdown files in `tasks/` are auto-generated
-- Run `task-master generate` after manual changes to tasks.json
-
-### Claude Code Session Management
-
-- Use `/clear` frequently to maintain focused context
-- Create custom slash commands for repeated Task Master workflows
-- Configure tool allowlist to streamline permissions
-- Use headless mode for automation: `claude -p "task-master next"`
-
-### Multi-Task Updates
-
-- Use `update --from=<id>` to update multiple future tasks
-- Use `update-task --id=<id>` for single task updates
-- Use `update-subtask --id=<id>` for implementation logging
-
-### Research Mode
-
-- Add `--research` flag for research-based AI enhancement
-- Requires a research model API key like Perplexity (`PERPLEXITY_API_KEY`) in environment
-- Provides more informed task creation and updates
-- Recommended for complex technical tasks
-
+**Blog Post Structure:**
+```yaml
 ---
+title: "Post Title"
+summary: "Brief description"
+date: "2024-01-01"
+author: "Author Name"
+authorImage: "/path/to/image.jpg"
+thumbnail: "/path/to/thumbnail.jpg"
+category: "Category Name"
+tags: ["tag1", "tag2"]
+---
+# Blog content in MDX
+```
 
-_This guide ensures Claude Code has immediate access to Task Master's essential functionality for agentic development workflows._
+Blog posts are rendered with syntax highlighting via Prism and support GitHub-flavored markdown via `remark-gfm`.
+
+### API Routes
+
+**Contact Form API** (`app/api/contact/route.ts`):
+- Rate limited (3 requests/minute via LRU cache)
+- Sends emails via SendGrid
+- Requires env vars: `SENDGRID_API_KEY`, `ADMIN_EMAIL_ADDRESS`, `FROM_EMAIL_ADDRESS`
+- Handles consent tracking for GDPR compliance
+
+### Styling System
+
+**Tailwind Configuration:**
+- Custom theme in `tailwind.config.ts`
+- Dark mode support via `next-themes`
+- Typography plugin for blog content (`@tailwindcss/typography`)
+- Utility function: `lib/utils.ts` exports `cn()` for className merging
+
+**Fonts:**
+- Uses Geist Sans via `geist/font/sans`
+- Configured in root layout with `antialiased` class
+
+### State Management
+
+**Theme Provider:**
+- Located in `context/theme-provider.tsx`
+- Wraps app in root layout
+- Provides dark/light/system theme switching
+
+### Image Handling
+
+Remote images configured in `next.config.mjs`:
+- `i.pravatar.cc` - Avatar placeholders
+- `images.unsplash.com` - Stock imagery
+
+Use Next.js `<Image>` component for all images.
+
+## Common Development Tasks
+
+### Adding a New Blog Post
+
+1. Create MDX file in `content/blog/your-post-slug.mdx`
+2. Add frontmatter with required fields (title, date, author, etc.)
+3. Write content using MDX (supports JSX in markdown)
+4. Post automatically appears on blog page and homepage (if recent)
+
+### Creating a New Marketing Page
+
+1. Create folder in `app/(marketing)/page-name/`
+2. Add `page.tsx` with page component
+3. Page inherits layout from `app/(marketing)/layout.tsx`
+4. Add navigation link in `components/navbar/` if needed
+
+### Adding API Routes
+
+1. Create folder in `app/api/route-name/`
+2. Add `route.ts` with HTTP method handlers (GET, POST, etc.)
+3. Use `NextResponse` for responses
+4. Consider adding rate limiting for public endpoints
+
+### Modifying Forms
+
+Forms use `react-hook-form` with `zod` validation:
+- Define schema with Zod
+- Use `@hookform/resolvers/zod` for integration
+- See `components/contact.tsx` for reference implementation
+
+## Environment Variables
+
+Required for production:
+```bash
+SENDGRID_API_KEY=         # SendGrid email service
+ADMIN_EMAIL_ADDRESS=      # Where contact forms are sent
+FROM_EMAIL_ADDRESS=       # SendGrid verified sender
+NODE_ENV=production       # Enables Meta verification tag
+```
+
+## Meta/Facebook Integration
+
+- Meta Business Suite domain verification configured in `app/layout.tsx`
+- Verification tag only appears in production environment
+- Used for Facebook Pixel and business features
+
+## Path Aliases
+
+TypeScript configured with `@/*` alias mapping to root directory:
+```typescript
+import { Component } from "@/components/component"
+import { utils } from "@/lib/utils"
+```
+
+## MDX Configuration
+
+MDX support configured in `next.config.mjs`:
+- `remarkPlugins`: `remark-gfm` for GitHub-flavored markdown
+- `rehypePlugins`: `rehype-prism` for code syntax highlighting
+- Supports `.md` and `.mdx` extensions
+
+Syntax highlighting styles in `app/prism.css`.
+
+## Testing Strategy
+
+**Coverage Requirements:**
+- Branches: 80%
+- Functions: 80%
+- Lines: 80%
+- Statements: 80%
+
+**Test Exclusions:**
+- Type definitions (`.d.ts`)
+- Private files (`_*.{js,jsx,ts,tsx}`)
+- API routes
+- Layout/page files (test business logic separately)
+
+## Git Workflow
+
+Current branch: `update-home-page-text-animation`
+Main branch: `main`
+
+When creating PRs, target `main` branch.
+
+## Performance Considerations
+
+- View transitions enabled via `next-view-transitions`
+- Blog posts sorted once on build, not per-request
+- Rate limiting prevents API abuse
+- MDX compiled at build time
+- Static pages generated where possible
+
+## Common Patterns
+
+**Conditional Rendering:**
+```typescript
+const isProduction = process.env.NODE_ENV === 'production'
+```
+
+**Blog Queries:**
+```typescript
+// Homepage
+const featuredBlogs = getFeaturedBlogs(3)
+
+// Blog listing page
+const allBlogs = getAllBlogs()
+```
+
+**Styling Pattern:**
+```typescript
+import { cn } from "@/lib/utils"
+
+<div className={cn("base-classes", conditionalClass && "additional")} />
+```
