@@ -12,6 +12,7 @@ SSI Automations is a Next.js 14 marketing website for AI solutions and automatio
 - React 18
 - TypeScript 5
 - Tailwind CSS
+- Supabase (Authentication & Database)
 - MDX for blog content
 - SendGrid for email
 - Framer Motion for animations
@@ -25,6 +26,9 @@ npm run dev          # Start dev server at http://localhost:3000
 npm run build        # Build for production
 npm run start        # Start production server
 npm run lint         # Run ESLint
+npm run format       # Format code with Prettier
+npm run type-check   # Run TypeScript type checking
+npm run clear-cache  # Clear Next.js cache and build artifacts
 ```
 
 ### Testing
@@ -33,9 +37,21 @@ npm run lint         # Run ESLint
 npm test                # Run all tests
 npm run test:watch      # Run tests in watch mode
 npm run test:coverage   # Run tests with coverage report
+npm run otp            # Test Supabase OTP authentication (interactive)
 ```
 
 Tests are located in `tests/` directory and use Jest with React Testing Library. Test files should match pattern `*.test.ts` or `*.test.tsx`.
+
+### Git Hooks
+
+Husky is configured with a pre-commit hook that runs:
+1. `clear-cache` - Clears Next.js build cache
+2. `build` - Builds the project
+3. `lint` - Runs ESLint
+4. `format` - Formats code with Prettier
+5. `type-check` - Runs TypeScript type checking
+
+Pre-commit hook located at `.husky/pre-commit`.
 
 ## Architecture & Code Organization
 
@@ -136,6 +152,51 @@ Blog posts are rendered with syntax highlighting via Prism and support GitHub-fl
 - Uses Geist Sans via `geist/font/sans`
 - Configured in root layout with `antialiased` class
 
+### Supabase Integration
+
+**Client Utilities** (`lib/supabase/`):
+
+Supabase client utilities are organized for different execution contexts:
+
+- `lib/supabase/client.ts` - Browser client using `@supabase/ssr` (use in Client Components)
+- `lib/supabase/server.ts` - Server client with cookie handling (use in Server Components, Server Actions, Route Handlers)
+- `lib/supabase/cookies.ts` - Cookie utilities for server-side operations
+- `lib/supabase/types.ts` - TypeScript types for database schema (generate with Supabase CLI)
+- `lib/supabase/index.ts` - Convenience exports
+
+**Usage Pattern:**
+
+```typescript
+// Client Component
+import { createBrowserClient } from "@/lib/supabase";
+const supabase = createBrowserClient();
+
+// Server Component / Server Action
+import { createServerClient } from "@/lib/supabase";
+const supabase = createServerClient();
+```
+
+**Authentication:**
+
+- OTP-based email authentication configured
+- Auth pages in `app/(auth)/login` and `app/(auth)/signup`
+- Test OTP flow with `npm run otp` script
+
+**Environment Variables:**
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=          # Supabase project URL
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=  # Supabase anon/public key
+```
+
+**Generating TypeScript Types:**
+
+When your database schema changes, regenerate types with:
+
+```bash
+npx supabase gen types typescript --project-id YOUR_PROJECT_ID --schema public > lib/supabase/types.ts
+```
+
 ### State Management
 
 **Theme Provider:**
@@ -189,10 +250,17 @@ Forms use `react-hook-form` with `zod` validation:
 Required for production:
 
 ```bash
-SENDGRID_API_KEY=         # SendGrid email service
-ADMIN_EMAIL_ADDRESS=      # Where contact forms are sent
-FROM_EMAIL_ADDRESS=       # SendGrid verified sender
-NODE_ENV=production       # Enables Meta verification tag
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=                  # Supabase project URL
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=      # Supabase anon/public key
+
+# Email
+SENDGRID_API_KEY=                          # SendGrid email service
+ADMIN_EMAIL_ADDRESS=                       # Where contact forms are sent
+FROM_EMAIL_ADDRESS=                        # SendGrid verified sender
+
+# Environment
+NODE_ENV=production                        # Enables Meta verification tag
 ```
 
 ## Meta/Facebook Integration
@@ -238,10 +306,11 @@ Syntax highlighting styles in `app/prism.css`.
 
 ## Git Workflow
 
-Current branch: `update-home-page-text-animation`
 Main branch: `main`
 
 When creating PRs, target `main` branch.
+
+Pre-commit hooks automatically run build, lint, format, and type-check before commits.
 
 ## Performance Considerations
 

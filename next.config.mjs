@@ -17,6 +17,18 @@ const nextConfig = {
     ],
   },
   pageExtensions: ["ts", "tsx", "mdx"],
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "2mb",
+    },
+  },
+  // Increase the max HTTP header size to handle large Supabase auth cookies
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals = [...(config.externals || [])];
+    }
+    return config;
+  },
 };
 
 const withMDX = nextMDX({

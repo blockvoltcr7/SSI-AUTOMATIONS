@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useState } from "react";
 
 import {
   Form,
@@ -13,12 +14,10 @@ import {
 } from "@/components/ui/form";
 
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { IconBrandGithub } from "@tabler/icons-react";
-import Password from "./password";
 import { Button } from "./button";
 import { Logo } from "./Logo";
+import { createClient as createBrowserClient } from "@/lib/supabase/client";
 
 const formSchema = z.object({
   email: z
@@ -27,28 +26,48 @@ const formSchema = z.object({
     })
     .email("Please enter valid email")
     .min(1, "Please enter email"),
-  password: z
-    .string({
-      required_error: "Please enter password",
-    })
-    .min(1, "Please enter password"),
 });
 
 export type LoginUser = z.infer<typeof formSchema>;
 
 export function LoginForm() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+
   const form = useForm<LoginUser>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   });
 
   async function onSubmit(values: LoginUser) {
     try {
-      console.log("submitted form", values);
-    } catch (e) {}
+      setIsLoading(true);
+      setError(null);
+
+      const supabase = createBrowserClient();
+
+      const { error: otpError } = await supabase.auth.signInWithOtp({
+        email: values.email,
+        options: {
+          shouldCreateUser: true,
+        },
+      });
+
+      if (otpError) {
+        setError(otpError.message);
+        return;
+      }
+
+      // Redirect to OTP page with email parameter
+      router.push(`/otp?email=${encodeURIComponent(values.email)}`);
+    } catch (e) {
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -62,6 +81,9 @@ export function LoginForm() {
             <h2 className="mt-8 text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
               Sign in to your account
             </h2>
+            <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+              Enter your email to receive a verification code
+            </p>
           </div>
 
           <div className="mt-10">
@@ -88,7 +110,8 @@ export function LoginForm() {
                               id="email"
                               type="email"
                               placeholder="hello@johndoe.com"
-                              className="block w-full bg-white dark:bg-neutral-900 px-4 rounded-md border-0 py-1.5  shadow-aceternity text-black placeholder:text-gray-400 focus:ring-2 focus:ring-neutral-400 focus:outline-none sm:text-sm sm:leading-6 dark:text-white"
+                              className="block w-full bg-white dark:bg-neutral-900 px-4 rounded-md border-0 py-1.5 shadow-aceternity text-black placeholder:text-gray-400 focus:ring-2 focus:ring-neutral-400 focus:outline-none sm:text-sm sm:leading-6 dark:text-white"
+                              disabled={isLoading}
                               {...field}
                             />
                           </div>
@@ -99,100 +122,38 @@ export function LoginForm() {
                   />
                 </div>
 
-                <div>
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <label
-                          htmlFor="password"
-                          className="block text-sm font-medium leading-6 text-neutral-700 dark:text-muted-dark"
-                        >
-                          Password
-                        </label>
-                        <FormControl>
-                          <div className="mt-2">
-                            <Password
-                              id="password"
-                              type="password"
-                              placeholder="••••••••"
-                              className="block w-full bg-white dark:bg-neutral-900 px-4 rounded-md border-0 py-1.5  shadow-aceternity text-black placeholder:text-gray-400 focus:ring-2 focus:ring-neutral-400 focus:outline-none sm:text-sm sm:leading-6 dark:text-white"
-                              {...field}
-                            />
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="text-sm leading-6">
-                    <Link href="#" className="font-normal text-neutral-500">
-                      Forgot password?
-                    </Link>
+                {error && (
+                  <div className="rounded-md bg-red-50 dark:bg-red-900/20 p-3">
+                    <p className="text-sm text-red-800 dark:text-red-200">
+                      {error}
+                    </p>
                   </div>
-                </div>
+                )}
 
                 <div>
-                  <Button className="w-full">Sign in</Button>
-                  <p
-                    className={cn(
-                      "text-sm text-neutral-500 text-center mt-4 text-muted dark:text-muted-dark",
-                    )}
-                  >
-                    Don&apos; have an account?{" "}
-                    <Link href="/signup" className="text-black dark:text-white">
-                      Sign up
-                    </Link>
-                  </p>
+                  <Button className="w-full" disabled={isLoading}>
+                    {isLoading ? "Sending code..." : "Send verification code"}
+                  </Button>
                 </div>
               </form>
             </div>
 
-            <div className="mt-10">
-              <div className="relative">
-                <div
-                  className="absolute inset-0 flex items-center"
-                  aria-hidden="true"
-                >
-                  <div className="w-full border-t border-neutral-300 dark:border-neutral-700" />
-                </div>
-                <div className="relative flex justify-center text-sm font-medium leading-6">
-                  <span className="bg-white px-6 text-neutral-400 dark:text-neutral-500 dark:bg-black">
-                    Or continue with
-                  </span>
-                </div>
-              </div>
-
-              <div className="mt-6 w-full flex items-center justify-center">
-                <Button onClick={() => {}} className="w-full py-1.5">
-                  <IconBrandGithub className="h-5 w-5" />
-                  <span className="text-sm font-semibold leading-6">
-                    Github
-                  </span>
-                </Button>
-              </div>
-
-              <p className="text-neutral-600 dark:text-neutral-400 text-sm text-center mt-8">
-                By clicking on sign in, you agree to our{" "}
-                <Link
-                  href="#"
-                  className="text-neutral-500 dark:text-neutral-300"
-                >
-                  Terms of Service
-                </Link>{" "}
-                and{" "}
-                <Link
-                  href="#"
-                  className="text-neutral-500 dark:text-neutral-300"
-                >
-                  Privacy Policy
-                </Link>
-              </p>
-            </div>
+            <p className="text-neutral-600 dark:text-neutral-400 text-sm text-center mt-8">
+              By signing in, you agree to our{" "}
+              <Link
+                href="/terms"
+                className="text-neutral-500 dark:text-neutral-300"
+              >
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link
+                href="/privacy"
+                className="text-neutral-500 dark:text-neutral-300"
+              >
+                Privacy Policy
+              </Link>
+            </p>
           </div>
         </div>
       </div>
