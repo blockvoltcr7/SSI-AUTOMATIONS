@@ -45,6 +45,7 @@ Tests are located in `tests/` directory and use Jest with React Testing Library.
 ### Git Hooks
 
 Husky is configured with a pre-commit hook that runs:
+
 1. `clear-cache` - Clears Next.js build cache
 2. `build` - Builds the project
 3. `lint` - Runs ESLint

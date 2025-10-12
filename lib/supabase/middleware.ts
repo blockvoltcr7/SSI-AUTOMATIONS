@@ -65,9 +65,10 @@ export async function updateSession(request: NextRequest) {
   ];
 
   // Check if the current path is a public route or starts with a public route
-  const isPublicRoute = publicRoutes.some((route) =>
-    request.nextUrl.pathname === route ||
-    request.nextUrl.pathname.startsWith(`${route}/`)
+  const isPublicRoute = publicRoutes.some(
+    (route) =>
+      request.nextUrl.pathname === route ||
+      request.nextUrl.pathname.startsWith(`${route}/`),
   );
 
   // Redirect unauthenticated users trying to access protected routes
