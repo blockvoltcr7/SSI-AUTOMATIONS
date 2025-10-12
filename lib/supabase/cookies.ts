@@ -1,8 +1,9 @@
-import { cookies } from "next/headers";
+import { cookies } from 'next/headers';
 
-export function getAllCookies(): Record<string, string> {
+export async function getAllCookies(): Promise<Record<string, string>> {
+  const cookieStore = await cookies();
   const out: Record<string, string> = {};
-  cookies()
+  cookieStore
     .getAll()
     .forEach(({ name, value }) => {
       out[name] = value;
@@ -10,8 +11,9 @@ export function getAllCookies(): Record<string, string> {
   return out;
 }
 
-export function setAllCookies(obj: Record<string, string>) {
+export async function setAllCookies(obj: Record<string, string>) {
+  const cookieStore = await cookies();
   Object.entries(obj).forEach(([name, value]) => {
-    cookies().set({ name, value });
+    cookieStore.set({ name, value });
   });
 }

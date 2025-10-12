@@ -7,7 +7,7 @@ interface InputOTPContextValue {
   value: string;
   onChange: (value: string) => void;
   maxLength: number;
-  slots: React.RefObject<(HTMLInputElement | null)[]>;
+  slots: React.RefObject<(HTMLInputElement | null)[] | null>;
 }
 
 const InputOTPContext = React.createContext<InputOTPContextValue | null>(null);

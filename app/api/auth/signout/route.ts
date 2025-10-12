@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { redirect } from "next/navigation";
 
 export async function POST(request: Request) {
-  const supabase = createServerClient();
+  const supabase = await createServerClient();
 
   const { error } = await supabase.auth.signOut();
 
