@@ -1,13 +1,11 @@
-import { cookies } from 'next/headers';
+import { cookies } from "next/headers";
 
 export async function getAllCookies(): Promise<Record<string, string>> {
   const cookieStore = await cookies();
   const out: Record<string, string> = {};
-  cookieStore
-    .getAll()
-    .forEach(({ name, value }) => {
-      out[name] = value;
-    });
+  cookieStore.getAll().forEach(({ name, value }) => {
+    out[name] = value;
+  });
   return out;
 }
 

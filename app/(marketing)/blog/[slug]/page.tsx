@@ -18,7 +18,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata(props: BlogPostPageProps): Promise<Metadata> {
+export async function generateMetadata(
+  props: BlogPostPageProps,
+): Promise<Metadata> {
   const params = await props.params;
   const blog = getBlogBySlug(params.slug);
 
