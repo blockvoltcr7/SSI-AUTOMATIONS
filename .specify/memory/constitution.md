@@ -1,97 +1,50 @@
-<!--
-Sync Impact Report
-==================
-Version change: 0.0.0 → 1.0.0 (Initial constitution establishment)
-New principles added:
-  - Component-First Architecture
-  - Type Safety & Documentation
-  - Test Coverage Requirements
-  - Performance & Accessibility
-  - Security & Data Protection
-New sections added:
-  - Technical Standards
-  - Development Workflow
-  - Governance
-Templates requiring updates:
-  ✅ constitution.md (completed)
-  ⚠ plan-template.md (pending review)
-  ⚠ spec-template.md (pending review)
-  ⚠ tasks-template.md (pending review)
-  ⚠ command files (pending review)
-Follow-up TODOs:
-  - RATIFICATION_DATE: Set when formally adopted by team
--->
-
-# SSI Automations Constitution
+# [PROJECT_NAME] Constitution
+<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
 
 ## Core Principles
 
-### I. Component-First Architecture
+### [PRINCIPLE_1_NAME]
+<!-- Example: I. Library-First -->
+[PRINCIPLE_1_DESCRIPTION]
+<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
 
-Every feature MUST be implemented as a reusable React component with clear boundaries. Components must be self-contained with their own styles, types, and tests. No feature implementation without proper componentization - business logic must be separated from presentation logic through custom hooks and utilities.
+### [PRINCIPLE_2_NAME]
+<!-- Example: II. CLI Interface -->
+[PRINCIPLE_2_DESCRIPTION]
+<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
 
-### II. Type Safety & Documentation
+### [PRINCIPLE_3_NAME]
+<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
+[PRINCIPLE_3_DESCRIPTION]
+<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
 
-TypeScript strict mode is mandatory for all code. Every exported function, component, and hook MUST have comprehensive type definitions. JSDoc comments required for public APIs. Props interfaces must be explicitly defined and exported for all components.
+### [PRINCIPLE_4_NAME]
+<!-- Example: IV. Integration Testing -->
+[PRINCIPLE_4_DESCRIPTION]
+<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
 
-### III. Test Coverage Requirements
+### [PRINCIPLE_5_NAME]
+<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
+[PRINCIPLE_5_DESCRIPTION]
+<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
 
-Minimum 80% code coverage for all new features. Critical paths require integration tests using Cypress or Playwright. Component testing mandatory for all UI components. API routes must have request/response validation tests. No deployment without passing test suites.
+## [SECTION_2_NAME]
+<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
 
-### IV. Performance & Accessibility
+[SECTION_2_CONTENT]
+<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
 
-Core Web Vitals targets MUST be met: LCP < 2.5s, FID < 100ms, CLS < 0.1. All interactive elements require ARIA labels and keyboard navigation support. Images must use Next.js Image component with proper sizing. Code splitting required for routes over 50KB.
+## [SECTION_3_NAME]
+<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
 
-### V. Security & Data Protection
-
-All user inputs MUST be validated on both client and server. API routes require authentication middleware except public endpoints. Sensitive data must never be exposed in client-side code or logs. Rate limiting required on all API endpoints. Environment variables must follow naming convention and be documented.
-
-## Technical Standards
-
-### Framework Conventions
-
-- Next.js App Router patterns for all routing
-- Server Components by default, Client Components only when needed
-- API routes follow RESTful conventions with proper status codes
-- Tailwind CSS for styling with component-specific module files when needed
-- Shadcn/ui components as base building blocks
-
-### Code Organization
-
-- Features grouped by domain in `/app` directory
-- Shared components in `/components` with atomic design principles
-- Utilities and helpers in `/lib` directory
-- Types centralized in `/types` directory
-- API logic separated in `/app/api` routes
-
-## Development Workflow
-
-### Code Review Requirements
-
-- All code requires peer review before merge
-- Automated checks must pass: lint, type-check, tests
-- Performance budget validation required
-- Accessibility audit for UI changes
-- Security review for authentication/data handling changes
-
-### Deployment Pipeline
-
-- Feature branches deploy to preview environments
-- Main branch auto-deploys to staging
-- Production deployment requires manual approval
-- Rollback plan required for database migrations
-- Monitoring alerts configured before feature release
+[SECTION_3_CONTENT]
+<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
 
 ## Governance
+<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-The Constitution supersedes all development practices and architectural decisions. Amendments require:
+[GOVERNANCE_RULES]
+<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
 
-1. Written proposal with justification
-2. Team review and discussion
-3. Impact analysis on existing code
-4. Migration plan if breaking changes
-5. Documentation updates
-
-All pull requests MUST verify constitutional compliance through automated checks where possible and manual review for principles that cannot be automated. Complexity additions must be justified against business value. The CLAUDE.md file serves as runtime development guidance for AI-assisted development.
-
-**Version**: 1.0.0 | **Ratified**: TODO(RATIFICATION_DATE): To be set upon formal team adoption | **Last Amended**: 2025-09-28
+**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
+<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
