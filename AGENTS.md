@@ -1,25 +1,34 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-
-Next.js routes live under `app/`; `(marketing)` handles public funnels, `(auth)` covers account flows, and `api/` exposes server actions. Shared UI components sit in `components/`, while cross-cutting hooks and utilities belong to `lib/`. Keep configuration objects in `constants/`, context providers in `context/`, and long-form references in `content/`, `docs/`, or `specs/`. Static assets belong in `public/`, Jest specs live in `tests/` with multi-step journeys under `tests/integration/`, and automation helpers reside in `scripts/` (e.g., `scripts/supabase-otp-test.mjs`).
+- Feature routes live in `app/`; use `(marketing)` for public funnels, `(auth)` for account flows, and `app/api/` for server actions.
+- Shared UI primitives reside in `components/`, while hooks and utilities belong in `lib/`.
+- Persist configuration objects in `constants/`, context providers in `context/`, and long-form docs in `content/`, `docs/`, or `specs/`.
+- Static assets ship from `public/`. Automation scripts sit under `scripts/` (e.g., `scripts/supabase-otp-test.mjs`).
+- Mirror runtime paths inside `tests/`, placing multi-step journeys in `tests/integration/`.
 
 ## Build, Test, and Development Commands
-
-Use `npm run dev` to launch the Next.js dev server with hot reload. `npm run build` compiles the production bundle and runs type checks; follow with `npm run start` if you need to verify the built output. Run `npm run lint` before each push, and pair it with `npm run format` when formatting drifts. `npm run test`, `npm run test:watch`, and `npm run test:coverage` drive the Jest suite; `npm run type-check` validates TypeScript separately, and `npm run clear-cache` resets `.next` artifacts.
+- `npm run dev`: start the Next.js dev server with hot reload.
+- `npm run build`: compile the production bundle and run type checks; follow with `npm run start` to verify the output.
+- `npm run lint` and `npm run format`: ensure ESLint and Prettier stay green before opening a PR.
+- `npm run test`, `npm run test:watch`, `npm run test:coverage`: execute the Jest suite, watch mode, and coverage thresholds.
+- `npm run type-check` and `npm run clear-cache`: validate TypeScript separately and reset `.next` artifacts when builds misbehave.
 
 ## Coding Style & Naming Conventions
-
-Write components in TypeScript/TSX with functional patterns and React hooks. Follow the project’s two-space indentation, trailing commas, and Tailwind-first styling—introduce module CSS only for cases Tailwind cannot cover. Export React components in PascalCase, keep files kebab-case, and reserve camelCase for helpers. Accept ESLint autofixes and ensure Prettier runs cleanly via `npm run format`.
+- Ship TypeScript/TSX components that lean on functional React patterns and hooks.
+- Honor two-space indentation, trailing commas, and Tailwind-first styling; reach for module CSS only when Tailwind cannot express the design.
+- Export React components in PascalCase, keep filenames kebab-case, and reserve camelCase for helpers. Accept ESLint autofixes and re-run `npm run format` after larger edits.
 
 ## Testing Guidelines
-
-Jest with `jest-environment-jsdom` and React Testing Library underpins UI tests. Mirror the component or route path in filenames (e.g., `tests/integration/marketing/home.spec.tsx`). Mock network services such as SendGrid, Upstash, and Supabase in tests. Run `npm run test:coverage` for behaviour changes and keep coverage thresholds green before merging.
+- Jest with `jest-environment-jsdom` and React Testing Library cover UI behaviour. Co-locate mocks for SendGrid, Upstash, and Supabase in the test file or dedicated helpers.
+- Name specs after their target path (e.g., `tests/integration/marketing/home.spec.tsx`) and prefer black-box assertions over implementation details.
+- Require passing coverage via `npm run test:coverage` whenever behaviour changes.
 
 ## Commit & Pull Request Guidelines
-
-Write imperative, one-line commit subjects like `add contact form validations` and keep each commit scoped. Pull requests need a summary, linked issues, and before/after screenshots for UI updates. Confirm `npm run lint`, `npm run test`, and relevant coverage checks locally, and note any follow-up tasks in the PR description.
+- Write imperative, one-line subjects such as `add contact form validations`; keep each commit scoped and self-review before pushing.
+- PRs need a concise summary, linked issues, and before/after screenshots for UI changes. Note any follow-up tasks explicitly.
+- Confirm `npm run lint`, `npm run test`, and relevant coverage commands locally before requesting review.
 
 ## Security & Configuration Tips
-
-Seed local secrets by copying `.env.example` to `.env`; never commit actual credentials. Review `vercel.json` and `next.config.mjs` before modifying deployment behaviour. Keep Vercel environment variables aligned with new configuration keys and document required setup steps in `docs/`.
+- Copy `.env.example` to `.env` for local setup; never commit real credentials.
+- Review `vercel.json` and `next.config.mjs` carefully prior to altering deployment behaviour, and document new configuration keys in `docs/`.
