@@ -3,3 +3,4 @@ pnpm run build
 pnpm run lint
 pnpm run format
 pnpm run type-check
+git add -u
