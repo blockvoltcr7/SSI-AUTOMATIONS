@@ -3,7 +3,6 @@ import Image from "next/image";
 import { useId } from "react";
 import { motion } from "framer-motion";
 import { HorizontalGradient } from "@/components/horizontal-gradient";
-import { FeaturedTestimonials } from "@/components/featured-testimonials";
 
 export function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,21 +11,21 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
         {children}
         <div className="relative w-full z-20 hidden md:flex border-l border-neutral-100 dark:border-neutral-800 overflow-hidden bg-gray-50 dark:bg-neutral-900 items-center justify-center">
           <div className="max-w-sm mx-auto">
-            <FeaturedTestimonials />
             <p
               className={cn(
                 "font-semibold text-xl text-center text-muted dark:text-muted-dark",
               )}
             >
-              Every AI is used by thousands of users
+              Join thousands learning AI engineering
             </p>
             <p
               className={cn(
                 "font-normal text-base text-center text-neutral-500 dark:text-neutral-400 mt-8",
               )}
             >
-              With lots of AI applications around, Everything AI stands out with
-              its state of the art Shitposting capabilities.
+              Master AI and agentic engineering skills. Whether you're technical
+              or non-technical, learn how to leverage AI and become a
+              high-demand agentic AI engineer.
             </p>
           </div>
           <HorizontalGradient className="top-20" />
