@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import {
   Form,
@@ -42,6 +42,22 @@ export function LoginForm() {
     },
   });
 
+  // Check if user is already authenticated and redirect to dashboard
+  useEffect(() => {
+    const checkAuth = async () => {
+      const supabase = createBrowserClient();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (session) {
+        router.push("/dashboard");
+      }
+    };
+
+    checkAuth();
+  }, [router]);
+
   async function onSubmit(values: LoginUser) {
     try {
       setIsLoading(true);
@@ -75,8 +91,22 @@ export function LoginForm() {
       <div className="flex items-center w-full justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
         <div className="mx-auto w-full max-w-md">
           <div>
-            <div className="flex">
+            <div className="flex items-center justify-between">
               <Logo />
+              <div className="flex gap-4 text-sm">
+                <Link
+                  href="/"
+                  className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+                >
+                  Home
+                </Link>
+                <Link
+                  href="/blog"
+                  className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+                >
+                  Blog
+                </Link>
+              </div>
             </div>
             <h2 className="mt-8 text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
               Sign in to your account

@@ -152,6 +152,28 @@ const InputOTPSlot = React.forwardRef<HTMLInputElement, InputOTPSlotProps>(
       e.target.select();
     };
 
+    const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+      e.preventDefault();
+
+      // Get pasted text from clipboard
+      const pastedText = e.clipboardData.getData("text");
+
+      // Extract only digits from pasted text
+      const digits = pastedText.replace(/\D/g, "");
+
+      if (digits.length === 0) return;
+
+      // Fill slots starting from the beginning (index 0)
+      const newValue = digits.slice(0, maxLength);
+      onChange(newValue);
+
+      // Focus the last filled slot or the next empty slot
+      const nextIndex = Math.min(newValue.length, maxLength - 1);
+      setTimeout(() => {
+        slots.current?.[nextIndex]?.focus();
+      }, 0);
+    };
+
     return (
       <div
         data-slot="input-otp-slot"
@@ -168,6 +190,7 @@ const InputOTPSlot = React.forwardRef<HTMLInputElement, InputOTPSlotProps>(
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           onFocus={handleFocus}
+          onPaste={handlePaste}
           className={cn(
             "h-full w-full rounded-md border border-neutral-300 dark:border-neutral-700",
             "bg-white dark:bg-neutral-900",

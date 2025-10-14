@@ -16,6 +16,10 @@ const navItems = [
     title: "Blog",
     link: "/blog",
   },
+  {
+    title: "Login",
+    link: "/login",
+  },
 ];
 
 export function NavBar() {
