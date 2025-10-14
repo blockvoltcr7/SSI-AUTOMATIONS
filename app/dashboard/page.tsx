@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function DashboardPage() {
-  const supabase = createServerClient();
+  const supabase = await createServerClient();
 
   const {
     data: { user },
@@ -83,9 +83,7 @@ export default async function DashboardPage() {
                 href="/"
                 className="p-4 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
               >
-                <h3 className="font-medium text-black dark:text-white">
-                  Home
-                </h3>
+                <h3 className="font-medium text-black dark:text-white">Home</h3>
                 <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">
                   Return to the homepage
                 </p>
@@ -94,9 +92,7 @@ export default async function DashboardPage() {
                 href="/blog"
                 className="p-4 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
               >
-                <h3 className="font-medium text-black dark:text-white">
-                  Blog
-                </h3>
+                <h3 className="font-medium text-black dark:text-white">Blog</h3>
                 <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">
                   Read our latest posts
                 </p>

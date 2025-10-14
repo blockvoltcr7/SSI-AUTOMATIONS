@@ -116,12 +116,7 @@ export function OTPForm({ email, ...props }: OTPFormProps) {
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="otp">Verification code</FieldLabel>
-              <InputOTP
-                maxLength={6}
-                id="otp"
-                value={otp}
-                onChange={setOtp}
-              >
+              <InputOTP maxLength={6} id="otp" value={otp} onChange={setOtp}>
                 <InputOTPGroup className="gap-2.5 *:data-[slot=input-otp-slot]:rounded-md *:data-[slot=input-otp-slot]:border">
                   <InputOTPSlot index={0} />
                   <InputOTPSlot index={1} />

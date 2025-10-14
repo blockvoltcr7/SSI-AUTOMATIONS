@@ -7,7 +7,7 @@ interface InputOTPContextValue {
   value: string;
   onChange: (value: string) => void;
   maxLength: number;
-  slots: React.RefObject<(HTMLInputElement | null)[]>;
+  slots: React.RefObject<(HTMLInputElement | null)[] | null>;
 }
 
 const InputOTPContext = React.createContext<InputOTPContextValue | null>(null);
@@ -29,7 +29,14 @@ interface InputOTPProps
 
 const InputOTP = React.forwardRef<HTMLDivElement, InputOTPProps>(
   (
-    { maxLength, value: controlledValue, onChange: controlledOnChange, children, className, ...props },
+    {
+      maxLength,
+      value: controlledValue,
+      onChange: controlledOnChange,
+      children,
+      className,
+      ...props
+    },
     ref,
   ) => {
     const [internalValue, setInternalValue] = React.useState("");
@@ -148,10 +155,7 @@ const InputOTPSlot = React.forwardRef<HTMLInputElement, InputOTPSlotProps>(
     return (
       <div
         data-slot="input-otp-slot"
-        className={cn(
-          "relative h-10 w-10 text-sm",
-          className,
-        )}
+        className={cn("relative h-10 w-10 text-sm", className)}
         {...props}
       >
         <input
