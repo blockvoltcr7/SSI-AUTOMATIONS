@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "./button";
 import { Logo } from "./Logo";
 import { createClient as createBrowserClient } from "@/lib/supabase/client";
+import { signInWithWeb3, detectWeb3Wallet } from "@/lib/supabase/web3";
 
 const formSchema = z.object({
   email: z
@@ -32,7 +33,9 @@ export type LoginUser = z.infer<typeof formSchema>;
 
 export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
+  const [isWeb3Loading, setIsWeb3Loading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hasWeb3Wallet, setHasWeb3Wallet] = useState(false);
   const router = useRouter();
 
   const form = useForm<LoginUser>({
@@ -56,6 +59,10 @@ export function LoginForm() {
     };
 
     checkAuth();
+
+    // Detect if Web3 wallet is available
+    const walletType = detectWeb3Wallet();
+    setHasWeb3Wallet(!!walletType);
   }, [router]);
 
   async function onSubmit(values: LoginUser) {
@@ -83,6 +90,29 @@ export function LoginForm() {
       setError("An unexpected error occurred. Please try again.");
     } finally {
       setIsLoading(false);
+    }
+  }
+
+  async function handleWeb3SignIn() {
+    try {
+      setIsWeb3Loading(true);
+      setError(null);
+
+      const { data, error: web3Error } = await signInWithWeb3();
+
+      if (web3Error) {
+        setError(web3Error);
+        return;
+      }
+
+      if (data?.session) {
+        // Successfully authenticated, redirect to dashboard
+        router.push("/dashboard");
+      }
+    } catch (e: any) {
+      setError(e.message || "Failed to sign in with Web3. Please try again.");
+    } finally {
+      setIsWeb3Loading(false);
     }
   }
 
@@ -211,14 +241,44 @@ export function LoginForm() {
                 <div>
                   <button
                     type="button"
-                    className="relative inline-flex h-12 w-full overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+                    onClick={handleWeb3SignIn}
+                    disabled={isWeb3Loading || !hasWeb3Wallet}
+                    className="relative inline-flex h-12 w-full overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
                     <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-                      Sign in with Web3
+                      {isWeb3Loading
+                        ? "Connecting..."
+                        : !hasWeb3Wallet
+                          ? "No Web3 Wallet Detected"
+                          : "Sign in with Web3"}
                     </span>
                   </button>
                 </div>
+
+                {!hasWeb3Wallet && (
+                  <p className="text-xs text-center text-neutral-500 dark:text-neutral-400 mt-2">
+                    Install{" "}
+                    <a
+                      href="https://phantom.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-purple-500 hover:text-purple-600 underline"
+                    >
+                      Phantom
+                    </a>{" "}
+                    or{" "}
+                    <a
+                      href="https://metamask.io/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-orange-500 hover:text-orange-600 underline"
+                    >
+                      MetaMask
+                    </a>{" "}
+                    to sign in with Web3
+                  </p>
+                )}
               </form>
             </div>
 
