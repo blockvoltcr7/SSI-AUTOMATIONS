@@ -9,6 +9,7 @@ export type { Database } from "./types";
 export {
   signInWithWeb3,
   signInWithSolana,
+  signInWithSolanaAdapter,
   signInWithEthereum,
   detectWeb3Wallet,
   isSolanaWalletAvailable,

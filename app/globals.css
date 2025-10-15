@@ -27,3 +27,15 @@ html {
     text-wrap: balance;
   }
 }
+
+/* Override Solana Wallet Adapter button styles */
+.wallet-adapter-button {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+.wallet-adapter-button:hover {
+  background: transparent !important;
+  background-color: transparent !important;
+}

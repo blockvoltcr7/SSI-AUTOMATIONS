@@ -1,4 +1,5 @@
 import { createClient } from "./client";
+import type { WalletContextState } from "@solana/wallet-adapter-react";
 
 /**
  * Detects if a Solana wallet is available in the browser
@@ -143,5 +144,79 @@ export async function signInWithWeb3() {
     return await signInWithSolana();
   } else {
     return await signInWithEthereum();
+  }
+}
+
+/**
+ * Signs in a user with Solana Wallet Adapter
+ * This is the recommended method for multi-wallet support
+ *
+ * @param wallet - The wallet context from useWallet() hook
+ */
+export async function signInWithSolanaAdapter(wallet: WalletContextState) {
+  try {
+    const supabase = createClient();
+
+    if (!wallet.connected || !wallet.publicKey) {
+      return {
+        data: null,
+        error: "Wallet not connected. Please connect your wallet first.",
+      };
+    }
+
+    // Sign in with Web3 using the wallet adapter
+    const result = await supabase.auth.signInWithWeb3({
+      chain: "solana",
+      statement:
+        "I accept the SSI Automations Terms of Service at https://www.ssiautomations.com/terms",
+      wallet: wallet as any, // Wallet adapter is compatible with Supabase
+    });
+
+    if (result.error) {
+      // Handle user rejection gracefully
+      const errorMessage = result.error.message || "";
+      const isUserRejection =
+        errorMessage.includes("User rejected") ||
+        errorMessage.includes("rejected the request") ||
+        errorMessage.includes("User cancelled") ||
+        errorMessage.includes("user rejected");
+
+      if (isUserRejection) {
+        return {
+          data: null,
+          error:
+            "Signature request was cancelled. Please try again when ready.",
+        };
+      }
+
+      return {
+        data: null,
+        error: errorMessage || "Failed to sign in with Solana wallet",
+      };
+    }
+
+    return { data: result.data, error: null };
+  } catch (error: any) {
+    // Catch any unexpected errors
+    console.error("Unexpected error during Solana sign-in:", error);
+
+    const errorMessage = error.message || error.toString() || "";
+    const isUserRejection =
+      errorMessage.toLowerCase().includes("user rejected") ||
+      errorMessage.toLowerCase().includes("rejected the request") ||
+      errorMessage.toLowerCase().includes("user cancelled") ||
+      error.code === 4001;
+
+    if (isUserRejection) {
+      return {
+        data: null,
+        error: "Signature request was cancelled. Please try again when ready.",
+      };
+    }
+
+    return {
+      data: null,
+      error: "An unexpected error occurred. Please try again.",
+    };
   }
 }
