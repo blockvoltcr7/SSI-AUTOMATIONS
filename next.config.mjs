@@ -27,6 +27,29 @@ const nextConfig = {
     if (isServer) {
       config.externals = [...(config.externals || [])];
     }
+
+    // Fix for Solana wallet adapter and WalletConnect dependencies
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
+      crypto: false,
+      stream: false,
+      http: false,
+      https: false,
+      zlib: false,
+      path: false,
+      os: false,
+      "pino-pretty": false,
+    };
+
+    // Ignore pino-pretty warnings
+    config.ignoreWarnings = [
+      { module: /pino-pretty/ },
+      { module: /node_modules\/pino/ },
+    ];
+
     return config;
   },
 };
