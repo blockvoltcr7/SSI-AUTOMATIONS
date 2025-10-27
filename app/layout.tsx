@@ -42,13 +42,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body className={cn(GeistSans.className, "antialiased h-full w-full")}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
-          enableSystem
+          enableSystem={false}
           disableTransitionOnChange
+          forcedTheme="dark"
         >
           <ViewTransitions>{children}</ViewTransitions>
         </ThemeProvider>
