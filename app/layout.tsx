@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import { cn } from "@/lib/utils";
 import { ViewTransitions } from "next-view-transitions";
 import { ThemeProvider } from "@/context/theme-provider";
+import { Suspense } from "react";
 
 // Check if we're in production environment for Meta Business Suite domain verification
 // This ensures the Meta verification tag only appears on the live production domain
@@ -44,14 +45,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn(GeistSans.className, "antialiased h-full w-full")}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ViewTransitions>{children}</ViewTransitions>
-        </ThemeProvider>
+        <Suspense fallback={null}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ViewTransitions>{children}</ViewTransitions>
+          </ThemeProvider>
+        </Suspense>
       </body>
     </html>
   );
