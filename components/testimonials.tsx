@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Heading } from "./heading";
 import { Subheading } from "./subheading";
 import { cn } from "@/lib/utils";
 import { InViewDiv } from "./in-view-div";
-import { useMemo } from "react";
 import { TestimonialColumnContainer } from "./testimonial-column-container";
 import Image from "next/image";
 
@@ -193,21 +192,25 @@ function Testimonial({
   ...props
 }: Omit<React.ComponentPropsWithoutRef<"figure">, keyof Testimonial> &
   Testimonial) {
-  let animationDelay = useMemo(() => {
-    let possibleAnimationDelays = [
-      "0s",
-      "0.1s",
-      "0.2s",
-      "0.3s",
-      "0.4s",
-      "0.5s",
-    ];
-    return possibleAnimationDelays[
-      Math.floor(Math.random() * possibleAnimationDelays.length)
-    ];
+  const possibleAnimationDelays = [
+    "0s",
+    "0.1s",
+    "0.2s",
+    "0.3s",
+    "0.4s",
+    "0.5s",
+  ];
+
+  const [animationDelay, setAnimationDelay] = useState("0s");
+
+  useEffect(() => {
+    setAnimationDelay(
+      possibleAnimationDelays[
+        Math.floor(Math.random() * possibleAnimationDelays.length)
+      ]
+    );
   }, []);
 
-  const boxStyle = {};
   return (
     <figure
       className={cn(

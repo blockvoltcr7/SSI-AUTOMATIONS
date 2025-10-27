@@ -1,9 +1,11 @@
-import rehypePrism from "@mapbox/rehype-prism";
-import nextMDX from "@next/mdx";
-import remarkGfm from "remark-gfm";
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Disabled cacheComponents due to conflicts with:
+  // 1. ThemeProvider cookie access during SSR
+  // 2. Authentication routes that require dynamic rendering
+  // TODO: Re-enable after upgrading next-themes or when Next.js has better support
+  // cacheComponents: true,
+  output: 'standalone', // Optimize for production
   images: {
     remotePatterns: [
       {
@@ -16,12 +18,13 @@ const nextConfig = {
       },
     ],
   },
-  pageExtensions: ["ts", "tsx", "mdx"],
+  pageExtensions: ["ts", "tsx"],
   experimental: {
     serverActions: {
       bodySizeLimit: "2mb",
     },
   },
+  turbopack: {}, // Empty turbopack config to silence warning about webpack config
   // Increase the max HTTP header size to handle large Supabase auth cookies
   webpack: (config, { isServer }) => {
     if (isServer) {
@@ -54,12 +57,4 @@ const nextConfig = {
   },
 };
 
-const withMDX = nextMDX({
-  extension: /\.mdx?$/,
-  options: {
-    remarkPlugins: [remarkGfm],
-    rehypePlugins: [rehypePrism],
-  },
-});
-
-export default withMDX(nextConfig);
+export default nextConfig;
