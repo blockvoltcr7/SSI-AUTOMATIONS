@@ -108,7 +108,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
             >
               <a href="/">
                 <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-800 text-white">
                     <span className="text-lg font-bold">S</span>
                   </div>
                   <span className="text-base font-semibold">SSI Automations</span>
