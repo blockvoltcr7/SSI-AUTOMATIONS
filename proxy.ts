@@ -2,16 +2,17 @@ import { type NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
 
 /**
- * Next.js Middleware - runs on every request matching the config below.
+ * Next.js Proxy - runs on every request matching the config below.
  * Automatically refreshes Supabase auth sessions to prevent unexpected logouts.
+ * Note: Runs in Node.js runtime (not Edge) as of Next.js 16.
  */
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   // Update user's auth session (refreshes tokens if needed)
   return await updateSession(request);
 }
 
 /**
- * Matcher configuration - defines which routes this middleware runs on.
+ * Matcher configuration - defines which routes this proxy runs on.
  * Excludes static files, images, and Next.js internal routes for performance.
  */
 export const config = {

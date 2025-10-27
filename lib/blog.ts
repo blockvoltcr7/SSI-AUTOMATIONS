@@ -1,3 +1,5 @@
+"use cache";
+
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
@@ -23,7 +25,7 @@ const blogDirectory = path.join(process.cwd(), "content/blog");
 /**
  * Get all blog post slugs
  */
-export function getAllBlogSlugs(): string[] {
+export async function getAllBlogSlugs(): Promise<string[]> {
   try {
     const files = fs.readdirSync(blogDirectory);
     return files
@@ -38,7 +40,12 @@ export function getAllBlogSlugs(): string[] {
 /**
  * Get blog post by slug
  */
-export function getBlogBySlug(slug: string): BlogWithSlug | null {
+export async function getBlogBySlug(
+  slug: string,
+): Promise<BlogWithSlug | null> {
+  // Cache: weeks - Blog posts rarely change
+  // Tags: blog-posts, blog-{slug}
+
   try {
     const fullPath = path.join(blogDirectory, `${slug}.mdx`);
 
@@ -74,22 +81,29 @@ export function getBlogBySlug(slug: string): BlogWithSlug | null {
 /**
  * Get all blog posts sorted by date (newest first)
  */
-export function getAllBlogs(): BlogWithSlug[] {
-  const slugs = getAllBlogSlugs();
-  const blogs = slugs
-    .map((slug) => getBlogBySlug(slug))
+export async function getAllBlogs(): Promise<BlogWithSlug[]> {
+  // Cache: hours - Cache for 1 hour
+  // Tags: blog-posts
+
+  const slugs = await getAllBlogSlugs();
+  const blogs = await Promise.all(slugs.map((slug) => getBlogBySlug(slug)));
+
+  return blogs
     .filter((blog): blog is BlogWithSlug => blog !== null)
     .sort((a, b) => {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
-
-  return blogs;
 }
 
 /**
  * Get featured blog posts (limit to n posts)
  */
-export function getFeaturedBlogs(limit: number = 3): BlogWithSlug[] {
-  const allBlogs = getAllBlogs();
+export async function getFeaturedBlogs(
+  limit: number = 3,
+): Promise<BlogWithSlug[]> {
+  // Cache: hours - Cache for 1 hour
+  // Tags: blog-posts
+
+  const allBlogs = await getAllBlogs();
   return allBlogs.slice(0, limit);
 }

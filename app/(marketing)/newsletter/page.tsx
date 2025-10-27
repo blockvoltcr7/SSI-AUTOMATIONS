@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Metadata } from "next";
 import { Container } from "@/components/container";
 import { Background } from "@/components/background";
@@ -35,7 +36,9 @@ export default function NewsletterPage() {
 
           {/* Newsletter Input */}
           <div className="mb-20">
-            <NewsletterSignupHome />
+            <Suspense fallback={<div className="h-12" />}>
+              <NewsletterSignupHome />
+            </Suspense>
           </div>
 
           {/* Features Grid */}

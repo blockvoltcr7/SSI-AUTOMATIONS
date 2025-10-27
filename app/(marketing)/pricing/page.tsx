@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Container } from "@/components/container";
 import { Background } from "@/components/background";
 import { Heading } from "@/components/heading";
@@ -29,9 +30,13 @@ export default function PricingPage() {
             started instantly.
           </Subheading>
         </div>
-        <Pricing />
+        <Suspense fallback={<div className="h-96" />}>
+          <Pricing />
+        </Suspense>
         <PricingTable />
-        <Companies />
+        <Suspense fallback={<div className="h-96" />}>
+          <Companies />
+        </Suspense>
       </Container>
     </div>
   );

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Container } from "@/components/container";
 import { Hero } from "@/components/hero";
 import { Background } from "@/components/background";
@@ -5,11 +6,10 @@ import { HubCards } from "@/components/hub-cards";
 import { CTA } from "@/components/cta";
 import { NewsletterSection } from "@/components/newsletter-section";
 import { BlogSection } from "@/components/blog-section";
+import { BlogSectionSkeleton } from "@/components/loading/blog-section-skeleton";
 import { getFeaturedBlogs } from "@/lib/blog";
 
 export default function Home() {
-  const featuredBlogs = getFeaturedBlogs(3);
-
   return (
     <div className="relative">
       <div className="absolute inset-0 h-full w-full overflow-hidden">
@@ -23,15 +23,19 @@ export default function Home() {
           <HubCards />
         </div>
 
-        <NewsletterSection />
+        <Suspense fallback={<div className="h-96" />}>
+          <NewsletterSection />
+        </Suspense>
       </Container>
 
-      {/* Blog Section */}
+      {/* Blog Section with Suspense for progressive loading */}
       <div className="relative">
         <div className="absolute inset-0 h-full w-full overflow-hidden">
           <Background />
         </div>
-        <BlogSection blogs={featuredBlogs} />
+        <Suspense fallback={<BlogSectionSkeleton />}>
+          <BlogSectionContainer />
+        </Suspense>
       </div>
 
       <div className="relative">
@@ -42,4 +46,10 @@ export default function Home() {
       </div>
     </div>
   );
+}
+
+// Async container component for featured blogs
+async function BlogSectionContainer() {
+  const featuredBlogs = await getFeaturedBlogs(3);
+  return <BlogSection blogs={featuredBlogs} />;
 }

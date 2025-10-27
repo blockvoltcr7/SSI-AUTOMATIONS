@@ -163,10 +163,18 @@ export const SkeletonTwo = () => {
     "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=2070&auto=format&fit=crop",
   ];
 
+  const [rotations, setRotations] = useState<number[]>([]);
+
+  useEffect(() => {
+    // Generate random rotations once on client
+    setRotations(images.map(() => Math.random() * 20 - 10));
+  }, []);
+
   const imageVariants = {
     whileHover: { scale: 1.1, rotate: 0, zIndex: 100 },
     whileTap: { scale: 1.1, rotate: 0, zIndex: 100 },
   };
+
   return (
     <div className="relative flex h-full flex-col items-start gap-10 overflow-hidden p-8">
       <div className="-ml-20 flex flex-row">
@@ -174,7 +182,7 @@ export const SkeletonTwo = () => {
           <motion.div
             variants={imageVariants}
             key={"images-first" + idx}
-            style={{ rotate: Math.random() * 20 - 10 }}
+            style={{ rotate: rotations[idx] || 0 }}
             whileHover="whileHover"
             whileTap="whileTap"
             className="-mr-4 mt-4 flex-shrink-0 overflow-hidden rounded-xl border border-neutral-100 bg-white p-1 dark:border-neutral-700 dark:bg-neutral-800"
@@ -193,7 +201,7 @@ export const SkeletonTwo = () => {
         {images.map((image, idx) => (
           <motion.div
             key={"images-second" + idx}
-            style={{ rotate: Math.random() * 20 - 10 }}
+            style={{ rotate: rotations[idx] || 0 }}
             variants={imageVariants}
             whileHover="whileHover"
             whileTap="whileTap"

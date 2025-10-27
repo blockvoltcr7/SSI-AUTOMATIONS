@@ -1,3 +1,5 @@
+"use cache";
+
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Background } from "@/components/background";
@@ -12,7 +14,7 @@ interface BlogPostPageProps {
 }
 
 export async function generateStaticParams() {
-  const slugs = getAllBlogSlugs();
+  const slugs = await getAllBlogSlugs();
   return slugs.map((slug) => ({
     slug,
   }));
@@ -22,7 +24,7 @@ export async function generateMetadata(
   props: BlogPostPageProps,
 ): Promise<Metadata> {
   const params = await props.params;
-  const blog = getBlogBySlug(params.slug);
+  const blog = await getBlogBySlug(params.slug);
 
   if (!blog) {
     return {
@@ -42,8 +44,10 @@ export async function generateMetadata(
 }
 
 export default async function BlogPostPage(props: BlogPostPageProps) {
+  // Cache: weeks - Blog posts rarely change
+
   const params = await props.params;
-  const blog = getBlogBySlug(params.slug);
+  const blog = await getBlogBySlug(params.slug);
 
   if (!blog) {
     notFound();
