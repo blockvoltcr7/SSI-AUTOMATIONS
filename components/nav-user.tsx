@@ -98,13 +98,23 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <form action="/api/auth/signout" method="post" className="w-full">
-                <button type="submit" className="flex w-full items-center gap-2">
-                  <LogOutIcon />
-                  Log out
-                </button>
-              </form>
+            <DropdownMenuItem
+              onClick={async () => {
+                try {
+                  await fetch("/api/auth/signout", {
+                    method: "POST",
+                    credentials: "include",
+                  });
+                  // Redirect to login page after successful logout
+                  window.location.href = "/login";
+                } catch (error) {
+                  console.error("Logout failed:", error);
+                }
+              }}
+              className="cursor-pointer"
+            >
+              <LogOutIcon />
+              Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

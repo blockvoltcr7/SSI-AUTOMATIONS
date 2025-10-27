@@ -2,7 +2,6 @@ import { createClient as createServerClient } from "@/lib/supabase/server";
 import type { Metadata } from "next";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { LogoutButton } from "@/components/logout-button";
 
 export const metadata: Metadata = {
   title: "Dashboard - SSI Automations",
@@ -25,16 +24,13 @@ export default async function DashboardPage() {
     <>
       {/* Welcome Section */}
       <div className="flex flex-1 flex-col gap-4 p-4">
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-3xl font-bold">Welcome back!</h1>
-            <p className="text-muted-foreground">
-              {isWeb3User && chain
-                ? `Connected with ${chain.toUpperCase()} wallet`
-                : "Here's an overview of your account"}
-            </p>
-          </div>
-          <LogoutButton />
+        <div>
+          <h1 className="text-3xl font-bold">Welcome back!</h1>
+          <p className="text-muted-foreground">
+            {isWeb3User && chain
+              ? `Connected with ${chain.toUpperCase()} wallet`
+              : "Here's an overview of your account"}
+          </p>
         </div>
 
         {/* Stats Cards */}
