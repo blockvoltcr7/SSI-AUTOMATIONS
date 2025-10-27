@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  cacheComponents: true, // Enable "use cache" directive (moved out of experimental)
+  // Disabled cacheComponents due to conflicts with:
+  // 1. ThemeProvider cookie access during SSR
+  // 2. Authentication routes that require dynamic rendering
+  // TODO: Re-enable after upgrading next-themes or when Next.js has better support
+  // cacheComponents: true,
   output: 'standalone', // Optimize for production
   images: {
     remotePatterns: [

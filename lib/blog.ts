@@ -1,4 +1,5 @@
-"use cache";
+// "use cache" disabled - requires cacheComponents: true in next.config.mjs
+// which conflicts with ThemeProvider cookie access and auth routes
 
 import fs from "fs";
 import path from "path";
