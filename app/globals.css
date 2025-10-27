@@ -124,3 +124,13 @@ html {
     @apply bg-background text-foreground;
   }
 }
+
+/* Force dark theme consistency - override shadcn CSS variables */
+html.dark {
+  color-scheme: dark;
+}
+
+/* Ensure body uses black background in dark mode */
+html.dark body {
+  background: black !important;
+}
