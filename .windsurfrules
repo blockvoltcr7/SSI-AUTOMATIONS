@@ -1,0 +1,375 @@
+# Windsurf AI Rules for SSI Automations
+
+## Project Overview
+SSI Automations is a Next.js 14.2.15 marketing website upgraded to Next.js 16.0.0 for AI learning solutions and automation services. The site features authentication (Supabase email/OTP + Solana Web3), blog system, and protected routes.
+
+## Technology Stack
+- **Framework**: Next.js 16.0.0 (App Router with Turbopack)
+- **React**: 19.2.0
+- **TypeScript**: 5.x
+- **Styling**: Tailwind CSS (dark theme forced)
+- **Authentication**: Supabase Auth (email/OTP + Web3/Solana)
+- **Database**: Supabase PostgreSQL
+- **Animations**: Framer Motion
+- **Content**: MDX for blog posts
+- **Email**: SendGrid
+- **Theme**: next-themes (forced dark mode)
+
+## Critical Architecture Rules
+
+### 1. Next.js 16 Proxy (formerly Middleware)
+**IMPORTANT**: Next.js 16 deprecated `middleware.ts` in favor of `proxy.ts`
+
+✅ **DO**:
+- Use `proxy.ts` in the root directory
+- Export function named `proxy` (not `middleware`)
+- Handle authentication via `lib/supabase/middleware.ts`
+
+❌ **DON'T**:
+- Create or rename to `middleware.ts`
+- Use deprecated middleware patterns
+
+**Current Implementation**:
+```typescript
+// proxy.ts
+export async function proxy(request: NextRequest) {
+  return await updateSession(request);
+}
+```
+
+### 2. Authentication Flow
+
+**Two-Layer Protection**:
+1. **Proxy Layer**: Runs on every request, validates auth, refreshes tokens
+2. **Page Layer**: Server-side auth check with redirect
+
+**Auth Methods Supported**:
+- Supabase Email/OTP
+- Solana Web3 (wallet-based)
+
+**Protected Routes**: All routes EXCEPT those in `publicRoutes` array in `lib/supabase/middleware.ts`
+
+**Public Routes** (as of current config):
+```
+/, /login, /otp, /about, /blog, /contact, /pricing, /learn, /newsletter, /privacy, /terms
+```
+
+**Adding Protected Pages**:
+```typescript
+// Just create the page - proxy protects it automatically
+export default async function ProtectedPage() {
+  const supabase = await createServerClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) redirect("/login");
+
+  // Your protected content
+}
+```
+
+### 3. Supabase Integration
+
+**Server-Side** (use in Server Components, API routes):
+```typescript
+import { createClient as createServerClient } from "@/lib/supabase/server";
+const supabase = await createServerClient();
+```
+
+**Client-Side** (use in Client Components):
+```typescript
+import { createBrowserClient } from "@/lib/supabase/client";
+const supabase = createBrowserClient();
+```
+
+### 4. Theme Management
+
+**CRITICAL**: Theme is FORCED to dark mode to prevent inconsistencies
+
+```typescript
+// app/layout.tsx
+<html lang="en" className="dark">
+  <ThemeProvider forcedTheme="dark" enableSystem={false}>
+```
+
+**Why forced dark**:
+- Prevents light mode flash on load
+- Consistent navbar/footer styling
+- Simplified theme management
+
+❌ **DON'T** remove `className="dark"` or enable system theme
+
+### 5. Cache Components (Currently Disabled)
+
+**Status**: `cacheComponents: true` is **DISABLED** in `next.config.mjs`
+
+**Reason**: Conflicts with next-themes ThemeProvider cookie access
+
+**Impact**:
+- "use cache" directives are commented out
+- Pages use standard Next.js caching instead
+
+**Future**: Can re-enable when next-themes is updated or alternative theme solution is implemented
+
+## File Structure Rules
+
+### App Router Organization
+```
+app/
+├── (marketing)/          # Public marketing pages
+│   ├── page.tsx         # Homepage
+│   ├── blog/[slug]/     # Dynamic blog posts
+│   └── ...
+├── (auth)/              # Authentication pages
+│   ├── login/
+│   └── signup/
+├── dashboard/           # Protected dashboard
+├── api/                 # API routes
+└── layout.tsx          # Root layout (dark theme forced)
+```
+
+### Component Structure
+```
+components/
+├── ui/                  # Reusable primitives
+├── navbar/             # Desktop/mobile navbar
+├── background.tsx      # Solid black background
+├── footer.tsx          # Site footer
+└── ...
+```
+
+### Content Structure
+```
+content/
+└── blog/               # MDX blog posts with frontmatter
+```
+
+## Development Commands
+
+```bash
+# Development
+npm run dev             # Start dev server (port 3000)
+npm run build           # Production build
+npm run start           # Start production server
+
+# Code Quality
+npm run lint            # ESLint
+npm run format          # Prettier
+npm run type-check      # TypeScript
+
+# Testing
+npm test                # Jest tests
+npm run test:watch      # Watch mode
+npm run test:coverage   # Coverage report
+
+# Utilities
+npm run clear-cache     # Clear Next.js cache
+npm run otp            # Test Supabase OTP
+```
+
+## Coding Standards
+
+### TypeScript
+- Use strict TypeScript types
+- Prefer interfaces for object shapes
+- Use type imports: `import type { Type } from 'module'`
+- No `any` unless absolutely necessary
+
+### React/Next.js
+- Use Server Components by default
+- Add "use client" only when needed (hooks, events, browser APIs)
+- Use async Server Components for data fetching
+- Prefer `await` params in Next.js 15+ dynamic routes
+
+### Styling
+- Use Tailwind utility classes
+- Use `cn()` from `lib/utils` for conditional classes
+- Always include dark mode variants (even though forced dark)
+- Mobile-first responsive design
+
+### Imports
+- Use path aliases: `@/components`, `@/lib`, etc.
+- Group imports: React → Next.js → Third-party → Local
+- No default exports for utilities (use named exports)
+
+## Git Workflow
+
+**Branch**: Currently on `nextjs16upgrade`
+**Main Branch**: `main`
+
+**Pre-commit Hooks** (via Husky):
+1. Clear cache
+2. Build
+3. Lint
+4. Format
+5. Type-check
+
+**Note**: May need `--no-verify` if build fails on unrelated issues
+
+## API Routes
+
+### Contact Form (`/api/contact`)
+- Rate limited (3 req/min)
+- Uses SendGrid
+- Requires: `SENDGRID_API_KEY`, `ADMIN_EMAIL_ADDRESS`, `FROM_EMAIL_ADDRESS`
+
+## Environment Variables
+
+**Required**:
+```bash
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
+
+# SendGrid
+SENDGRID_API_KEY=
+ADMIN_EMAIL_ADDRESS=
+FROM_EMAIL_ADDRESS=
+
+# Optional
+NODE_ENV=production  # Enables Meta verification tag
+```
+
+## Blog System
+
+**MDX Files**: `content/blog/*.mdx`
+
+**Frontmatter**:
+```yaml
+---
+title: "Post Title"
+summary: "Brief description"
+date: "2024-01-01"
+author: "Author Name"
+authorImage: "/path/to/image.jpg"
+thumbnail: "/path/to/thumbnail.jpg"
+category: "Category"
+tags: ["tag1", "tag2"]
+---
+```
+
+**Utilities**:
+```typescript
+getAllBlogSlugs()      // Get all post slugs
+getBlogBySlug(slug)    // Get single post
+getAllBlogs()          // All posts sorted by date
+getFeaturedBlogs(n)    // n most recent posts
+```
+
+## Common Patterns
+
+### Protected Page Pattern
+```typescript
+export default async function ProtectedPage() {
+  const supabase = await createServerClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) redirect("/login");
+
+  // Check auth method
+  const isWeb3User = user.app_metadata?.provider === "web3";
+  const walletAddress = user.user_metadata?.custom_claims?.address;
+
+  return <div>Protected Content</div>;
+}
+```
+
+### Role-Based Access
+```typescript
+if (!user) redirect("/login");
+
+const isAdmin = user.app_metadata?.role === "admin";
+if (!isAdmin) redirect("/dashboard");
+```
+
+### Form Validation
+```typescript
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const schema = z.object({
+  email: z.string().email(),
+});
+
+const form = useForm({
+  resolver: zodResolver(schema),
+});
+```
+
+## Known Issues & Trade-offs
+
+1. **cacheComponents disabled**: Conflicts with next-themes, will re-enable later
+2. **ESLint config**: Pre-commit may fail on lint, use `--no-verify` if needed
+3. **Lockfile warning**: Multiple lockfiles detected, can be ignored
+4. **Dark theme forced**: Not toggleable, but this is intentional
+
+## Performance Optimizations
+
+- Turbopack enabled (faster builds)
+- `output: 'standalone'` for production
+- Blog posts generated at build time
+- Image optimization via next/image
+- Font optimization via next/font
+
+## Security Best Practices
+
+✅ Two-layer auth (proxy + page level)
+✅ Server-side token validation
+✅ Automatic token refresh
+✅ HttpOnly secure cookies
+✅ Rate limiting on API routes
+✅ CSRF protection via Supabase
+
+## Testing Guidelines
+
+- Test files: `tests/*.test.ts(x)`
+- Coverage target: 80% (branches, functions, lines, statements)
+- Run tests before committing
+- Mock Supabase calls in tests
+
+## Deployment
+
+**Platform**: Vercel (recommended)
+
+**Build Command**: `npm run build`
+**Output**: `.next` directory (standalone)
+**Node Version**: 18.x or higher
+
+**Environment Variables**: Set all required env vars in Vercel dashboard
+
+## Documentation
+
+- Main docs: `CLAUDE.md` (project instructions)
+- Next.js 16 migration: `.docs/nextjs16/`
+- Web3 integration: `.docs/web3/`
+- This file: `.windsurfrules` (AI rules)
+
+## When Adding New Features
+
+1. Check if route should be public or protected
+2. Use Server Components unless client interaction needed
+3. Add proper TypeScript types
+4. Include dark mode styling
+5. Test authentication flow
+6. Update documentation if needed
+7. Run build before committing
+
+## Questions to Ask Before Coding
+
+- Is this a Server or Client Component?
+- Does this route need authentication?
+- Are we accessing browser APIs? (needs "use client")
+- Is the Supabase client correct for the context (server vs browser)?
+- Does this need to be added to public routes?
+- Have I tested with both auth methods (email + Web3)?
+
+## AI Assistant Best Practices
+
+1. Always check `CLAUDE.md` for project-specific patterns
+2. Verify Next.js 16 patterns (proxy not middleware)
+3. Don't suggest enabling system theme or cacheComponents
+4. Always include authentication checks for new pages
+5. Use the correct Supabase client for the context
+6. Maintain dark theme consistency
+7. Follow the established file structure
+8. Check existing patterns before creating new ones
