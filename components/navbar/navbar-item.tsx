@@ -38,9 +38,4 @@ export function NavBarItem({
   );
 }
 
-export const NAV_ITEMS = [
-  {
-    label: "Pricing",
-    href: "/pricing",
-  },
-];
+export const NAV_ITEMS: Array<{ label: string; href: string }> = [];
