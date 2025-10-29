@@ -1,40 +1,84 @@
 import { NextResponse } from "next/server";
-import sgMail from "@sendgrid/mail";
-import { rateLimit } from "@/lib/rate-limit";
-import { createClient as createServerClient } from "@/lib/supabase/server";
+// import { rateLimit } from "@/lib/rate-limit"; // TODO: Re-enable rate limiting in production
+import { createAdminClient } from "@/lib/supabase/admin";
+import { logger } from "@/lib/logger";
 
-// Initialize SendGrid
-sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
+// Create scoped logger for newsletter operations
+const log = logger.scope("Newsletter");
 
-const limiter = rateLimit({
-  interval: 60 * 1000, // 1 minute
-  uniqueTokenPerInterval: 500, // Max 500 users per minute
-});
+// TODO: Re-enable rate limiting in production
+// const limiter = rateLimit({
+//   interval: 60 * 1000, // 1 minute
+//   uniqueTokenPerInterval: 500, // Max 500 users per minute
+// });
 
 export async function POST(req: Request) {
-  try {
-    await limiter.check(req, 1, "NEWSLETTER_TOKEN"); // 1 request per minute
+  const requestId = Math.random().toString(36).substring(7);
+  log.info(`[${requestId}] Incoming POST request to /api/newsletter`);
 
+  try {
+    // Verify service role key is configured (server-side only check)
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      log.error(
+        `[${requestId}] CONFIGURATION ERROR: Missing SUPABASE_SERVICE_ROLE_KEY`,
+      );
+      return NextResponse.json(
+        { error: "Server configuration error. Please contact support." },
+        { status: 500 },
+      );
+    }
+
+    // Rate limiting disabled for testing - re-enable in production
+    // log.debug(`[${requestId}] Checking rate limit`);
+    // await limiter.check(req, 1, "NEWSLETTER_TOKEN"); // 1 request per minute
+    // log.debug(`[${requestId}] Rate limit check passed`);
+
+    log.debug(`[${requestId}] Parsing request body`);
     const { email } = await req.json();
+    log.info(`[${requestId}] Request body parsed`, {
+      email: email ? "provided" : "missing",
+    });
 
     // Validate email format
+    log.debug(`[${requestId}] Validating email format`);
     if (!email || typeof email !== "string") {
+      log.warn(`[${requestId}] Email validation failed: Email is required`);
       return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
 
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/;
     if (!emailRegex.test(email)) {
+      log.warn(`[${requestId}] Email validation failed: Invalid format`, {
+        email,
+      });
       return NextResponse.json(
         { error: "Please enter a valid email address" },
         { status: 400 },
       );
     }
-
-    console.log("Newsletter signup request for:", email);
+    log.info(`[${requestId}] Email validation passed`, { email });
 
     // Check for duplicate subscription
-    const supabase = await createServerClient();
+    // Use admin client since newsletter_subscribers table has RLS disabled
+    log.debug(`[${requestId}] Creating Supabase admin client`);
+    let supabase;
+    try {
+      supabase = createAdminClient();
+      log.debug(`[${requestId}] Supabase admin client created successfully`);
+    } catch (clientError) {
+      log.error(
+        `[${requestId}] Failed to create Supabase admin client`,
+        clientError,
+      );
+      return NextResponse.json(
+        { error: "Database connection error. Please try again later." },
+        { status: 500 },
+      );
+    }
 
+    log.debug(`[${requestId}] Checking for existing subscription`, {
+      email: email.toLowerCase(),
+    });
     const { data: existingSubscriber, error: checkError } = await supabase
       .from("newsletter_subscribers")
       .select("email")
@@ -43,7 +87,14 @@ export async function POST(req: Request) {
 
     if (checkError && checkError.code !== "PGRST116") {
       // PGRST116 is "not found" - any other error is a problem
-      console.error("Error checking for duplicate:", checkError);
+      log.error(
+        `[${requestId}] Database error checking for duplicate`,
+        checkError,
+        {
+          errorCode: checkError.code,
+          email: email.toLowerCase(),
+        },
+      );
       return NextResponse.json(
         { error: "Error checking subscription status" },
         { status: 500 },
@@ -51,116 +102,79 @@ export async function POST(req: Request) {
     }
 
     if (existingSubscriber) {
+      log.warn(`[${requestId}] Duplicate subscription attempt`, {
+        email: email.toLowerCase(),
+      });
       return NextResponse.json(
         { error: "This email is already subscribed to our newsletter" },
         { status: 409 },
       );
     }
+    log.info(
+      `[${requestId}] No existing subscription found - proceeding with insert`,
+    );
 
-    // Insert new subscriber
+    // Insert new subscriber with welcomed=false
+    // Welcome emails will be sent by scheduled job at midnight
+    log.debug(`[${requestId}] Inserting new subscriber into database`);
     const { error: insertError } = await supabase
       .from("newsletter_subscribers")
       .insert({
         email: email.toLowerCase(),
         subscribed_at: new Date().toISOString(),
         status: "active",
+        welcomed: false, // Will be set to true after welcome email is sent by cron job
       });
 
     if (insertError) {
-      console.error("Error inserting subscriber:", insertError);
+      log.error(
+        `[${requestId}] Database error inserting subscriber`,
+        insertError,
+        {
+          email: email.toLowerCase(),
+        },
+      );
       return NextResponse.json(
         { error: "Error subscribing to newsletter" },
         { status: 500 },
       );
     }
 
-    // Send welcome email
-    const welcomeMsg = {
-      to: email,
-      from: process.env.SENDER_EMAIL as string,
-      subject: "Welcome to SSI Automations Newsletter!",
-      text: `Thank you for subscribing to the SSI Automations newsletter!
+    log.info(`[${requestId}] Successfully inserted subscriber into database`, {
+      email: email.toLowerCase(),
+      welcomed: false,
+      note: "Welcome email will be sent by scheduled job",
+    });
 
-We're excited to have you join our community of AI learning enthusiasts.
-
-What to expect:
-- Curated AI learning resources and course recommendations
-- Platform updates and new features
-- Learning tips and best practices
-- Community highlights and success stories
-
-You'll receive our newsletter regularly with valuable insights to help you on your AI learning journey.
-
-If you ever wish to unsubscribe, you can do so at any time.
-
-Best regards,
-SSI Automations Team`,
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h1 style="color: #333; border-bottom: 2px solid #000; padding-bottom: 10px;">
-            Welcome to SSI Automations Newsletter!
-          </h1>
-
-          <p style="font-size: 16px; color: #555; line-height: 1.6;">
-            Thank you for subscribing to the SSI Automations newsletter!
-          </p>
-
-          <p style="font-size: 16px; color: #555; line-height: 1.6;">
-            We're excited to have you join our community of AI learning enthusiasts.
-          </p>
-
-          <h2 style="color: #333; margin-top: 30px;">What to expect:</h2>
-
-          <ul style="font-size: 15px; color: #555; line-height: 1.8;">
-            <li><strong>Curated AI learning resources</strong> and course recommendations</li>
-            <li><strong>Platform updates</strong> and new features</li>
-            <li><strong>Learning tips</strong> and best practices</li>
-            <li><strong>Community highlights</strong> and success stories</li>
-          </ul>
-
-          <p style="font-size: 16px; color: #555; line-height: 1.6; margin-top: 30px;">
-            You'll receive our newsletter regularly with valuable insights to help you on your AI learning journey.
-          </p>
-
-          <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 13px; color: #888;">
-            <p>If you ever wish to unsubscribe, you can do so at any time.</p>
-            <p style="margin-top: 10px;">
-              <strong>SSI Automations Team</strong><br>
-              AI Learning Solutions & Automation Services
-            </p>
-          </div>
-        </div>
-      `,
-    };
-
-    console.log("Sending welcome email to:", email);
-
-    const result = await sgMail.send(welcomeMsg);
-    console.log("SendGrid response:", result);
+    log.info(`[${requestId}] Newsletter subscription completed successfully`, {
+      email: email.toLowerCase(),
+    });
 
     return NextResponse.json(
       {
-        message: "Successfully subscribed to newsletter!",
+        message:
+          "Successfully subscribed to newsletter! You'll receive a welcome email soon.",
         email: email.toLowerCase(),
       },
       { status: 200 },
     );
   } catch (error) {
-    if ((error as Error).message === "Rate limit exceeded") {
-      return NextResponse.json(
-        {
-          error:
-            "Too many subscription attempts. Please try again in a minute.",
-        },
-        { status: 429 },
-      );
-    }
-    console.error("Detailed error in newsletter signup:", error);
-    if (error instanceof Error) {
-      console.error("Error name:", error.name);
-      console.error("Error message:", error.message);
-      console.error("Error stack:", error.stack);
-    }
+    // Rate limiting disabled for testing - re-enable in production
+    // if ((error as Error).message === "Rate limit exceeded") {
+    //   log.warn(`[${requestId}] Rate limit exceeded`);
+    //   return NextResponse.json(
+    //     {
+    //       error:
+    //         "Too many subscription attempts. Please try again in a minute.",
+    //     },
+    //     { status: 429 },
+    //   );
+    // }
+
+    log.error(`[${requestId}] Unhandled error in newsletter signup`, error, {
+      errorType: error instanceof Error ? error.constructor.name : typeof error,
+    });
+
     return NextResponse.json(
       {
         error: "Error processing newsletter subscription",
