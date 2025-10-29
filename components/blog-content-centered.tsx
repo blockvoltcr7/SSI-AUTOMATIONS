@@ -12,12 +12,12 @@ interface BlogContentCenteredProps {
 }
 
 export function BlogContentCentered({ blog }: BlogContentCenteredProps) {
-  const [pageUrl, setPageUrl] = useState("");
-
-  useEffect(() => {
-    // Use production URL with current path
-    const pathname = window.location.pathname;
-    setPageUrl(`https://www.ssiautomations.com${pathname}`);
+  // Compute pageUrl only once on mount using useMemo
+  const pageUrl = React.useMemo(() => {
+    if (typeof window !== "undefined") {
+      return `https://www.ssiautomations.com${window.location.pathname}`;
+    }
+    return "";
   }, []);
 
   return (

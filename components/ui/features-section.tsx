@@ -163,12 +163,8 @@ export const SkeletonTwo = () => {
     "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=2070&auto=format&fit=crop",
   ];
 
-  const [rotations, setRotations] = useState<number[]>([]);
-
-  useEffect(() => {
-    // Generate random rotations once on client
-    setRotations(images.map(() => Math.random() * 20 - 10));
-  }, []);
+  // Generate random rotations once - useState initializer runs only once on mount
+  const [rotations] = useState(() => images.map(() => Math.random() * 20 - 10));
 
   const imageVariants = {
     whileHover: { scale: 1.1, rotate: 0, zIndex: 100 },

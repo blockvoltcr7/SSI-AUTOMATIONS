@@ -20,6 +20,7 @@
 Next.js 16 introduces the **"use cache"** directive, a revolutionary approach to caching that makes it **explicit and opt-in**, replacing the confusing implicit caching behavior from earlier versions.
 
 **Key Features:**
+
 - ✅ **Opt-in caching** - Nothing is cached unless you explicitly add "use cache"
 - ✅ **Multiple levels** - Cache entire pages, components, or individual functions
 - ✅ **Automatic cache keys** - Compiler generates keys based on inputs
@@ -35,6 +36,7 @@ The `"use cache"` directive is a compiler hint that tells Next.js to cache the o
 ### The Problem It Solves
 
 **Before Next.js 16 (Implicit Caching):**
+
 ```tsx
 // This was automatically cached... maybe? 🤷
 async function BlogPosts() {
@@ -44,6 +46,7 @@ async function BlogPosts() {
 ```
 
 **With Next.js 16 (Explicit Caching):**
+
 ```tsx
 "use cache"; // ✅ Clearly indicates this is cached
 
@@ -68,11 +71,11 @@ async function BlogPosts() {
 
 ```typescript
 // next.config.ts (or next.config.mjs)
-import type { NextConfig } from 'next';
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   experimental: {
-    cacheComponents: true,  // ← Enable "use cache" directive
+    cacheComponents: true, // ← Enable "use cache" directive
   },
 };
 
@@ -107,13 +110,13 @@ Cache **everything** exported from a file.
 // app/blog/page.tsx
 "use cache";
 
-import { getAllBlogs } from '@/lib/blog';
+import { getAllBlogs } from "@/lib/blog";
 
 export default async function BlogPage() {
   const blogs = await getAllBlogs();
   return (
     <div>
-      {blogs.map(blog => (
+      {blogs.map((blog) => (
         <BlogCard key={blog.slug} blog={blog} />
       ))}
     </div>
@@ -124,6 +127,7 @@ export default async function BlogPage() {
 ```
 
 **When to use:**
+
 - Static pages that change infrequently
 - Blog listing pages
 - Marketing pages
@@ -151,7 +155,7 @@ export default function DashboardPage() {
 }
 
 // Separate file: components/cached-stats.tsx
-"use cache";
+("use cache");
 
 async function CachedStats() {
   const stats = await fetchStats();
@@ -160,6 +164,7 @@ async function CachedStats() {
 ```
 
 **When to use:**
+
 - Mixed dynamic/static pages
 - Expensive computations
 - Third-party API calls with rate limits
@@ -174,8 +179,8 @@ Cache **utility functions** used across multiple pages.
 "use cache";
 
 export async function getAllBlogs() {
-  const files = fs.readdirSync('./content/blog');
-  const blogs = files.map(file => parseBlogFile(file));
+  const files = fs.readdirSync("./content/blog");
+  const blogs = files.map((file) => parseBlogFile(file));
   return blogs.sort((a, b) => new Date(b.date) - new Date(a.date));
 }
 
@@ -188,6 +193,7 @@ const featuredBlogs = (await getAllBlogs()).slice(0, 3);
 ```
 
 **When to use:**
+
 - Shared data fetching functions
 - Expensive computations used in multiple places
 - Database queries
@@ -202,15 +208,15 @@ Control how long data stays cached using `cacheLife()`.
 ### Available Profiles
 
 ```typescript
-import { cacheLife } from 'next/cache';
+import { cacheLife } from "next/cache";
 
 // Predefined profiles:
-cacheLife('seconds');  // Cache for 1 second
-cacheLife('minutes');  // Cache for 5 minutes (default)
-cacheLife('hours');    // Cache for 1 hour
-cacheLife('days');     // Cache for 1 day
-cacheLife('weeks');    // Cache for 1 week
-cacheLife('max');      // Cache indefinitely
+cacheLife("seconds"); // Cache for 1 second
+cacheLife("minutes"); // Cache for 5 minutes (default)
+cacheLife("hours"); // Cache for 1 hour
+cacheLife("days"); // Cache for 1 day
+cacheLife("weeks"); // Cache for 1 week
+cacheLife("max"); // Cache indefinitely
 ```
 
 ### Usage Examples
@@ -251,10 +257,10 @@ async function FeaturedPosts() {
 ```tsx
 "use cache";
 
-import { cacheLife } from 'next/cache';
+import { cacheLife } from "next/cache";
 
 export async function getRecommendations(userId: string) {
-  cacheLife('hours'); // ← Cache for 1 hour
+  cacheLife("hours"); // ← Cache for 1 hour
 
   const prefs = await fetchUserPreferences(userId);
   const recs = await computeRecommendations(prefs);
@@ -273,14 +279,14 @@ const nextConfig: NextConfig = {
     cacheComponents: true,
     cacheLife: {
       blog: {
-        stale: 60,        // 60 seconds
+        stale: 60, // 60 seconds
         revalidate: 3600, // 1 hour
-        expire: 86400,    // 1 day
+        expire: 86400, // 1 day
       },
       userContent: {
         stale: 0,
-        revalidate: 300,  // 5 minutes
-        expire: 3600,     // 1 hour
+        revalidate: 300, // 5 minutes
+        expire: 3600, // 1 hour
       },
     },
   },
@@ -292,10 +298,10 @@ Usage:
 ```tsx
 "use cache";
 
-import { cacheLife } from 'next/cache';
+import { cacheLife } from "next/cache";
 
 export default async function BlogPage() {
-  cacheLife('blog'); // ← Use custom profile
+  cacheLife("blog"); // ← Use custom profile
   // ...
 }
 ```
@@ -311,10 +317,10 @@ Invalidate cached content on-demand using cache tags.
 ```tsx
 "use cache";
 
-import { cacheTag } from 'next/cache';
+import { cacheTag } from "next/cache";
 
 export async function getAllBlogs() {
-  cacheTag('blog-posts'); // ← Tag this cached data
+  cacheTag("blog-posts"); // ← Tag this cached data
 
   const blogs = await fetchBlogs();
   return blogs;
@@ -329,13 +335,13 @@ export async function getAllBlogs() {
 // app/actions.ts
 "use server";
 
-import { revalidateTag } from 'next/cache';
+import { revalidateTag } from "next/cache";
 
 export async function publishBlogPost(post: BlogPost) {
   await saveBlogPost(post);
 
   // Invalidate blog-posts cache
-  revalidateTag('blog-posts');
+  revalidateTag("blog-posts");
 }
 ```
 
@@ -343,7 +349,7 @@ export async function publishBlogPost(post: BlogPost) {
 
 ```tsx
 // app/api/revalidate/route.ts
-import { revalidateTag } from 'next/cache';
+import { revalidateTag } from "next/cache";
 
 export async function POST(request: Request) {
   const { tag } = await request.json();
@@ -359,10 +365,10 @@ export async function POST(request: Request) {
 ```tsx
 "use cache";
 
-import { cacheTag } from 'next/cache';
+import { cacheTag } from "next/cache";
 
 export async function getBlogBySlug(slug: string) {
-  cacheTag('blog-posts');
+  cacheTag("blog-posts");
   cacheTag(`blog-${slug}`);
 
   const blog = await fetchBlog(slug);
@@ -370,10 +376,10 @@ export async function getBlogBySlug(slug: string) {
 }
 
 // Revalidate specific post
-revalidateTag('blog-my-post-slug');
+revalidateTag("blog-my-post-slug");
 
 // Revalidate all posts
-revalidateTag('blog-posts');
+revalidateTag("blog-posts");
 ```
 
 ---
@@ -386,11 +392,11 @@ revalidateTag('blog-posts');
 // app/blog/page.tsx
 "use cache";
 
-import { cacheLife } from 'next/cache';
-import { getAllBlogs } from '@/lib/blog';
+import { cacheLife } from "next/cache";
+import { getAllBlogs } from "@/lib/blog";
 
 export default async function BlogPage() {
-  cacheLife('hours'); // Cache for 1 hour
+  cacheLife("hours"); // Cache for 1 hour
 
   const blogs = await getAllBlogs();
 
@@ -398,7 +404,7 @@ export default async function BlogPage() {
     <div>
       <h1>Blog</h1>
       <div className="grid grid-cols-3 gap-4">
-        {blogs.map(blog => (
+        {blogs.map((blog) => (
           <BlogCard key={blog.slug} blog={blog} />
         ))}
       </div>
@@ -415,11 +421,11 @@ export default async function BlogPage() {
 // app/blog/[slug]/page.tsx
 "use cache";
 
-import { cacheLife } from 'next/cache';
-import { getBlogBySlug } from '@/lib/blog';
+import { cacheLife } from "next/cache";
+import { getBlogBySlug } from "@/lib/blog";
 
 export default async function BlogPostPage({ params }) {
-  cacheLife('weeks'); // Blog posts rarely change
+  cacheLife("weeks"); // Blog posts rarely change
 
   const blog = await getBlogBySlug(params.slug);
 
@@ -440,18 +446,21 @@ export default async function BlogPostPage({ params }) {
 // lib/blog.ts
 "use cache";
 
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import { cacheLife, cacheTag } from 'next/cache';
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+import { cacheLife, cacheTag } from "next/cache";
 
 export async function getAllBlogs() {
-  cacheLife('hours');
-  cacheTag('blog-posts');
+  cacheLife("hours");
+  cacheTag("blog-posts");
 
-  const files = fs.readdirSync(path.join(process.cwd(), 'content/blog'));
-  const blogs = files.map(file => {
-    const content = fs.readFileSync(path.join(process.cwd(), 'content/blog', file), 'utf8');
+  const files = fs.readdirSync(path.join(process.cwd(), "content/blog"));
+  const blogs = files.map((file) => {
+    const content = fs.readFileSync(
+      path.join(process.cwd(), "content/blog", file),
+      "utf8",
+    );
     const { data } = matter(content);
     return data;
   });
@@ -460,13 +469,13 @@ export async function getAllBlogs() {
 }
 
 export async function getBlogBySlug(slug: string) {
-  cacheLife('weeks');
-  cacheTag('blog-posts');
+  cacheLife("weeks");
+  cacheTag("blog-posts");
   cacheTag(`blog-${slug}`);
 
   const content = fs.readFileSync(
-    path.join(process.cwd(), 'content/blog', `${slug}.mdx`),
-    'utf8'
+    path.join(process.cwd(), "content/blog", `${slug}.mdx`),
+    "utf8",
   );
   const { data, content: markdown } = matter(content);
 
@@ -474,8 +483,8 @@ export async function getBlogBySlug(slug: string) {
 }
 
 export async function getFeaturedBlogs(limit: number = 3) {
-  cacheLife('hours');
-  cacheTag('blog-posts');
+  cacheLife("hours");
+  cacheTag("blog-posts");
 
   const allBlogs = await getAllBlogs();
   return allBlogs.slice(0, limit);
@@ -488,7 +497,7 @@ export async function getFeaturedBlogs(limit: number = 3) {
 
 ```tsx
 // app/page.tsx
-import { getFeaturedBlogs } from '@/lib/blog';
+import { getFeaturedBlogs } from "@/lib/blog";
 
 export default async function HomePage() {
   // This is cached because getFeaturedBlogs has "use cache"
@@ -516,7 +525,7 @@ export default async function HomePage() {
 "use cache";
 
 export async function getAllBlogs() {
-  cacheLife('hours');
+  cacheLife("hours");
   // ...
 }
 ```
@@ -527,14 +536,14 @@ export async function getAllBlogs() {
 // Static content - cache for weeks
 "use cache";
 export async function getAboutPage() {
-  cacheLife('weeks');
+  cacheLife("weeks");
   // ...
 }
 
 // Dynamic content - cache for minutes
-"use cache";
+("use cache");
 export async function getUserStats() {
-  cacheLife('minutes');
+  cacheLife("minutes");
   // ...
 }
 ```
@@ -544,10 +553,10 @@ export async function getUserStats() {
 ```tsx
 "use cache";
 
-import { cacheTag } from 'next/cache';
+import { cacheTag } from "next/cache";
 
 export async function getAllBlogs() {
-  cacheTag('blog-posts'); // ← Easy to invalidate later
+  cacheTag("blog-posts"); // ← Easy to invalidate later
   // ...
 }
 ```
@@ -558,7 +567,7 @@ export async function getAllBlogs() {
 "use cache";
 
 export async function analyzeUserBehavior(userId: string) {
-  cacheLife('hours');
+  cacheLife("hours");
 
   // Expensive computation
   const data = await fetchLargeDataset(userId);
@@ -599,7 +608,7 @@ export async function getLiveStockPrices() {
 "use cache";
 
 export function getStaticConfig() {
-  return { apiUrl: 'https://api.example.com' }; // ❌ Already static
+  return { apiUrl: "https://api.example.com" }; // ❌ Already static
 }
 ```
 
@@ -610,6 +619,7 @@ export function getStaticConfig() {
 ### From Next.js 14/15 (Implicit Caching)
 
 **Before (Next.js 14/15):**
+
 ```tsx
 // Automatically cached (confusing!)
 export async function BlogPage() {
@@ -619,6 +629,7 @@ export async function BlogPage() {
 ```
 
 **After (Next.js 16):**
+
 ```tsx
 // Explicitly cached (clear!)
 "use cache";
@@ -632,6 +643,7 @@ export async function BlogPage() {
 ### Replacing `revalidate`
 
 **Before:**
+
 ```tsx
 export const revalidate = 3600; // Revalidate every hour
 
@@ -641,13 +653,14 @@ export async function BlogPage() {
 ```
 
 **After:**
+
 ```tsx
 "use cache";
 
-import { cacheLife } from 'next/cache';
+import { cacheLife } from "next/cache";
 
 export async function BlogPage() {
-  cacheLife('hours'); // Cache for 1 hour
+  cacheLife("hours"); // Cache for 1 hour
   // ...
 }
 ```
@@ -655,19 +668,21 @@ export async function BlogPage() {
 ### Replacing `fetch()` Cache Options
 
 **Before:**
+
 ```tsx
-const data = await fetch('/api/data', {
-  next: { revalidate: 3600 }
+const data = await fetch("/api/data", {
+  next: { revalidate: 3600 },
 });
 ```
 
 **After:**
+
 ```tsx
 "use cache";
 
 async function getData() {
-  cacheLife('hours');
-  const data = await fetch('/api/data');
+  cacheLife("hours");
+  const data = await fetch("/api/data");
   return data;
 }
 ```
@@ -681,13 +696,13 @@ async function getData() {
 ```tsx
 "use cache";
 
-import { cacheLife } from 'next/cache';
+import { cacheLife } from "next/cache";
 
 export async function getContent(isDynamic: boolean) {
   if (isDynamic) {
-    cacheLife('minutes'); // Short cache for dynamic
+    cacheLife("minutes"); // Short cache for dynamic
   } else {
-    cacheLife('weeks');   // Long cache for static
+    cacheLife("weeks"); // Long cache for static
   }
 
   const content = await fetchContent();
@@ -702,7 +717,7 @@ export async function getContent(isDynamic: boolean) {
 
 // Function 1: Cache user data
 export async function getUser(id: string) {
-  cacheLife('hours');
+  cacheLife("hours");
   cacheTag(`user-${id}`);
 
   return await fetchUser(id);
@@ -710,7 +725,7 @@ export async function getUser(id: string) {
 
 // Function 2: Cache user posts (depends on user)
 export async function getUserPosts(userId: string) {
-  cacheLife('hours');
+  cacheLife("hours");
   cacheTag(`posts-${userId}`);
 
   const user = await getUser(userId); // Uses cached user
@@ -726,8 +741,8 @@ export async function getUserPosts(userId: string) {
 export async function generateStaticParams() {
   const blogs = await getAllBlogs(); // ← Warms cache
 
-  return blogs.map(blog => ({
-    slug: blog.slug
+  return blogs.map((blog) => ({
+    slug: blog.slug,
   }));
 }
 ```
@@ -737,10 +752,10 @@ export async function generateStaticParams() {
 ```tsx
 "use cache";
 
-import { cacheLife } from 'next/cache';
+import { cacheLife } from "next/cache";
 
 export async function getUserDashboard(userId: string) {
-  cacheLife('minutes');
+  cacheLife("minutes");
   cacheTag(`dashboard-${userId}`);
 
   const data = await fetchDashboardData(userId);
@@ -755,13 +770,13 @@ revalidateTag(`dashboard-${userId}`);
 
 ## Comparison: "use cache" vs. Suspense
 
-| Feature | "use cache" | Suspense |
-|---------|-------------|----------|
-| **Purpose** | Cache computed results | Stream UI progressively |
-| **When to use** | Expensive computations, slow APIs | Long-running data fetches |
+| Feature                 | "use cache"                            | Suspense                       |
+| ----------------------- | -------------------------------------- | ------------------------------ |
+| **Purpose**             | Cache computed results                 | Stream UI progressively        |
+| **When to use**         | Expensive computations, slow APIs      | Long-running data fetches      |
 | **Performance benefit** | Skip re-execution on repeated requests | Show content faster (TTFB/FCP) |
-| **User experience** | Faster page loads | Progressive rendering |
-| **Use together?** | ✅ Yes! Complementary features | ✅ Yes! Use both for best UX |
+| **User experience**     | Faster page loads                      | Progressive rendering          |
+| **Use together?**       | ✅ Yes! Complementary features         | ✅ Yes! Use both for best UX   |
 
 **Example: Using Both Together**
 
@@ -792,6 +807,7 @@ async function BlogList() {
 ```
 
 **Result:**
+
 - First request: Slow (fetches + caches)
 - Subsequent requests: Fast (reads from cache)
 - All requests: Progressive rendering via Suspense
@@ -805,12 +821,12 @@ async function BlogList() {
 ```tsx
 "use cache";
 
-import { cacheLife } from 'next/cache';
+import { cacheLife } from "next/cache";
 
 export async function getBlogs() {
-  cacheLife('hours');
+  cacheLife("hours");
 
-  console.log('[CACHE] Fetching blogs...', new Date().toISOString());
+  console.log("[CACHE] Fetching blogs...", new Date().toISOString());
 
   const blogs = await fetchBlogs();
   return blogs;
@@ -818,6 +834,7 @@ export async function getBlogs() {
 ```
 
 **In logs:**
+
 - First request: `[CACHE] Fetching blogs... 2025-10-26T12:00:00.000Z`
 - Second request: (no log - served from cache)
 - After 1 hour: `[CACHE] Fetching blogs... 2025-10-26T13:00:05.000Z`

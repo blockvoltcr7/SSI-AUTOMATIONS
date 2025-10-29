@@ -95,9 +95,11 @@ const InputOTPSlot = React.forwardRef<HTMLInputElement, InputOTPSlotProps>(
 
     React.useEffect(() => {
       if (slots.current) {
+        // This is intentional mutation for managing input refs
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         slots.current[index] = inputRef.current;
       }
-    }, [index, slots]);
+    }, [index]);
 
     const char = value[index] || "";
 

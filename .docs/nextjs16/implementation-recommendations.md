@@ -55,6 +55,7 @@ lib/
 **Why:** Blog pages are heavily used and involve file I/O operations.
 
 **Files to modify:**
+
 - ✅ `lib/blog.ts` - Add "use cache" to all functions
 - ✅ `app/(marketing)/blog/page.tsx` - Add Suspense + "use cache"
 - ✅ `app/(marketing)/blog/[slug]/page.tsx` - Add "use cache"
@@ -62,6 +63,7 @@ lib/
 - ✅ Create `app/(marketing)/blog/loading.tsx`
 
 **Expected gains:**
+
 - 60-80% faster blog listing page (after first load)
 - 70-90% faster individual blog posts (after first load)
 - Better perceived performance with progressive loading
@@ -71,15 +73,18 @@ lib/
 **Why:** Homepage is the entry point for most users.
 
 **Files to modify:**
+
 - ✅ `app/(marketing)/page.tsx` - Add Suspense around BlogSection
 
 **Expected gains:**
+
 - Faster initial page render (hero/header appear immediately)
 - 50-70% faster featured blogs section (cached)
 
 ### 3. Other Marketing Pages (MEDIUM IMPACT)
 
 **Files to consider:**
+
 - `app/(marketing)/about/page.tsx`
 - `app/(marketing)/contact/page.tsx`
 - `app/(marketing)/pricing/page.tsx`
@@ -88,6 +93,7 @@ lib/
 **Why:** These are likely static content that changes rarely.
 
 **Expected gains:**
+
 - 80-95% faster page loads (if using "use cache")
 
 ---
@@ -116,6 +122,7 @@ const nextConfig = {
 **File:** `lib/blog.ts`
 
 **Current implementation:**
+
 ```typescript
 export function getAllBlogs(): BlogWithSlug[] {
   const slugs = getAllBlogSlugs();
@@ -124,14 +131,15 @@ export function getAllBlogs(): BlogWithSlug[] {
 ```
 
 **Optimized implementation:**
+
 ```typescript
 "use cache";
 
-import { cacheLife, cacheTag } from 'next/cache';
+import { cacheLife, cacheTag } from "next/cache";
 
 export async function getAllBlogs(): Promise<BlogWithSlug[]> {
-  cacheLife('hours'); // Cache for 1 hour
-  cacheTag('blog-posts');
+  cacheLife("hours"); // Cache for 1 hour
+  cacheTag("blog-posts");
 
   const slugs = getAllBlogSlugs();
   const blogs = slugs
@@ -144,9 +152,11 @@ export async function getAllBlogs(): Promise<BlogWithSlug[]> {
   return blogs;
 }
 
-export async function getBlogBySlug(slug: string): Promise<BlogWithSlug | null> {
-  cacheLife('weeks'); // Blog posts rarely change
-  cacheTag('blog-posts');
+export async function getBlogBySlug(
+  slug: string,
+): Promise<BlogWithSlug | null> {
+  cacheLife("weeks"); // Blog posts rarely change
+  cacheTag("blog-posts");
   cacheTag(`blog-${slug}`);
 
   try {
@@ -180,9 +190,11 @@ export async function getBlogBySlug(slug: string): Promise<BlogWithSlug | null> 
   }
 }
 
-export async function getFeaturedBlogs(limit: number = 3): Promise<BlogWithSlug[]> {
-  cacheLife('hours');
-  cacheTag('blog-posts');
+export async function getFeaturedBlogs(
+  limit: number = 3,
+): Promise<BlogWithSlug[]> {
+  cacheLife("hours");
+  cacheTag("blog-posts");
 
   const allBlogs = await getAllBlogs();
   return allBlogs.slice(0, limit);
@@ -190,6 +202,7 @@ export async function getFeaturedBlogs(limit: number = 3): Promise<BlogWithSlug[
 ```
 
 **Changes:**
+
 - ✅ Added `"use cache"` directive
 - ✅ Made functions `async`
 - ✅ Added `cacheLife()` configurations
@@ -241,7 +254,7 @@ export function BlogCardSkeleton() {
 **File:** `components/loading/blog-grid-skeleton.tsx`
 
 ```tsx
-import { BlogCardSkeleton } from './blog-card-skeleton';
+import { BlogCardSkeleton } from "./blog-card-skeleton";
 
 export function BlogGridSkeleton() {
   return (
@@ -259,6 +272,7 @@ export function BlogGridSkeleton() {
 **File:** `app/(marketing)/blog/page.tsx`
 
 **Current:**
+
 ```tsx
 export default function BlogPage() {
   const blogs = getAllBlogs();
@@ -267,9 +281,10 @@ export default function BlogPage() {
 ```
 
 **Optimized:**
+
 ```tsx
-import { Suspense } from 'react';
-import { BlogGridSkeleton } from '@/components/loading/blog-grid-skeleton';
+import { Suspense } from "react";
+import { BlogGridSkeleton } from "@/components/loading/blog-grid-skeleton";
 
 export default function BlogPage() {
   return (
@@ -286,7 +301,8 @@ export default function BlogPage() {
             Blog
           </h1>
           <p className="text-lg md:text-xl text-neutral-400">
-            Insights, guides, and reviews about AI learning platforms and resources.
+            Insights, guides, and reviews about AI learning platforms and
+            resources.
           </p>
         </div>
 
@@ -361,16 +377,18 @@ export default function Loading() {
 **File:** `app/(marketing)/blog/[slug]/page.tsx`
 
 **Add at the top of the file:**
+
 ```tsx
 "use cache";
 
-import { cacheLife } from 'next/cache';
+import { cacheLife } from "next/cache";
 ```
 
 **Update the page component:**
+
 ```tsx
 export default async function BlogPostPage(props: BlogPostPageProps) {
-  cacheLife('weeks'); // Blog posts rarely change
+  cacheLife("weeks"); // Blog posts rarely change
 
   const params = await props.params;
   const blog = await getBlogBySlug(params.slug);
@@ -398,6 +416,7 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
 **File:** `app/(marketing)/page.tsx`
 
 **Current:**
+
 ```tsx
 export default function Home() {
   const featuredBlogs = getFeaturedBlogs(3);
@@ -411,8 +430,9 @@ export default function Home() {
 ```
 
 **Optimized:**
+
 ```tsx
-import { Suspense } from 'react';
+import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -469,7 +489,10 @@ function BlogSectionSkeleton() {
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-96 bg-neutral-700/50 rounded-3xl animate-pulse" />
+            <div
+              key={i}
+              className="h-96 bg-neutral-700/50 rounded-3xl animate-pulse"
+            />
           ))}
         </div>
       </div>
@@ -487,30 +510,33 @@ function BlogSectionSkeleton() {
 These pages likely have static content:
 
 **File:** `app/(marketing)/about/page.tsx`
+
 ```tsx
 "use cache";
 
-import { cacheLife } from 'next/cache';
+import { cacheLife } from "next/cache";
 
 export default function AboutPage() {
-  cacheLife('weeks'); // Static content
+  cacheLife("weeks"); // Static content
   // ... page content
 }
 ```
 
 **File:** `app/(marketing)/pricing/page.tsx`
+
 ```tsx
 "use cache";
 
-import { cacheLife } from 'next/cache';
+import { cacheLife } from "next/cache";
 
 export default function PricingPage() {
-  cacheLife('days'); // Pricing changes occasionally
+  cacheLife("days"); // Pricing changes occasionally
   // ... page content
 }
 ```
 
 **File:** `app/(marketing)/contact/page.tsx`
+
 ```tsx
 // No caching - has form interaction
 export default function ContactPage() {
@@ -521,6 +547,7 @@ export default function ContactPage() {
 ### Pages NOT to Cache
 
 ❌ **Don't cache these:**
+
 - `app/(auth)/login/page.tsx` - User-specific
 - `app/dashboard/page.tsx` - User-specific, dynamic
 - `app/otp/page.tsx` - One-time codes
@@ -531,9 +558,11 @@ export default function ContactPage() {
 ## Implementation Priority Order
 
 ### Phase 1: Enable Feature (5 minutes)
+
 1. ✅ Update `next.config.mjs` to enable `cacheComponents: true`
 
 ### Phase 2: Blog System Core (30 minutes)
+
 1. ✅ Update `lib/blog.ts` - Add "use cache" to all functions
 2. ✅ Create skeleton components
 3. ✅ Update `app/(marketing)/blog/page.tsx` with Suspense
@@ -541,13 +570,16 @@ export default function ContactPage() {
 5. ✅ Update `app/(marketing)/blog/[slug]/page.tsx` with "use cache"
 
 ### Phase 3: Homepage (15 minutes)
+
 1. ✅ Update `app/(marketing)/page.tsx` with Suspense for blog section
 
 ### Phase 4: Other Pages (20 minutes)
+
 1. ✅ Add "use cache" to `/about`, `/pricing`, `/learn` pages
 2. ✅ Test each page
 
 ### Phase 5: Testing & Validation (30 minutes)
+
 1. ✅ Test blog listing page
 2. ✅ Test individual blog posts
 3. ✅ Test homepage
@@ -563,6 +595,7 @@ export default function ContactPage() {
 ### Blog Listing Page
 
 **Before:**
+
 ```
 Initial load: 800ms
 Subsequent loads: 800ms (no caching)
@@ -571,6 +604,7 @@ FCP: 800ms
 ```
 
 **After:**
+
 ```
 Initial load: 850ms (slightly slower due to caching overhead)
 Subsequent loads: 120ms (85% faster! - served from cache)
@@ -581,12 +615,14 @@ FCP: 250ms (69% faster - header shows immediately)
 ### Individual Blog Post
 
 **Before:**
+
 ```
 Initial load: 400ms
 Subsequent loads: 400ms
 ```
 
 **After:**
+
 ```
 Initial load: 420ms
 Subsequent loads: 50ms (87% faster!)
@@ -595,12 +631,14 @@ Subsequent loads: 50ms (87% faster!)
 ### Homepage Featured Blogs
 
 **Before:**
+
 ```
 Full page load: 1200ms (everything waits for blogs)
 FCP: 1200ms
 ```
 
 **After:**
+
 ```
 Hero/Header: 200ms (shown immediately)
 Featured blogs: 350ms (cached after first load)
@@ -614,6 +652,7 @@ FCP: 200ms (83% faster perceived performance)
 ### Manual Testing
 
 1. **Clear cache and test initial load:**
+
    ```bash
    # Clear Next.js cache
    rm -rf .next
@@ -640,6 +679,7 @@ FCP: 200ms (83% faster perceived performance)
 ### Automated Testing
 
 **Add to `package.json`:**
+
 ```json
 {
   "scripts": {
@@ -649,27 +689,28 @@ FCP: 200ms (83% faster perceived performance)
 ```
 
 **Create `scripts/test-cache.mjs`:**
+
 ```javascript
-import { performance } from 'perf_hooks';
+import { performance } from "perf_hooks";
 
 async function testCachePerformance() {
-  const baseUrl = 'http://localhost:3000';
+  const baseUrl = "http://localhost:3000";
 
   // Test 1: First load (cold cache)
-  console.log('Testing first load (cold cache)...');
+  console.log("Testing first load (cold cache)...");
   const start1 = performance.now();
   await fetch(`${baseUrl}/blog`);
   const end1 = performance.now();
   console.log(`First load: ${(end1 - start1).toFixed(2)}ms`);
 
   // Test 2: Second load (warm cache)
-  console.log('Testing second load (warm cache)...');
+  console.log("Testing second load (warm cache)...");
   const start2 = performance.now();
   await fetch(`${baseUrl}/blog`);
   const end2 = performance.now();
   console.log(`Second load: ${(end2 - start2).toFixed(2)}ms`);
 
-  const improvement = ((end1 - end2) / end1 * 100).toFixed(2);
+  const improvement = (((end1 - end2) / end1) * 100).toFixed(2);
   console.log(`\nImprovement: ${improvement}%`);
 }
 
@@ -683,22 +724,25 @@ testCachePerformance();
 ### Verify Cache is Working
 
 **Check DevTools:**
+
 1. Open Network tab
 2. Visit `/blog` page
 3. Look for response header: `X-Next-Cache: HIT` (cached) or `MISS` (fresh)
 
 **Check Server Logs:**
+
 ```typescript
 // Add to lib/blog.ts for debugging
 "use cache";
 
 export async function getAllBlogs() {
-  console.log('[CACHE] getAllBlogs called at:', new Date().toISOString());
+  console.log("[CACHE] getAllBlogs called at:", new Date().toISOString());
   // ...
 }
 ```
 
 **Expected behavior:**
+
 - First visit: `[CACHE] getAllBlogs called at: 2025-10-26T12:00:00.000Z`
 - Second visit: (no log - served from cache)
 - After 1 hour: `[CACHE] getAllBlogs called at: 2025-10-26T13:00:05.000Z`
@@ -709,15 +753,16 @@ export async function getAllBlogs() {
 
 ```typescript
 // scripts/invalidate-blog-cache.ts
-import { revalidateTag } from 'next/cache';
+import { revalidateTag } from "next/cache";
 
 // Invalidate all blog posts
-revalidateTag('blog-posts');
+revalidateTag("blog-posts");
 
-console.log('Blog cache invalidated!');
+console.log("Blog cache invalidated!");
 ```
 
 **When to invalidate:**
+
 - After publishing a new blog post
 - After editing an existing post
 - After deleting a post
@@ -731,6 +776,7 @@ If issues arise, you can easily rollback:
 ### Step 1: Disable "use cache"
 
 **Remove from `next.config.mjs`:**
+
 ```javascript
 experimental: {
   // cacheComponents: true, // ← Comment out

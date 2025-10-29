@@ -201,15 +201,13 @@ function Testimonial({
     "0.5s",
   ];
 
-  const [animationDelay, setAnimationDelay] = useState("0s");
-
-  useEffect(() => {
-    setAnimationDelay(
+  // Generate random delay once using useMemo to avoid setState in effect
+  const animationDelay = useState(
+    () =>
       possibleAnimationDelays[
         Math.floor(Math.random() * possibleAnimationDelays.length)
-      ]
-    );
-  }, []);
+      ],
+  )[0];
 
   return (
     <figure

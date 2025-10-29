@@ -56,8 +56,6 @@ export async function updateSession(request: NextRequest) {
     "/otp",
     "/about",
     "/blog",
-    "/contact",
-    "/pricing",
     "/learn",
     "/newsletter",
     "/privacy",

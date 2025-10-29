@@ -5,7 +5,7 @@ const nextConfig = {
   // 2. Authentication routes that require dynamic rendering
   // TODO: Re-enable after upgrading next-themes or when Next.js has better support
   // cacheComponents: true,
-  output: 'standalone', // Optimize for production
+  output: "standalone", // Optimize for production
   images: {
     remotePatterns: [
       {

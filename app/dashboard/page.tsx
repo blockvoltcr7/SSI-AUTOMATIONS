@@ -1,6 +1,12 @@
 import { createClient as createServerClient } from "@/lib/supabase/server";
 import type { Metadata } from "next";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
@@ -59,7 +65,9 @@ export default async function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                <Badge variant="default" className="bg-green-500">Active</Badge>
+                <Badge variant="default" className="bg-green-500">
+                  Active
+                </Badge>
               </div>
               <p className="text-xs text-muted-foreground">
                 All systems operational
@@ -76,30 +84,35 @@ export default async function DashboardPage() {
             <CardContent>
               <div className="text-2xl font-bold">
                 {user?.created_at
-                  ? new Date(user.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+                  ? new Date(user.created_at).toLocaleDateString("en-US", {
+                      month: "short",
+                      year: "numeric",
+                    })
                   : "N/A"}
               </div>
-              <p className="text-xs text-muted-foreground">
-                Account created
-              </p>
+              <p className="text-xs text-muted-foreground">Account created</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Last Login
-              </CardTitle>
+              <CardTitle className="text-sm font-medium">Last Login</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
                 {user?.last_sign_in_at
-                  ? new Date(user.last_sign_in_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+                  ? new Date(user.last_sign_in_at).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                    })
                   : "N/A"}
               </div>
               <p className="text-xs text-muted-foreground">
                 {user?.last_sign_in_at
-                  ? new Date(user.last_sign_in_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+                  ? new Date(user.last_sign_in_at).toLocaleTimeString("en-US", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })
                   : ""}
               </p>
             </CardContent>
@@ -130,9 +143,7 @@ export default async function DashboardPage() {
                 <dt className="text-sm font-medium text-muted-foreground">
                   User ID
                 </dt>
-                <dd className="mt-1 text-xs font-mono">
-                  {user?.id}
-                </dd>
+                <dd className="mt-1 text-xs font-mono">{user?.id}</dd>
               </div>
               <div>
                 <dt className="text-sm font-medium text-muted-foreground">
@@ -150,7 +161,9 @@ export default async function DashboardPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Web3 Wallet</CardTitle>
-                <CardDescription>Your blockchain connection details</CardDescription>
+                <CardDescription>
+                  Your blockchain connection details
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
