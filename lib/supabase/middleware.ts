@@ -60,6 +60,7 @@ export async function updateSession(request: NextRequest) {
     "/newsletter",
     "/privacy",
     "/terms",
+    "/api/newsletter", // Newsletter signup API endpoint
   ];
 
   // Check if the current path is a public route or starts with a public route

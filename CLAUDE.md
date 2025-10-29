@@ -364,6 +364,54 @@ Remote images configured in `next.config.mjs`:
 
 Use Next.js `<Image>` component for all images.
 
+## Logging System
+
+The project implements a comprehensive logging system for debugging and monitoring. See `.docs/logging-strategy.md` for full documentation.
+
+### Quick Start
+
+**Enable detailed logs:**
+
+```bash
+# Add to .env.local
+LOG_LEVEL=DEBUG
+```
+
+**Using logger in code:**
+
+```typescript
+import { logger } from "@/lib/logger";
+
+const log = logger.scope("FeatureName");
+log.info("Operation started", { userId: 123 });
+log.debug("Detailed debug info");
+log.error("Operation failed", error, { context });
+```
+
+**Newsletter API logging:**
+The newsletter signup endpoint (`/app/api/newsletter/route.ts`) includes comprehensive logging at every step:
+
+- Request validation
+- Rate limiting
+- Database operations
+- Email sending
+- Error handling
+
+All logs include request IDs for tracing (e.g., `[abc123]`).
+
+**Monitoring logs:**
+
+```bash
+# Watch all logs
+npm run dev
+
+# Filter by category
+npm run dev 2>&1 | grep "\[Newsletter\]"
+
+# Show errors only
+npm run dev 2>&1 | grep "\[ERROR\]"
+```
+
 ## Common Development Tasks
 
 ### Adding a New Blog Post
