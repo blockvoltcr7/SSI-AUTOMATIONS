@@ -6,10 +6,8 @@ import {
   LayoutDashboardIcon,
   BarChartIcon,
   BookOpenIcon,
-  MailIcon,
   NewspaperIcon,
   SettingsIcon,
-  HelpCircleIcon,
   HomeIcon,
 } from "lucide-react"
 
@@ -81,19 +79,9 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
       icon: NewspaperIcon,
     },
     {
-      title: "Contact",
-      url: "/contact",
-      icon: MailIcon,
-    },
-    {
       title: "Settings",
       url: "/dashboard/settings",
       icon: SettingsIcon,
-    },
-    {
-      title: "Help",
-      url: "/contact",
-      icon: HelpCircleIcon,
     },
   ]
 
