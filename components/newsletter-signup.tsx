@@ -59,7 +59,11 @@ export function NewsletterSignup() {
       }, 5000);
     } catch (err) {
       console.error("Newsletter signup error:", err);
-      setError(err instanceof Error ? err.message : "An error occurred. Please try again.");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "An error occurred. Please try again.",
+      );
     } finally {
       setIsLoading(false);
     }

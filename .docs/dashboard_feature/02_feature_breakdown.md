@@ -5,6 +5,7 @@ This document details the components and features of the Developer Dashboard.
 ---
 
 ### 1. My Profile: Your Professional Showcase
+
 This is the user's public-facing resume that clients will see. A complete and professional profile is key to being discovered.
 
 - **Profile Completeness:** A visual progress bar to encourage users to fill out all details.
@@ -19,6 +20,7 @@ This is the user's public-facing resume that clients will see. A complete and pr
 ---
 
 ### 2. Project Marketplace: Find Your Next Gig
+
 This is the interactive hub for discovering and filtering open projects.
 
 - **Project Feed:** A list or card-based view of all open projects.
@@ -33,6 +35,7 @@ This is the interactive hub for discovering and filtering open projects.
 ---
 
 ### 3. My Activity: Track Your Journey
+
 This section provides tools to manage the application and communication process.
 
 - **My Applications:** A table that tracks all submitted applications.
@@ -69,6 +72,8 @@ This section provides tools to manage the application and communication process.
 |   [ CARD 3: Project Title, Skills, Budget ]  [ APPLY ]                    |
 |
 \---------------------------------------------------------------------------/
+```
+
 ```
 
 ```

@@ -59,7 +59,11 @@ export function NewsletterSignupHome() {
       }, 5000);
     } catch (err) {
       console.error("Newsletter signup error:", err);
-      setError(err instanceof Error ? err.message : "An error occurred. Please try again.");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "An error occurred. Please try again.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -148,9 +152,10 @@ export function NewsletterSignupHome() {
                   Successfully Subscribed!
                 </h4>
                 <p className="text-sm text-neutral-400">
-                  Thank you for subscribing to our AI Learning Newsletter.
-                  Check your email for a welcome message. You'll receive curated
-                  content, course updates, and learning tips straight to your inbox.
+                  Thank you for subscribing to our AI Learning Newsletter. Check
+                  your email for a welcome message. You'll receive curated
+                  content, course updates, and learning tips straight to your
+                  inbox.
                 </p>
               </div>
             </div>

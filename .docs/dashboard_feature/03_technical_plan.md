@@ -37,7 +37,7 @@ interface UserProfile {
   avatar_url?: string;
   full_name: string;
   bio?: string;
-  availability: 'Available' | 'Booked' | 'Open to Offers';
+  availability: "Available" | "Booked" | "Open to Offers";
   skills: Skill[];
   portfolio: PortfolioItem[];
 }
@@ -64,14 +64,14 @@ interface Project {
   required_skills: Skill[];
   budget_min?: number;
   budget_max?: number;
-  status: 'Open' | 'In Progress' | 'Closed';
+  status: "Open" | "In Progress" | "Closed";
 }
 
 interface Application {
   id: number;
   project_id: number;
   developer_id: string;
-  status: 'Submitted' | 'In Review' | 'Interviewing' | 'Offer' | 'Rejected';
+  status: "Submitted" | "In Review" | "Interviewing" | "Offer" | "Rejected";
 }
 ```
 

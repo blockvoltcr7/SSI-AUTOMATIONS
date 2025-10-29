@@ -79,6 +79,7 @@ export const config = {
 ```
 
 The proxy runs on **every request** and:
+
 1. Reads authentication cookies
 2. Validates tokens with Supabase
 3. Automatically refreshes expired tokens
@@ -104,16 +105,18 @@ The proxy runs on **every request** and:
 ### Supported Authentication Methods
 
 #### 1. Supabase Email/OTP
+
 ```typescript
 // User structure
 user = {
   id: "uuid",
   email: "user@example.com",
-  app_metadata: { provider: "email" }
-}
+  app_metadata: { provider: "email" },
+};
 ```
 
 #### 2. Solana Web3 Wallet
+
 ```typescript
 // User structure
 user = {
@@ -125,25 +128,36 @@ user = {
       address: "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
       chain: "solana",
       domain: "yourdomain.com",
-      statement: "Sign in with Solana"
-    }
-  }
-}
+      statement: "Sign in with Solana",
+    },
+  },
+};
 ```
 
 ### Route Protection
 
 **Public Routes** (defined in `lib/supabase/middleware.ts`):
+
 ```typescript
 const publicRoutes = [
-  "/", "/login", "/otp", "/about", "/blog", "/contact",
-  "/pricing", "/learn", "/newsletter", "/privacy", "/terms"
+  "/",
+  "/login",
+  "/otp",
+  "/about",
+  "/blog",
+  "/contact",
+  "/pricing",
+  "/learn",
+  "/newsletter",
+  "/privacy",
+  "/terms",
 ];
 ```
 
 **Protected Routes**: All routes NOT in `publicRoutes` require authentication
 
 **Adding a Protected Page**:
+
 ```typescript
 // app/premium/page.tsx
 export default async function PremiumPage() {
@@ -335,6 +349,7 @@ npx supabase gen types typescript --project-id YOUR_PROJECT_ID --schema public >
 - Prevents theme flash and ensures consistent dark UI
 
 **Why Forced Dark Theme:**
+
 - Eliminates light mode flash during initial load
 - Prevents navbar/footer theme inconsistencies
 - Simplifies theme management
@@ -486,6 +501,7 @@ import { cn } from "@/lib/utils"
 ### What Changed
 
 **✅ Completed**:
+
 - Upgraded from Next.js 14.2.15 → 16.0.0
 - React 18 → 19.2.0
 - `middleware.ts` → `proxy.ts` migration
@@ -493,6 +509,7 @@ import { cn } from "@/lib/utils"
 - Forced dark theme for consistency
 
 **Current Configuration**:
+
 ```javascript
 // next.config.mjs
 {
@@ -505,12 +522,14 @@ import { cn } from "@/lib/utils"
 ### Trade-offs Made
 
 **1. cacheComponents Disabled**
+
 - **Why**: Conflicts with next-themes ThemeProvider cookie access
 - **Impact**: Can't use "use cache" directive
 - **Future**: Re-enable when next-themes is updated
 - **Status**: All "use cache" directives commented out
 
 **2. Forced Dark Theme**
+
 - **Why**: Prevents theme flash and inconsistencies
 - **Impact**: No light mode or system theme detection
 - **Benefit**: Better performance, consistent UX
@@ -531,6 +550,7 @@ import { cn } from "@/lib/utils"
 ### Migration Guide Reference
 
 See `.docs/nextjs16/` for detailed migration documentation:
+
 - `middleware-to-proxy-migration.md` - Proxy migration guide
 - `use-cache-guide.md` - Cache directive usage
 - `implementation-recommendations.md` - Best practices

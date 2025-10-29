@@ -19,6 +19,7 @@
 Next.js 16 with React 19 provides first-class support for **Suspense** and **Streaming**, allowing you to progressively render and stream UI to the browser. This means users see content faster, even while data is still being fetched.
 
 **Key Features:**
+
 - ✅ Streaming is **enabled by default** in the App Router
 - ✅ Suspense is **fully stable** in React 19 (no longer experimental)
 - ✅ Works seamlessly with Server Components
@@ -33,11 +34,11 @@ Next.js 16 with React 19 provides first-class support for **Suspense** and **Str
 ### Basic Concept
 
 ```tsx
-import { Suspense } from 'react';
+import { Suspense } from "react";
 
 <Suspense fallback={<LoadingSpinner />}>
   <AsyncComponent />
-</Suspense>
+</Suspense>;
 ```
 
 When `<AsyncComponent>` is loading (fetching data, lazy-loading code, etc.), React shows the `fallback` UI. Once ready, it swaps in the actual component.
@@ -45,12 +46,14 @@ When `<AsyncComponent>` is loading (fetching data, lazy-loading code, etc.), Rea
 ### Why Use Suspense?
 
 **Without Suspense:**
+
 ```
 [Loading...................................] → [Full Page Appears]
 User waits for everything before seeing anything
 ```
 
 **With Suspense:**
+
 ```
 [Header] → [Sidebar] → [Main Content] → [Comments]
 User sees content progressively as it loads
@@ -123,7 +126,7 @@ Wrap specific components with Suspense boundaries for granular control:
 **Example: Streaming Blog Posts**
 
 ```tsx
-import { Suspense } from 'react';
+import { Suspense } from "react";
 
 export default function BlogPage() {
   return (
@@ -153,7 +156,7 @@ You can use both `loading.tsx` AND component-level Suspense:
 
 ```tsx
 // app/blog/page.tsx
-import { Suspense } from 'react';
+import { Suspense } from "react";
 
 export default function BlogPage() {
   return (
@@ -385,7 +388,7 @@ async function BlogPosts() {
 // Wrap in Suspense
 <Suspense fallback={<Skeleton />}>
   <BlogPosts />
-</Suspense>
+</Suspense>;
 ```
 
 ### ❌ DON'T: Wrap Client Components with Suspense for Data Fetching
@@ -456,8 +459,8 @@ function BlogPostsClient({ posts }) {
 
 ```tsx
 // app/blog/page.tsx
-import { Suspense } from 'react';
-import { getAllBlogs } from '@/lib/blog';
+import { Suspense } from "react";
+import { getAllBlogs } from "@/lib/blog";
 
 export default function BlogPage() {
   return (
@@ -474,7 +477,7 @@ async function BlogGrid() {
   const blogs = await getAllBlogs();
   return (
     <div className="grid grid-cols-3 gap-4">
-      {blogs.map(blog => (
+      {blogs.map((blog) => (
         <BlogCard key={blog.slug} blog={blog} />
       ))}
     </div>
@@ -484,7 +487,7 @@ async function BlogGrid() {
 function BlogGridSkeleton() {
   return (
     <div className="grid grid-cols-3 gap-4">
-      {[1, 2, 3, 4, 5, 6].map(i => (
+      {[1, 2, 3, 4, 5, 6].map((i) => (
         <BlogCardSkeleton key={i} />
       ))}
     </div>
@@ -496,8 +499,8 @@ function BlogGridSkeleton() {
 
 ```tsx
 // app/blog/[slug]/page.tsx
-import { Suspense } from 'react';
-import { getBlogBySlug } from '@/lib/blog';
+import { Suspense } from "react";
+import { getBlogBySlug } from "@/lib/blog";
 
 export default async function BlogPostPage({ params }) {
   return (
@@ -523,7 +526,7 @@ async function BlogPost({ slug }: { slug: string }) {
 
 ```tsx
 // app/page.tsx
-import { Suspense } from 'react';
+import { Suspense } from "react";
 
 export default function HomePage() {
   return (
@@ -599,7 +602,7 @@ function BlogPostsClient({ posts }) {
 function Skeleton() {
   return (
     <div className="grid grid-cols-3 gap-4">
-      {[1,2,3].map(i => (
+      {[1, 2, 3].map((i) => (
         <div key={i} className="h-64 bg-gray-200 rounded"></div>
       ))}
     </div>
@@ -609,8 +612,10 @@ function Skeleton() {
 function Content() {
   return (
     <div className="grid grid-cols-3 gap-4">
-      {posts.map(post => (
-        <div key={post.id} className="h-64 rounded">...</div>
+      {posts.map((post) => (
+        <div key={post.id} className="h-64 rounded">
+          ...
+        </div>
       ))}
     </div>
   );
@@ -629,7 +634,9 @@ async function Outer() {
   const data = await fetchEverything(); // Blocks inner Suspense
   return (
     <div>
-      <Suspense><Inner /></Suspense>
+      <Suspense>
+        <Inner />
+      </Suspense>
     </div>
   );
 }
@@ -638,7 +645,9 @@ async function Outer() {
 function Outer() {
   return (
     <div>
-      <Suspense><Inner /></Suspense>
+      <Suspense>
+        <Inner />
+      </Suspense>
     </div>
   );
 }

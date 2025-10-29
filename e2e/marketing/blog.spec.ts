@@ -1,11 +1,11 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test.describe('Blog Page', () => {
-  test('should have a valid page title', async ({ page }) => {
-    await page.goto('/blog');
+test.describe("Blog Page", () => {
+  test("should have a valid page title", async ({ page }) => {
+    await page.goto("/blog");
 
     // Wait for the page to load
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState("networkidle");
 
     // Get the page title
     const title = await page.title();
